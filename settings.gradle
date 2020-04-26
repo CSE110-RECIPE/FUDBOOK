@@ -1,0 +1,2 @@
+rootProject.name='fudbook'
+include ':app'
