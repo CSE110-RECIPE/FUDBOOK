@@ -1,11 +1,11 @@
 package com.example.fudbook;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class login extends AppCompatActivity {
 
@@ -24,6 +24,8 @@ public class login extends AppCompatActivity {
         });
     }
 
+
+    // function to transition ot dashboard
     public void goToDash(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

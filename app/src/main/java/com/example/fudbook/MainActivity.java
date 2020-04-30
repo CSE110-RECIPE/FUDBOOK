@@ -5,17 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button create_button, explore_button, bookshelf_button;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         create_button = (Button) findViewById(R.id.createbutton);
         explore_button = (Button) findViewById(R.id.explorebutton);
         bookshelf_button = (Button) findViewById(R.id.bookshelfbutton);
+        toolbar = findViewById(R.id.ToolBar);
+        setSupportActionBar(toolbar);
 
         create_button.setOnClickListener(new View.OnClickListener(){
             @Override
