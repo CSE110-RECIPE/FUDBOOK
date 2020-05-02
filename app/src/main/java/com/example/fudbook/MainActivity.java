@@ -46,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started\n");
 
         // setting up toolbar
+        setupToolBar();
+
+
+        // set up fragment adapter
+        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
+        mViewPager = (ViewPager2) findViewById(R.id.container);
+        setupViewPager(mViewPager);
+    }
+
+    private void setupToolBar(){
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -55,15 +65,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"homebutton clicked", Toast.LENGTH_SHORT).show();
-                setViewPager(4);
+                setViewPager(1);
             }
         });
-
-
-        // set up fragment adapter
-        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
-        mViewPager = (ViewPager2) findViewById(R.id.container);
-        setupViewPager(mViewPager);
     }
 
     // adds fragments for dash
@@ -75,18 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
         // fragments to adds in this order [0...n]
         adapter.addFragment(new fragment_create1(), "Create Page 1"); // 0
-        adapter.addFragment(new fragment_create2(), "Create Page 2"); // 1
-        adapter.addFragment(new fragment_create3(), "Create Page 3"); // 2
-        adapter.addFragment(new fragment_create4(), "Create Page 4"); // 3
-        adapter.addFragment(new fragment_dashboard(), "Dashboard"); // 4
-        adapter.addFragment(new fragment_bookshelf1(), "Bookshelf Page 1"); // 5
-        adapter.addFragment(new fragment_bookshelf2(), "Bookshelf Page 2"); // 6
+        adapter.addFragment(new fragment_dashboard(), "Dashboard"); // 1
+        adapter.addFragment(new fragment_bookshelf1(), "Bookshelf Page 1"); // 2
 
         // NEED TO ADD FOR EXPLORE?
 
         // connect viewpager to made adapter
         viewPager.setAdapter(adapter);
-        setViewPager(4);
+        setViewPager(1);
     }
 
     public void setViewPager(int fragmentNumber){
