@@ -10,12 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.fudbook.fragments.fragment_bookshelf1;
-import com.example.fudbook.fragments.fragment_bookshelf2;
 import com.example.fudbook.fragments.fragment_create1;
-import com.example.fudbook.fragments.fragment_create2;
-import com.example.fudbook.fragments.fragment_create3;
-import com.example.fudbook.fragments.fragment_create4;
 import com.example.fudbook.fragments.fragment_dashboard;
+
 /*
         MAIN ACTIVITY:
             HOLDS ALL FRAGMENTS FOR DASHBOARD:
@@ -32,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     // initializations
     private Toolbar toolbar;
 
-    private FragmentAdapter mFragmentAdapter;
     private ViewPager2 mViewPager;
 
     @Override
@@ -50,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // set up fragment adapter
-        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPager = (ViewPager2) findViewById(R.id.container);
         setupViewPager(mViewPager);
+
+        //EXPLORE TRANSITION
     }
 
     private void setupToolBar(){
@@ -68,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 setViewPager(1);
             }
         });
+
     }
 
     // adds fragments for dash
@@ -82,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new fragment_dashboard(), "Dashboard"); // 1
         adapter.addFragment(new fragment_bookshelf1(), "Bookshelf Page 1"); // 2
 
-        // NEED TO ADD FOR EXPLORE?
 
         // connect viewpager to made adapter
+        viewPager.setUserInputEnabled(false);
         viewPager.setAdapter(adapter);
-        setViewPager(1);
+        setViewPager(1); // loads dashboard first
     }
 
     public void setViewPager(int fragmentNumber){
