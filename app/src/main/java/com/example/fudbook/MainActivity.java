@@ -1,21 +1,21 @@
 package com.example.fudbook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.example.fudbook.fragments.fragment_bookshelf1;
-import com.example.fudbook.fragments.fragment_bookshelf2;
-import com.example.fudbook.fragments.fragment_create1;
-import com.example.fudbook.fragments.fragment_create2;
-import com.example.fudbook.fragments.fragment_create3;
-import com.example.fudbook.fragments.fragment_create4;
-import com.example.fudbook.fragments.fragment_dashboard;
+import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
+import com.example.fudbook.ui.dashboard.fragment_dashboard;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 /*
         MAIN ACTIVITY:
             HOLDS ALL FRAGMENTS FOR DASHBOARD:
@@ -29,11 +29,10 @@ public class MainActivity extends AppCompatActivity {
     // name of activity
     private static final String TAG = "MainActivity";
 
-    // initializations
-    private Toolbar toolbar;
-
-    private FragmentAdapter mFragmentAdapter;
-    private ViewPager2 mViewPager;
+    // buttons
+    private ImageButton dashboard_button;
+    private ImageButton bookshelf_button;
+    private FloatingActionButton explore_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,53 +44,50 @@ public class MainActivity extends AppCompatActivity {
         // log activity
         Log.d(TAG, "onCreate: Started\n");
 
-        // setting up toolbar
-        setupToolBar();
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.container, new fragment_dashboard()).commit();
 
+        // button set up
+        dashboard_button = findViewById(R.id.dash_btn);
+        bookshelf_button = findViewById(R.id.bookshelf_btn);
+        explore_button = findViewById(R.id.explore_btn);
 
-        // set up fragment adapter
-        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
-        mViewPager = (ViewPager2) findViewById(R.id.container);
-        setupViewPager(mViewPager);
+        dashboard_button.setOnClickListener(dash_listener);
+        bookshelf_button.setOnClickListener(bookshelf_listener);
+        explore_button.setOnClickListener(explore_listener);
     }
 
-    private void setupToolBar(){
-        toolbar = findViewById(R.id.toolbarTop);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_home_white_50dp));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"homebutton clicked", Toast.LENGTH_SHORT).show();
-                setViewPager(1);
-            }
-        });
-    }
+    private FloatingActionButton.OnClickListener explore_listener =
+            new ImageButton.OnClickListener(){
 
-    // adds fragments for dash
-    private void setupViewPager(ViewPager2 viewPager){
-        Log.d(TAG, "setupViewPager: adding fragments");
+                @Override
+                public void onClick(View v) {
+                    // Go to explore activity
+                    Intent exp_intent = new Intent(getBaseContext(), ExploreActivity.class);
+                    startActivity(exp_intent);
+                }
+            };
 
-        // adapter to send to viewpager
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
+    private ImageButton.OnClickListener dash_listener =
+            new ImageButton.OnClickListener(){
 
-        // fragments to adds in this order [0...n]
-        adapter.addFragment(new fragment_create1(), "Create Page 1"); // 0
-        adapter.addFragment(new fragment_dashboard(), "Dashboard"); // 1
-        adapter.addFragment(new fragment_bookshelf1(), "Bookshelf Page 1"); // 2
+                @Override
+                public void onClick(View v) {
+                    // bring up dashboard
+                    FragmentManager fm = getSupportFragmentManager();
+                    fm.beginTransaction().replace(R.id.container, new fragment_dashboard()).commit();
+                }
+            };
 
-        // NEED TO ADD FOR EXPLORE?
+    private ImageButton.OnClickListener bookshelf_listener =
+            new ImageButton.OnClickListener(){
 
-        // connect viewpager to made adapter
-        viewPager.setAdapter(adapter);
-        setViewPager(1);
-    }
+                @Override
+                public void onClick(View v) {
+                    // bring up bookshelf
+                    FragmentManager fm = getSupportFragmentManager();
+                    fm.beginTransaction().replace(R.id.container, new fragment_bookshelf()).commit();
+                }
+            };
 
-    public void setViewPager(int fragmentNumber){
-        Log.d(TAG, "setViewPager");
-
-        mViewPager.setCurrentItem(fragmentNumber);
-    }
 }
