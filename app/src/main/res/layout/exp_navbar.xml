@@ -12,27 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/tan"
-        >
+        android:backgroundTint="@color/tan">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
             <ImageButton
-                android:id="@+id/create_button"
+                android:id="@+id/d_dashboard_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:background="@null"
-                android:src="@drawable/ic_create_recipe_24dp"
+                android:src="@drawable/ic_home_white_50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageButton
-                android:id="@+id/bookshelf_button"
+                android:id="@+id/d_bookshelf_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="80dp"
@@ -45,14 +43,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/explore_button"
+        android:id="@+id/basket_btn"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:src="@drawable/ic_fud_icon"
+        android:src="@drawable/ic_create_recipe_24dp"
         app:backgroundTint="@color/colorAccent"
         app:tint="@color/white"
         app:layout_anchor="@+id/bottom_app_bar"

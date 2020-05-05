@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     android:theme="@style/AppTheme">
 
-    <include layout="@layout/appbar"
-        android:id="@+id/action_bar_layout"/>
-
-    <androidx.viewpager2.widget.ViewPager2
+    <!-- switches main fragment view -->
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container"
-        android:layout_below="@id/action_bar_layout"
         >
-    </androidx.viewpager2.widget.ViewPager2>
+    </androidx.fragment.app.FragmentContainerView>
+
+
+    <include layout="@layout/dash_navbar"/>
+
 
 </RelativeLayout>

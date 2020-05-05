@@ -1,4 +1,4 @@
-package com.example.fudbook;
+package com.example.fudbook.ui;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
