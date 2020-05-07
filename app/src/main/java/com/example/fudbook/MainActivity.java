@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private FloatingActionButton.OnClickListener explore_listener =
-            new ImageButton.OnClickListener(){
+            new FloatingActionButton.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {

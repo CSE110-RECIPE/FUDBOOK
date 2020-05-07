@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFA387</color>
     <color name="white">#FFFFFF</color>
     <color name="tan">#FFFFF0</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
 </resources>
