@@ -1,17 +1,16 @@
 package com.example.fudbook.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.fudbook.CreateActivity;
 import com.example.fudbook.R;
-import com.example.fudbook.ui.create.fragment_create;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class fragment_dashboard extends Fragment {
@@ -39,9 +38,9 @@ public class fragment_dashboard extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    // fragment manager set up
-                    FragmentManager pfm = getParentFragmentManager();
-                    pfm.beginTransaction().replace(R.id.container, new fragment_create()).commit();
+                    // Go to create recipe activity
+                    Intent create_intent = new Intent(getContext(), CreateActivity.class);
+                    startActivity(create_intent);
                 }
             };
 }
