@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         bookshelf_button = findViewById(R.id.bookshelf_btn);
         explore_button = findViewById(R.id.explore_btn);
 
+        // button listeners set up
         dashboard_button.setOnClickListener(dash_listener);
         bookshelf_button.setOnClickListener(bookshelf_listener);
         explore_button.setOnClickListener(explore_listener);
