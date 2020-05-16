@@ -36,8 +36,8 @@ public class ExploreActivity extends AppCompatActivity {
 //        fm.beginTransaction().add(R.id.container, new fragment_dashboard()).commit();
 
         // button set up
-        d_dashboard_button = findViewById(R.id.d_dashboard_btn);
-        d_bookshelf_button = findViewById(R.id.d_bookshelf_btn);
+        d_dashboard_button = findViewById(R.id.dash_btn);
+        d_bookshelf_button = findViewById(R.id.bookshelf_btn);
         d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
 
         d_dashboard_button.setOnClickListener(dash_listener);

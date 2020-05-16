@@ -28,24 +28,42 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/recipe_title_input"
+            <TextView
+                android:id="@+id/user_recipe_title"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle"
-                android:hint="Enter your recipe name"
+                android:text="User's Title"
                 android:layout_below="@id/recipe_title"
-                android:maxLines="1"
-                android:inputType="text"
                 android:padding="10dp"
+                android:textSize="20sp"
                 android:layout_centerHorizontal="true"
-                android:imeOptions="actionNext" />
+                />
+
+            <TextView
+                android:id="@+id/photo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Photo"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:layout_below="@id/user_recipe_title"
+                />
+
+            <ImageView
+                android:id="@+id/recipe_photo"
+                android:layout_width="match_parent"
+                android:layout_height="375dp"
+                android:adjustViewBounds="true"
+                android:layout_below="@id/photo_title"
+                android:background="@drawable/dotted_rectangle"
+                />
 
             <Space
                 android:id="@+id/spacer_1"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_below="@id/recipe_title_input"/>
+                android:layout_below="@id/recipe_photo"/>
 
             <TextView
                 android:id="@+id/ingredient_title"
@@ -58,25 +76,25 @@
                 android:textSize="20sp"
                 android:layout_below="@id/spacer_1"/>
 
-            <AutoCompleteTextView
-                android:id="@+id/recipe_name_input"
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangle"
-                android:hint="Enter your ingredients"
-                android:layout_below="@id/ingredient_title"
-                android:padding="10dp"
-                android:layout_centerHorizontal="true"
-                android:imeOptions="actionDone"/>
 
             <!-- enter ingredient list here -->
 
+            <TextView
+                android:id="@+id/user_ingredient_list"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:text="Ingredient Bubbles"
+                android:layout_below="@id/ingredient_title"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                />
 
             <Space
                 android:id="@+id/spacer_2"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_below="@id/recipe_name_input"/>
+                android:layout_below="@id/user_ingredient_list"/>
 
             <TextView
                 android:id="@+id/instructions_title"
@@ -89,20 +107,15 @@
                 android:textSize="20sp"
                 android:layout_below="@id/spacer_2"/>
 
-            <EditText
-                android:id="@+id/instructions_input"
-                android:inputType="textMultiLine"
+            <TextView
+                android:id="@+id/user_instructions_input"
                 android:lines="10"
-                android:maxLength="2000"
-                android:gravity="top|left"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle"
-                android:hint="Enter recipe instructions"
                 android:layout_below="@id/instructions_title"
                 android:padding="10dp"
                 android:layout_centerHorizontal="true"
-                android:imeOptions="actionDone"
+                android:text="User Instructions List"
                 />
 
 

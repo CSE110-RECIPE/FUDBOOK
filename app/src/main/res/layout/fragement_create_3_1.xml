@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:paddingHorizontal="15dp"
+    android:paddingBottom="80dp">
+
+    <!-- View to store all content  -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Need inputs here  -->
+
+        <TextView
+        android:id="@+id/ingredient_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="673dp"
+        android:layout_marginEnd="377dp"
+        android:text="Ingredients"
+        android:textColor="#71BF9A"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/create_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Create"
+                android:textColor="#767676"
+                android:textSize="24dp" />
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFA386"
+                android:backgroundTint="#FFA386"
+                android:elevation="10dp"
+                android:shadowColor="#FFFFFF"
+                android:text="@android:string/cancel" />
+
+            <Button
+                android:id="@+id/next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="589dp"
+                android:text="next" />
+
+            <TextView
+                android:id="@+id/recipe_title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="308dp"
+                android:text="Recipe title"
+                android:textColor="#767676"
+                android:textSize="24dp" />
+
+            <ImageView
+                android:id="@+id/pen_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="96dp"
+                android:layout_marginEnd="283dp"
+                app:srcCompat="@drawable/ic_pen_24px" />
+
+            <TextView
+                android:id="@+id/img_output"
+                android:layout_width="482dp"
+                android:layout_height="440dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="183dp"
+                android:layout_marginEnd="-16dp"
+                android:background="@drawable/rectangle"
+                android:drawableRight="@drawable/ic_pen_24px"
+                android:drawablePadding="10dp"
+                android:gravity="right|bottom" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+</ScrollView>

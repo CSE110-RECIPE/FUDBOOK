@@ -6,11 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".CreateActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <RelativeLayout
+        android:id="@+id/header_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/open_sans"
+            android:text="Create"
+            android:textColor="@color/darkText"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="back" />
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="next" />
+    </RelativeLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/create_container"
+        android:layout_below="@+id/header_bar"
         >
-    </androidx.fragment.app.FragmentContainerView>
+    </androidx.viewpager2.widget.ViewPager2>
 
 </RelativeLayout>

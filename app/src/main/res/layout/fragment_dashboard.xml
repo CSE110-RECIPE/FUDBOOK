@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="15dp"
-    android:paddingHorizontal="15dp"
     android:paddingBottom="80dp"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -15,42 +14,168 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         >
+
+        <!-- Dashboard Bar -->
+
         <RelativeLayout
+            android:id="@+id/dashboard_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="5dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/settings_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_settings_black_24dp"
+                app:backgroundTint="@color/colorPrimaryDark"
+                app:fabCustomSize="40dp"
+                app:tint="@color/darkText" />
+
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_fudbook_orange"
-                />
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/open_sans"
+                android:text="Dashboard"
+                android:textColor="@color/darkText"
+                android:textSize="16sp" />
 
         </RelativeLayout>
+            
+        <TextView
+            android:id="@+id/recipe_of_the_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dashboard_top"
+            android:paddingLeft="10dp"
+            android:text="Recipe of the Day"
+            android:textSize="25sp"
+            />
 
-        <!-- Need inputs here  -->
+        <!-- Card to hold recipe of the day details -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
+            android:layout_below="@id/recipe_of_the_day"
+            android:layout_width="700dp"
+            android:layout_height="200dp"
+            android:elevation="8dp"
+            android:divider="@android:color/background_dark"
+            android:dividerHeight="0.0px"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:cardElevation="10dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+            <TextView
+                android:id="@+id/author_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author" />
+
+            <TextView
+                android:id="@+id/recipe_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/author_text"
+                android:text="Recipe Title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/description_text"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/recipe_title_text"
+                android:text="This is a description" />
+
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:id="@+id/spacer1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/card_view"
+            />
+
+        <Space
+            android:id="@+id/spacer2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/create_recipe_text"
+            />
+
+        <TextView
+            android:id="@+id/create_recipe_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create your own recipe!"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/spacer1"
+            />
+
+        <Button
             android:id="@+id/create_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_add_black_24dp"
-            app:tint="@color/white"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:text="create"
+            android:textSize="20sp"
+            android:layout_below="@id/spacer2"
+            android:layout_centerHorizontal="true"
+            android:elevation="10dp"
             />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/settings_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:src="@drawable/ic_settings_black_24dp"
-            app:tint="#FFFFFF"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:fabCustomSize="40dp"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/create_recipe_text">
+
+            <ImageView
+                android:id="@+id/ramen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ramen"/>
+
+            <ImageView
+                android:id="@+id/orangejuice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_orangejuice"
+                android:layout_alignParentRight="true"
+                />
+
+            <ImageView
+                android:id="@+id/ladle"
+                android:layout_width="145dp"
+                android:layout_height="153dp"
+                android:layout_below="@id/orangejuice"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-18dp"
+                android:layout_marginRight="9dp"
+                android:src="@drawable/ic_ladle" />
+
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 
