@@ -37,6 +37,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
         return mFragmentList.size();
     }
 
+    // gets fragment position
     @NonNull
     @Override
     public Fragment createFragment(int position) {
