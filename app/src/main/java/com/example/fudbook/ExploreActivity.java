@@ -1,6 +1,7 @@
 package com.example.fudbook;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
@@ -10,7 +11,8 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
-import com.example.fudbook.ui.dashboard.fragment_dashboard;
+import com.example.fudbook.ui.explore.fragment_basket;
+import com.example.fudbook.ui.explore.fragment_explore_1;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ExploreActivity extends AppCompatActivity {
@@ -23,6 +25,8 @@ public class ExploreActivity extends AppCompatActivity {
     private ImageButton d_bookshelf_button;
     private FloatingActionButton d_basket_button;
 
+    private Fragment FragmentBasket;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,8 @@ public class ExploreActivity extends AppCompatActivity {
         // log activity
         Log.d(TAG, "onCreate: Started\n");
 
-//        FragmentManager fm = getSupportFragmentManager();
-//        fm.beginTransaction().add(R.id.container, new fragment_dashboard()).commit();
+        fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.exp_container, new fragment_explore_1()).commit();
 
         // button set up
         d_dashboard_button = findViewById(R.id.dash_btn);
@@ -41,8 +45,13 @@ public class ExploreActivity extends AppCompatActivity {
         d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
 
         d_dashboard_button.setOnClickListener(dash_listener);
-        d_bookshelf_button.setOnClickListener(dash_listener);
+        d_bookshelf_button.setOnClickListener(bookshelf_listener);
         d_basket_button.setOnClickListener(basket_listener);
+    }
+
+    public void exitBasket(View v) {
+        if (FragmentBasket != null)
+            fm.beginTransaction().remove(FragmentBasket).commit();
     }
 
     private FloatingActionButton.OnClickListener basket_listener =
@@ -50,9 +59,8 @@ public class ExploreActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-
-                    // LOAD BASKET
-
+                    FragmentBasket = new fragment_basket();
+                    fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
                 }
             };
 
@@ -73,7 +81,6 @@ public class ExploreActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // bring up bookshelf
-                    FragmentManager fm = getSupportFragmentManager();
                     fm.beginTransaction().replace(R.id.container, new fragment_bookshelf()).commit();
                 }
             };
