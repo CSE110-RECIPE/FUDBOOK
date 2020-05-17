@@ -79,22 +79,37 @@
 
             <!-- enter ingredient list here -->
 
-            <TextView
-                android:id="@+id/user_ingredient_list"
+            <HorizontalScrollView
+                android:id="@+id/chip_container"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:text="Ingredient Bubbles"
                 android:layout_below="@id/ingredient_title"
-                android:padding="10dp"
-                android:textSize="20sp"
-                android:layout_centerHorizontal="true"
-                />
+                android:layout_centerHorizontal="true">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <!-- Chips can be declared here, or added dynamically. -->
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hello"
+                        android:layout_below="@id/ingredient_input">
+                    </com.google.android.material.chip.Chip>
+
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
             <Space
                 android:id="@+id/spacer_2"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_below="@id/user_ingredient_list"/>
+                android:layout_below="@id/chip_container"/>
 
             <TextView
                 android:id="@+id/instructions_title"

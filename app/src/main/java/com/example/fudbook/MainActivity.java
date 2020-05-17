@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         dashboard_button.setOnClickListener(dash_listener);
         bookshelf_button.setOnClickListener(bookshelf_listener);
         explore_button.setOnClickListener(explore_listener);
+
+
+        // API Calls
     }
 
     private FloatingActionButton.OnClickListener explore_listener =

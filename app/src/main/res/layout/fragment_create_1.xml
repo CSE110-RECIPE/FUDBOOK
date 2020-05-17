@@ -59,7 +59,7 @@
                 android:layout_below="@id/spacer_1"/>
 
             <AutoCompleteTextView
-                android:id="@+id/recipe_name_input"
+                android:id="@+id/ingredient_input"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle"
@@ -71,12 +71,43 @@
 
             <!-- enter ingredient list here -->
 
+            <HorizontalScrollView
+                android:id="@+id/chip_container"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ingredient_input"
+                android:layout_centerHorizontal="true">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+<!--
+                    1. User inputs
+                    2. System stores into an array for recipe object
+                    3. Takes value and generate chip for value
+-->
+                    <!-- Chips can be declared here, or added dynamically. -->
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hello"
+                        android:layout_below="@id/ingredient_input">
+                    </com.google.android.material.chip.Chip>
+
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
 
             <Space
                 android:id="@+id/spacer_2"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_below="@id/recipe_name_input"/>
+                android:layout_below="@id/chip_container"
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:id="@+id/instructions_title"

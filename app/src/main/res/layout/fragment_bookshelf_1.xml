@@ -25,24 +25,21 @@
                 android:layout_centerInParent="true"
                 >
                 <TextView
-                    android:id="@+id/TitlePage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bookshelf "
-                    android:textSize="30dp"
-                    android:textColor="@color/colorPrimary"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Bookshelf"
+                    android:textColor="@color/darkText"
+                    android:textSize="16sp" />
 
-                    />
+                <Button
+                    android:id="@+id/next_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="+ New" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_bookshelf_24dp"
-                    android:tint="@color/colorPrimary"
-                    android:layout_toRightOf="@+id/TitlePage"
-                    android:layout_centerVertical="true"
-                    />
             </RelativeLayout>
 
 
@@ -50,15 +47,12 @@
         </RelativeLayout>
 
         <!-- Need list view -->
-        <ListView
-            android:id="@+id/bookshelf_listview"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/title_layout">
+            android:layout_below="@id/title_layout">
 
-            <!--- needs cells or something -->
-
-        </ListView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
     </RelativeLayout>
