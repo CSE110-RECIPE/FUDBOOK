@@ -26,7 +26,6 @@ public class ExploreActivity extends AppCompatActivity {
     // buttons
     private ImageButton d_dashboard_button;
     private ImageButton d_bookshelf_button;
-    private FloatingActionButton d_basket_button;
 
     private Fragment FragmentBasket;
     private FragmentManager fm;
@@ -49,11 +48,9 @@ public class ExploreActivity extends AppCompatActivity {
         // button set up
         d_dashboard_button = findViewById(R.id.dash_btn);
         d_bookshelf_button = findViewById(R.id.bookshelf_btn);
-        d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
 
         d_dashboard_button.setOnClickListener(dash_listener);
         d_bookshelf_button.setOnClickListener(bookshelf_listener);
-        d_basket_button.setOnClickListener(basket_listener);
     }
 
     public void exitBasket(View v) {
@@ -63,18 +60,14 @@ public class ExploreActivity extends AppCompatActivity {
         isBasketOpen = false;
     }
 
-    private FloatingActionButton.OnClickListener basket_listener =
-            new ImageButton.OnClickListener(){
+    public void enterBasket(View v) {
+        if (!isBasketOpen) {
+            FragmentBasket = new fragment_basket();
+            fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
+            isBasketOpen = true;
+        }
+    }
 
-                @Override
-                public void onClick(View v) {
-                    if (!isBasketOpen) {
-                        FragmentBasket = new fragment_basket();
-                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
-                        isBasketOpen = true;
-                    }
-                }
-            };
 
     private ImageButton.OnClickListener dash_listener =
             new ImageButton.OnClickListener(){
@@ -92,7 +85,7 @@ public class ExploreActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-
+                    fm.beginTransaction().replace(R.id.exp_container, new fragment_bookshelf()).commit();
                 }
             };
 }
