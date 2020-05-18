@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
 import com.example.fudbook.ui.explore.fragment_basket;
+import com.example.fudbook.ui.explore.fragment_basket_item;
 import com.example.fudbook.ui.explore.fragment_explore_1;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,6 +31,8 @@ public class ExploreActivity extends AppCompatActivity {
     private Fragment FragmentBasket;
     private FragmentManager fm;
 
+    private boolean isBasketOpen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,8 @@ public class ExploreActivity extends AppCompatActivity {
 
         // log activity
         Log.d(TAG, "onCreate: Started\n");
+
+        isBasketOpen = false;
 
         fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.exp_container, new fragment_explore_1()).commit();
@@ -52,6 +59,8 @@ public class ExploreActivity extends AppCompatActivity {
     public void exitBasket(View v) {
         if (FragmentBasket != null)
             fm.beginTransaction().remove(FragmentBasket).commit();
+
+        isBasketOpen = false;
     }
 
     private FloatingActionButton.OnClickListener basket_listener =
@@ -59,8 +68,11 @@ public class ExploreActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-                    FragmentBasket = new fragment_basket();
-                    fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
+                    if (!isBasketOpen) {
+                        FragmentBasket = new fragment_basket();
+                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
+                        isBasketOpen = true;
+                    }
                 }
             };
 
@@ -80,8 +92,7 @@ public class ExploreActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-                    // bring up bookshelf
-                    fm.beginTransaction().replace(R.id.container, new fragment_bookshelf()).commit();
+
                 }
             };
 }

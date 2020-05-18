@@ -40,6 +40,16 @@
 
         </RelativeLayout>
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/basket_container"
+            android:layout_below="@+id/basket_top">
+
+        </ListView>
+
+
     </RelativeLayout>
 
 </RelativeLayout>
