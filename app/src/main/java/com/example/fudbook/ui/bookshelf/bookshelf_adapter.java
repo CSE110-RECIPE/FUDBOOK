@@ -85,5 +85,4 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         return names.size();
     }
 
-//    public interface
 }

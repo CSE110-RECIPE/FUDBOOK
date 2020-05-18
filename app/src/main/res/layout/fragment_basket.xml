@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.explore.fragment_basket"
+    android:paddingTop="15dp"
+    android:background="#FFFFFF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp">
+
+        <RelativeLayout
+            android:id="@+id/basket_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/open_sans"
+                android:text="Basket"
+                android:textColor="@color/darkText"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/basket_exit_btn"
+                android:text="X"
+                android:textSize="20sp"
+                android:layout_marginLeft="15dp"
+                android:padding="3dp"
+                android:onClick="exitBasket"
+                android:clickable="true"/>
+
+        </RelativeLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/basket_container"
+            android:layout_below="@+id/basket_top">
+
+        </ListView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
