@@ -41,7 +41,7 @@ public class ExploreActivity extends AppCompatActivity {
         d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
 
         d_dashboard_button.setOnClickListener(dash_listener);
-        d_bookshelf_button.setOnClickListener(dash_listener);
+        d_bookshelf_button.setOnClickListener(bookshelf_listener);
         d_basket_button.setOnClickListener(basket_listener);
     }
 
@@ -74,7 +74,7 @@ public class ExploreActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // bring up bookshelf
                     FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.container, new fragment_bookshelf()).commit();
+                    fm.beginTransaction().replace(R.id.exp_container, new fragment_bookshelf()).commit();
                 }
             };
 }

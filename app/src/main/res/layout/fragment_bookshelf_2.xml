@@ -24,8 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 >
-
                 <TextView
+                    android:id="@+id/book_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -33,13 +33,6 @@
                     android:text="Bookshelf"
                     android:textColor="@color/darkText"
                     android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/new_book_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="+ New" />
 
             </RelativeLayout>
 
@@ -49,7 +42,6 @@
 
         <!-- Need list view -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/books_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/title_layout"/>

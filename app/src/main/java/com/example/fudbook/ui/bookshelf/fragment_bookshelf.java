@@ -10,14 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fudbook.R;
-import com.example.fudbook.ui.create.fragment_create_1;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_bookshelf#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class fragment_bookshelf extends Fragment {
     private static final String TAG = "bookshelf";
 
