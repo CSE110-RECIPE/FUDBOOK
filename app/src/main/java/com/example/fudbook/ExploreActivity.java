@@ -82,6 +82,10 @@ public class ExploreActivity extends AppCompatActivity {
         }
     }
 
+    public void exitExplore(View v) {
+        
+    }
+
     /** DEPRECATED
      *  REMOVED NAV BAR FROM EXPLORE PAGE
     private ImageButton.OnClickListener dash_listener =
