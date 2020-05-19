@@ -1,25 +1,41 @@
 package com.example.fudbook.ui.bookshelf;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fudbook.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
-
-// optimize bookshelf adapter for bookshelf
+// optimize bookshelf adapter for bookshelf or books
 public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.ViewHolder> {
 
-    private List<String> names; // store bookshelf titles
-    private List<String> images; // store images
+    // TAG
+    private static final String TAG = "bookshelf_adapter";
 
-    // view holder stores book_title, book_icon
+    private ArrayList<String> mNames; // store bookshelf titles
+    private ArrayList<String> mImages; // store images
+    private Context mContext;
+    OnItemClickListener mListener;
+
+    // interface for listener
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    // set up onclick listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    // view holder stores view to be placed
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         // hold book title, icon, and layout
@@ -27,62 +43,86 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         public ImageView book_icon;
         public View layout;
 
-        public ViewHolder(View v) {
+        public ViewHolder(View v, final OnItemClickListener listener) {
             super(v);
             layout = v;
             book_title = (TextView) v.findViewById(R.id.book_title);
             book_icon = (ImageView) v.findViewById(R.id.icon);
+
+            v.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                if(listener != null){
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(position);
+                    }
+                }
+                }
+            });
         }
     }
 
-    // New item
+    // Constructor for the adapter
+    public bookshelf_adapter(Context newcontext, ArrayList<String> newnames, ArrayList<String> newimages) {
+
+        mNames = newnames;
+        mImages = newimages;
+        mContext = newcontext;
+
+    }
+
+    // add selected items to the adapter
     public void add(int position, String name, String image) {
-        names.add(position, name);
-        images.add(position,image);
+        mNames.add(position, name);
+        mImages.add(position,image);
         notifyItemInserted(position);
     }
 
+    // remove selected item from the adapter
     public void remove(int position) {
-        names.remove(position);
+        mNames.remove(position);
+        mImages.remove(position);
         notifyItemRemoved(position);
-    }
-
-    public bookshelf_adapter(List<String> myDataset) {
-        names = myDataset;
     }
 
     // creates cell
     @Override
-    public bookshelf_adapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                             int viewType) {
+    public bookshelf_adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         View v = inflater.inflate(R.layout.layout_listitem, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(v, mListener);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String name = names.get(position);
+
+        Log.d(TAG, "OnBindViewHolder: created");
+
+        final String name = mNames.get(position);
+
+
+        Glide.with(mContext)
+                .asBitmap()
+                .load(mImages.get(position))
+                .centerCrop()
+                .into(holder.book_icon);
+
+        // set name of column text
         holder.book_title.setText(name);
-        holder.book_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(position);
-            }
-        });
-        holder.book_title.setText("Footer: " + name);
+
     }
 
     @Override
     public int getItemCount() {
-        return names.size();
+        return mNames.size();
     }
 
 }

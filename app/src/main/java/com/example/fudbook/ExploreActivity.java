@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,8 +25,6 @@ public class ExploreActivity extends AppCompatActivity {
     private static final String TAG = "ExploreActivity";
 
     // buttons
-    private ImageButton d_dashboard_button;
-    private ImageButton d_bookshelf_button;
     private FloatingActionButton d_basket_button;
 
     private Fragment FragmentBasket;
@@ -45,37 +44,40 @@ public class ExploreActivity extends AppCompatActivity {
 
         fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.exp_container, new fragment_explore_1()).commit();
+        // handle backstacking
 
-        // button set up
-        d_dashboard_button = findViewById(R.id.dash_btn);
-        d_bookshelf_button = findViewById(R.id.bookshelf_btn);
-        d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
+//        // button set up
+//        d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
+//        d_basket_button.setOnClickListener(basket_listener);
 
-        d_dashboard_button.setOnClickListener(dash_listener);
-        d_bookshelf_button.setOnClickListener(bookshelf_listener);
-        d_basket_button.setOnClickListener(basket_listener);
     }
 
-    public void exitBasket(View v) {
-        if (FragmentBasket != null)
-            fm.beginTransaction().remove(FragmentBasket).commit();
+//    public void exitBasket(View v) {
+//        if (FragmentBasket != null)
+//            fm.beginTransaction().remove(FragmentBasket).commit();
+//
+//        isBasketOpen = false;
+//    }
 
-        isBasketOpen = false;
-    }
 
-    private FloatingActionButton.OnClickListener basket_listener =
-            new ImageButton.OnClickListener(){
+//    // open basket
+//    private FloatingActionButton.OnClickListener basket_listener =
+//            new ImageButton.OnClickListener(){
+//
+//                @Override
+//                public void onClick(View v) {
+//                    if (!isBasketOpen) {
+//                        FragmentBasket = new fragment_basket();
+//                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
+//                        isBasketOpen = true;
+//                    }
+//                }
+//            };
 
-                @Override
-                public void onClick(View v) {
-                    if (!isBasketOpen) {
-                        FragmentBasket = new fragment_basket();
-                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
-                        isBasketOpen = true;
-                    }
-                }
-            };
 
+
+    /** DEPRECATED
+     *  REMOVED NAV BAR FROM EXPLORE PAGE
     private ImageButton.OnClickListener dash_listener =
             new ImageButton.OnClickListener(){
 
@@ -97,4 +99,6 @@ public class ExploreActivity extends AppCompatActivity {
                     fm.beginTransaction().replace(R.id.exp_container, new fragment_bookshelf()).commit();
                 }
             };
+
+     */
 }

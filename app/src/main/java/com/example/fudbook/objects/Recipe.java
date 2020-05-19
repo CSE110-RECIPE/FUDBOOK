@@ -8,6 +8,7 @@ public class Recipe {
     private String[] instructions;
     private String[] tags;
     private String image;
+    // private String recipeId; // this needs to be in here
 
     //constructor
     public Recipe(String title, String author, String[] ingr, String[] instr, String[] tags, String image) {

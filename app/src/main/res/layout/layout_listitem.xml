@@ -23,8 +23,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
+
             android:src="@drawable/ic_launcher_foreground"
-            android:background="@mipmap/ic_launcher"
             android:layout_centerVertical="true"
             />
 

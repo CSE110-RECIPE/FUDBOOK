@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="15dp"
     android:paddingBottom="0dp"
     tools:context=".ui.explore.fragment_explore_1"
     android:id="@+id/fragment_explore_1">
 
+    <!--    Header for the explore page      -->
     <RelativeLayout
         android:id="@+id/explore_1_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="?actionBarSize"
+        android:padding="5dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,20 +24,26 @@
             android:textColor="@color/darkText"
             android:textSize="16sp" />
 
+        <Button
+            android:id="@+id/exit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="exit"
+
+            />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/explore_1_top"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/explore_1_top"
         android:background="#E3E3E3">
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/explore_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/explore_container"
-            android:layout_marginBottom="80dp"></androidx.fragment.app.FragmentContainerView>
+            android:layout_marginBottom="80dp"/>
 
     </RelativeLayout>
 

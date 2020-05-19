@@ -6,14 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ExploreActivity">
 
+
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/exp_container"
-        >
-    </androidx.fragment.app.FragmentContainerView>
-
-
-    <include layout="@layout/exp_navbar"/>
+        />
 
 </RelativeLayout>
