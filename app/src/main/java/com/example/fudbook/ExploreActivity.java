@@ -25,13 +25,16 @@ public class ExploreActivity extends AppCompatActivity {
     private static final String TAG = "ExploreActivity";
 
     // buttons
-    private FloatingActionButton d_basket_button;
+    private FloatingActionButton basket_button;
 
+    // fragment for basket
     private Fragment FragmentBasket;
     private FragmentManager fm;
 
+    // checks if basket is open
     private boolean isBasketOpen;
 
+    // On Starting Explore Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,37 +47,40 @@ public class ExploreActivity extends AppCompatActivity {
 
         fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.exp_container, new fragment_explore_1()).commit();
-        // handle backstacking
 
-//        // button set up
-//        d_basket_button = findViewById(R.id.basket_btn); // FLOATING BUTTON
-//        d_basket_button.setOnClickListener(basket_listener);
+        basket_button = findViewById(R.id.basket_btn);
+        basket_button.setOnClickListener(basket_listener);
 
     }
 
-//    public void exitBasket(View v) {
-//        if (FragmentBasket != null)
-//            fm.beginTransaction().remove(FragmentBasket).commit();
-//
-//        isBasketOpen = false;
-//    }
+    public void exitBasket(View v) {
+        if (FragmentBasket != null)
+            fm.beginTransaction().remove(FragmentBasket).commit();
 
+        isBasketOpen = false;
+    }
 
-//    // open basket
-//    private FloatingActionButton.OnClickListener basket_listener =
-//            new ImageButton.OnClickListener(){
-//
-//                @Override
-//                public void onClick(View v) {
-//                    if (!isBasketOpen) {
-//                        FragmentBasket = new fragment_basket();
-//                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
-//                        isBasketOpen = true;
-//                    }
-//                }
-//            };
+    // open basket
+    private FloatingActionButton.OnClickListener basket_listener =
+            new ImageButton.OnClickListener(){
 
+                @Override
+                public void onClick(View v) {
+                    if (!isBasketOpen) {
+                        FragmentBasket = new fragment_basket();
+                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
+                        isBasketOpen = true;
+                    }
+                }
+            };
 
+    public void enterBasket(View v) {
+        if (!isBasketOpen) {
+            FragmentBasket = new fragment_basket();
+            fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
+            isBasketOpen = true;
+        }
+    }
 
     /** DEPRECATED
      *  REMOVED NAV BAR FROM EXPLORE PAGE
@@ -94,8 +100,11 @@ public class ExploreActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
+<<<<<<< HEAD
                     // bring up bookshelf
                     FragmentManager fm = getSupportFragmentManager();
+=======
+>>>>>>> eeaf37a563304379a3b459746f09ea8f1c473cee
                     fm.beginTransaction().replace(R.id.exp_container, new fragment_bookshelf()).commit();
                 }
             };

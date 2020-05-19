@@ -32,8 +32,8 @@
 
     <ImageView
         android:id="@+id/title"
-        android:layout_width="387dp"
-        android:layout_height="92dp"
+        android:layout_width="347dp"
+        android:layout_height="61dp"
         android:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/background"
         app:layout_constraintEnd_toEndOf="parent"

@@ -13,4 +13,16 @@
         android:id="@+id/exp_container"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/basket_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="9dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@android:drawable/ic_menu_today"
+        android:tint="@color/white" />
+
+
 </RelativeLayout>
