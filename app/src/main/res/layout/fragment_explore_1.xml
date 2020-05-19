@@ -24,13 +24,11 @@
             android:textColor="@color/darkText"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/exit_btn"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="exit"
-
-            />
+            android:onClick="exitExplore"
+            android:text="Back" />
 
     </RelativeLayout>
 
