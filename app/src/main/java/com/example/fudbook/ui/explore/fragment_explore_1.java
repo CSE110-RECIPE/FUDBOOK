@@ -17,7 +17,7 @@ import com.example.fudbook.R;
 
 public class fragment_explore_1 extends Fragment {
 
-    Button exit_button; // go back to dash
+//    Button exit_button; // go back to dash
 
 
     @Override
@@ -30,19 +30,19 @@ public class fragment_explore_1 extends Fragment {
         fm.beginTransaction().add(R.id.explore_container, new fragment_explore_recipe()).commit();
 
 
-        exit_button.setOnClickListener(exit_explore_listener);
+//        exit_button.setOnClickListener(exit_explore_listener);
 
         return view;
     }
 
-    private Button.OnClickListener exit_explore_listener =
-            new Button.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    // go back to main activity and load dashboard
-                    Intent exp_intent = new Intent(getContext(), MainActivity.class);
-                    startActivity(exp_intent);
-                }
-            };
+//    private Button.OnClickListener exit_explore_listener =
+//            new Button.OnClickListener(){
+//
+//                @Override
+//                public void onClick(View v) {
+//                    // go back to main activity and load dashboard
+//                    Intent exp_intent = new Intent(getContext(), MainActivity.class);
+//                    startActivity(exp_intent);
+//                }
+//            };
 }

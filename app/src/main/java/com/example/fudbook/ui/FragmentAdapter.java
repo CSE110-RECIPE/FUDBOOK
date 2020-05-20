@@ -1,5 +1,7 @@
 package com.example.fudbook.ui;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -20,14 +22,15 @@ Fragment adapter, handles all fragments
 public class FragmentAdapter extends FragmentStateAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
+    private final Bundle fragmentBundle;
 
-
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public FragmentAdapter(@NonNull FragmentManager fragmentManager, Bundle data, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
+        fragmentBundle = data;
     }
 
-
     public void addFragment(Fragment fragment, String title){
+        fragment.setArguments(fragmentBundle); // handle bundle
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }

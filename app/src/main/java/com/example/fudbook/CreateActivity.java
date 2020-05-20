@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.fudbook.objects.Recipe;
 import com.example.fudbook.ui.FragmentAdapter;
 import com.example.fudbook.ui.create.fragment_create_1;
 import com.example.fudbook.ui.create.fragment_create_2;
+import com.example.fudbook.ui.create.fragment_create_3;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
 
 import java.io.InputStream;
@@ -36,6 +40,12 @@ public class CreateActivity extends AppCompatActivity {
     Button next_button;
     Button back_button; // need to implement
 
+    Bundle bundle;
+    Recipe recipe;
+    // For memory sharing
+    SharedPreferences sharedPreferences;
+    public static final String CREATE_PREFERENCES = "Create_Prefs";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +56,9 @@ public class CreateActivity extends AppCompatActivity {
 
 //        FragmentManager fm = getSupportFragmentManager();
 //        fm.beginTransaction().add(R.id.create_container, new fragment_create_1()).commit();
+
+        // for memory sharing
+        sharedPreferences = getSharedPreferences(CREATE_PREFERENCES, Context.MODE_PRIVATE);
 
         Log.d(TAG, "onCreate: Setting up viewPager \n");
 
@@ -59,8 +72,16 @@ public class CreateActivity extends AppCompatActivity {
         // listener set up
         next_button.setOnClickListener(next_listener);
         back_button.setOnClickListener(back_listener);
+    }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // clear memory after destroyed
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
     }
 
     private Button.OnClickListener back_listener =
@@ -88,6 +109,11 @@ public class CreateActivity extends AppCompatActivity {
                     int current = viewPager.getCurrentItem();
                     if(current != 3)
                         setViewPager(current+1);
+
+                    for (String key: bundle.keySet())
+                    {
+                        Log.d ("myApplication", key + " is a key in the bundle");
+                    }
                 }
             };
 
@@ -95,11 +121,12 @@ public class CreateActivity extends AppCompatActivity {
         Log.d(TAG, "setupViewPager: adding create fragments");
 
         // adapter to send to viewpager
-        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
+        bundle = new Bundle();
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), bundle, getLifecycle());
 
         fragmentAdapter.addFragment(new fragment_create_1(), "Create Recipe Step 1"); // 0
         fragmentAdapter.addFragment(new fragment_create_2(), "Create Recipe Step 2"); // 1
-        //adapter.addFragment(new fragment_create_3()), "Create Recipe Step 3"; // 2
+        fragmentAdapter.addFragment(new fragment_create_3(), "Create Recipe Step 3"); // 2
 
         viewPager.setAdapter(fragmentAdapter);
         setViewPager(0);
@@ -108,7 +135,6 @@ public class CreateActivity extends AppCompatActivity {
     // sets viewpager to certain fragment
     public void setViewPager(int fragmentNumber){
         Log.d(TAG, "setViewPager");
-
         viewPager.setCurrentItem(fragmentNumber);
     }
 }
