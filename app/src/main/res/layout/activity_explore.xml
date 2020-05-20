@@ -24,5 +24,4 @@
         android:src="@android:drawable/ic_menu_today"
         android:tint="@color/white" />
 
-
 </RelativeLayout>
