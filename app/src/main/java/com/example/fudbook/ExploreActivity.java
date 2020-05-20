@@ -83,7 +83,7 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     public void exitExplore(View v) {
-        
+
     }
 
     /** DEPRECATED

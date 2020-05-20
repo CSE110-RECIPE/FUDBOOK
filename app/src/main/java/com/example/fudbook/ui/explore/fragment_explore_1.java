@@ -29,7 +29,7 @@ public class fragment_explore_1 extends Fragment {
         FragmentManager fm = getChildFragmentManager();
         fm.beginTransaction().add(R.id.explore_container, new fragment_explore_recipe()).commit();
 
-        exit_button = view.findViewById(R.id.exit_btn);
+
         exit_button.setOnClickListener(exit_explore_listener);
 
         return view;

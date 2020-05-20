@@ -81,7 +81,8 @@
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chip_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="6dp"
                     >
 <!--
                     1. User inputs
@@ -89,14 +90,6 @@
                     3. Takes value and generate chip for value
 -->
                     <!-- Chips can be declared here, or added dynamically. -->
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="hello"
-                        android:layout_below="@id/ingredient_input">
-                    </com.google.android.material.chip.Chip>
-
 
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>

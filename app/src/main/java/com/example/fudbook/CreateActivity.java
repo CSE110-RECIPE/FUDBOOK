@@ -8,13 +8,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.fudbook.ui.FragmentAdapter;
 import com.example.fudbook.ui.create.fragment_create_1;
 import com.example.fudbook.ui.create.fragment_create_2;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -52,6 +59,7 @@ public class CreateActivity extends AppCompatActivity {
         // listener set up
         next_button.setOnClickListener(next_listener);
         back_button.setOnClickListener(back_listener);
+
 
     }
 
