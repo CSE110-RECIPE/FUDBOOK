@@ -1,6 +1,7 @@
 package com.example.fudbook;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -36,6 +37,8 @@ public class CreateActivity extends AppCompatActivity {
     private FragmentAdapter fragmentAdapter;
     private ViewPager2 viewPager;
 
+    private ArrayList<String> currentIngredientList, prevIngredientList;
+
     // overlaying buttons
     Button next_button;
     Button back_button; // need to implement
@@ -45,6 +48,8 @@ public class CreateActivity extends AppCompatActivity {
     // For memory sharing
     SharedPreferences sharedPreferences;
     public static final String CREATE_PREFERENCES = "Create_Prefs";
+
+    private Fragment create1, create2, create3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +112,11 @@ public class CreateActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // bring up next create page
                     int current = viewPager.getCurrentItem();
-                    if(current != 3)
-                        setViewPager(current+1);
+                    if(current != 3) {
+                        setViewPager(current + 1);
+
+                        fragmentAdapter.notifyItemChanged(2);
+                    }
 
                     for (String key: bundle.keySet())
                     {
@@ -124,9 +132,15 @@ public class CreateActivity extends AppCompatActivity {
         bundle = new Bundle();
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), bundle, getLifecycle());
 
-        fragmentAdapter.addFragment(new fragment_create_1(), "Create Recipe Step 1"); // 0
-        fragmentAdapter.addFragment(new fragment_create_2(), "Create Recipe Step 2"); // 1
-        fragmentAdapter.addFragment(new fragment_create_3(), "Create Recipe Step 3"); // 2
+        create1 = new fragment_create_1();
+        create2 = new fragment_create_2();
+        create3 = new fragment_create_3();
+
+        fragmentAdapter.addFragment(create1, "Create Recipe Step 1"); // 0
+        fragmentAdapter.addFragment(create2, "Create Recipe Step 2"); // 1
+        fragmentAdapter.addFragment(create3, "Create Recipe Step 3"); // 2
+
+        fragmentAdapter.notifyDataSetChanged();
 
         viewPager.setAdapter(fragmentAdapter);
         setViewPager(0);

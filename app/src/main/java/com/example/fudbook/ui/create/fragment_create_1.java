@@ -12,8 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Recipe;
@@ -29,7 +31,6 @@ public class fragment_create_1 extends Fragment{
     private EditText recipeNameView, instructionView;
     private AutoCompleteTextView ingredientNameView;
     private ChipGroup chipGroup;
-
 
     private ArrayList<String> ingredientList;
 
@@ -106,7 +107,7 @@ public class fragment_create_1 extends Fragment{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Object item = parent.getItemAtPosition(position);
-            Bundle args = getArguments();
+            final Bundle args = getArguments();
 
             if (item instanceof String) {
 
@@ -123,8 +124,10 @@ public class fragment_create_1 extends Fragment{
                 c.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ingredientList.remove(c.getText());
+                        selectedIngredients.remove(c.getText());
                         chipGroup.removeView(c);
+                        args.putStringArray("ingredients",
+                                selectedIngredients.toArray(new String[selectedIngredients.size()]));
                     }
                 });
                 c.setText(ingredient);

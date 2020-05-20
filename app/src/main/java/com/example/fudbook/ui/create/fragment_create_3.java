@@ -111,16 +111,19 @@ public class fragment_create_3 extends Fragment {
         }
 
         // load chip groups
-        for (String ing : recipeIngredients){
-            Chip c = new Chip(getContext());
-            c.setTextSize(16);
-            c.setPadding(3, 3, 3, 3);
-            c.setText(ing);
-            recipeChipGroup.addView(c);
+        if (recipeIngredients != null) {
+            for (String ing : recipeIngredients) {
+                Chip c = new Chip(getContext());
+                c.setTextSize(16);
+                c.setPadding(3, 3, 3, 3);
+                c.setText(ing);
+                recipeChipGroup.addView(c);
+            }
         }
 
         // load instructions
-        recipeInstructionsView.setText(recipeInstructions[0]);
+        recipeInstructionsView.setText(recipeInstructions != null ? recipeInstructions[0]
+                : "No instructions...");
     }
 
     // load bundle from last fragment
