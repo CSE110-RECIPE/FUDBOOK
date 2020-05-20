@@ -35,6 +35,7 @@ public class fragment_create_2 extends Fragment {
     private static final int UPLOAD_IMAGE_RESULT = 1;
     private Button upload_btn;
     private ImageView image;
+    private String strUri;
     Bundle args;
 
     @Override
@@ -69,6 +70,8 @@ public class fragment_create_2 extends Fragment {
         //check whether photo was uploaded successfully from gallery
         if(requestCode == UPLOAD_IMAGE_RESULT && resultCode == RESULT_OK && data != null) {
             Uri uploadedImage = data.getData();
+            //Convert uri to a string
+            strUri = uploadedImage.toString();
 
             //Fit picture to View
             Glide.with (getContext())
@@ -77,23 +80,9 @@ public class fragment_create_2 extends Fragment {
                     .centerCrop()
                     .into(image);
 
-            //make Bitmap
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uploadedImage);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                String encodeImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-
-                Log.d("fragment_create_2", encodeImage);
-                //write code to send encodedImage or bitmap in bundle
-                args.putString("recipe image", encodeImage);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //send to bundle
+            Log.d("fragment_create_2", strUri);
+            args.putString("recipe image", strUri);
         }
     }
 }
