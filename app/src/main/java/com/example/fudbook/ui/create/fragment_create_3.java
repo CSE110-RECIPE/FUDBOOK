@@ -1,5 +1,6 @@
 package com.example.fudbook.ui.create;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,11 +91,24 @@ public class fragment_create_3 extends Fragment {
         recipeTitleView.setText(recipeTitle);
 
         // load image
-        Glide.with (getContext())
-                .asBitmap()
-                .load(recipeImage)
-                .centerCrop()
-                .into(recipeImageView);
+        if(recipeImage != null) {
+            //Convert string back to Uri
+            Uri imageUri = Uri.parse(recipeImage);
+
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(imageUri)
+                    .centerCrop()
+                    .into(recipeImageView);
+        }
+        else
+        {
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(recipeImage)
+                    .centerCrop()
+                    .into(recipeImageView);
+        }
 
         // load chip groups
         for (String ing : recipeIngredients){
