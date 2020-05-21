@@ -11,7 +11,7 @@ public class Recipe{
     private String[] ingredients;
     private String[] instructions;
     private String image;
-    // private String recipeId; // this needs to be in here
+    //private String recipeId;   //add this in when we figure out what to put in Id
 
     // default constructor
     public Recipe(){
@@ -20,6 +20,7 @@ public class Recipe{
         this.ingredients = null;
         this.instructions = null;
         this.image = "";
+        //this.recipeId = "";
     }
 
     //constructor
@@ -29,6 +30,7 @@ public class Recipe{
         this.ingredients = ingr;
         this.instructions = instr;
         this.image = image;
+        //this.recipeId = recipeId;
     }
 
     //setter methods
@@ -45,14 +47,31 @@ public class Recipe{
     }
 
     public void setInstr(String[] instr) {
-        this.instructions = instr;
+        if(instr.length < 2) {
+            this.instructions = instr;
+        }
+        else
+        {
+            //combine instructions into a single string and store in array
+            String str = "";
+            for(int i=0; i< instr.length; i++)
+            {
+                str += instr[i];
+                str += "\n";
+            }
+            this.instructions = new String[]{str};
+        }
     }
 
 
     public void setImage(String image) {
         this.image = image;
     }
-
+    /*
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
+    }
+    */
     //getter methods
     public String getTitle() {
         return title;
@@ -73,4 +92,9 @@ public class Recipe{
     public String getImage() {
         return image;
     }
+    /*
+    public String getRecipeId() {
+        return recipeId;
+    }
+     */
 }
