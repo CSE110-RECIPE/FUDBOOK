@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -60,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
         // API Calls
 
+    }
 
-
-
+    public void enterSetting(View v) {
+        Intent setting_intent = new Intent(getBaseContext(), SettingActivity.class);
+        startActivity(setting_intent);
     }
 
     private FloatingActionButton.OnClickListener explore_listener =
