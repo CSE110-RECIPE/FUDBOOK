@@ -31,8 +31,8 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         ingredientList = new ArrayList<>();
-        selectedIncludeFilter = new ArrayList<>();
-        selectedExcludeFilter = new ArrayList<>();
+        selectedIncludeFilter = getIntent().getStringArrayListExtra("include_filter");
+        selectedExcludeFilter = getIntent().getStringArrayListExtra("exclude_filter");
 
         /** load ingredients list */
         try {
@@ -52,6 +52,36 @@ public class SettingActivity extends AppCompatActivity {
         includeChip = findViewById(R.id.include_filter_chip);
         excludeChip = findViewById(R.id.exclude_filter_chip);
 
+        for (String n : selectedIncludeFilter) {
+            final Chip c = new Chip(this);
+            c.setTextSize(16);
+            c.setPadding(3, 3, 3, 3);
+            c.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedIncludeFilter.remove(c.getText());
+                    includeChip.removeView(c);
+                }
+            });
+            c.setText(n);
+            includeChip.addView(c);
+        }
+
+        for (String n : selectedExcludeFilter) {
+            final Chip c = new Chip(this);
+            c.setTextSize(16);
+            c.setPadding(3, 3, 3, 3);
+            c.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedExcludeFilter.remove(c.getText());
+                    excludeChip.removeView(c);
+                }
+            });
+            c.setText(n);
+            excludeChip.addView(c);
+        }
+
         ArrayAdapter<String> iadapter = new ArrayAdapter<String>(this, R.layout.ingredient_layout, ingredientList);
         ArrayAdapter<String> eadapter = new ArrayAdapter<String>(this, R.layout.ingredient_layout, ingredientList);
 
@@ -62,8 +92,11 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     public void exitSetting(View v) {
-        Intent main_intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(main_intent);
+        Intent res = new Intent();
+        res.putStringArrayListExtra("include_filter", selectedIncludeFilter);
+        res.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+        setResult(1, res);
+        finish();
     }
 
     final AdapterView.OnItemClickListener i_auto_listener = new AdapterView.OnItemClickListener() {

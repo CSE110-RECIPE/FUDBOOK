@@ -17,6 +17,8 @@ import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 /*
         MAIN ACTIVITY:
             HOLDS ALL FRAGMENTS FOR DASHBOARD:
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton dashboard_button;
     private ImageButton bookshelf_button;
     private FloatingActionButton explore_button;
+
+    // filter
+    private ArrayList<String> selectedIncludeFilter, selectedExcludeFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +65,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         // API Calls
-
+        // Maybe will include API calls to fetch user filter, but for now nah
+        selectedIncludeFilter = new ArrayList<>();
+        selectedExcludeFilter = new ArrayList<>();
     }
 
     public void enterSetting(View v) {
         Intent setting_intent = new Intent(getBaseContext(), SettingActivity.class);
-        startActivity(setting_intent);
+        setting_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+        setting_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
+        startActivityForResult(setting_intent, 1);
     }
 
     private FloatingActionButton.OnClickListener explore_listener =
@@ -75,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // Go to explore activity
                     Intent exp_intent = new Intent(getBaseContext(), ExploreActivity.class);
+                    exp_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
+                    exp_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
                     startActivity(exp_intent);
                 }
             };
@@ -101,4 +112,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    /**
+     * Once setting is done Listener
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == 1) {
+                selectedIncludeFilter = data.getStringArrayListExtra("include_filter");
+                selectedExcludeFilter = data.getStringArrayListExtra("exclude_filter");
+
+                for (String n: selectedIncludeFilter)
+                    System.out.println(n);
+            }
+        }
+    }
 }

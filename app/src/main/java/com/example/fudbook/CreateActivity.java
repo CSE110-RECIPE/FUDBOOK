@@ -116,8 +116,7 @@ public class CreateActivity extends AppCompatActivity {
                         Button btn = (Button) findViewById(R.id.next_btn);
                         btn.setText("Next");
                     } else {
-                        Intent goToDash = new Intent(getBaseContext(), MainActivity.class);
-                        startActivity(goToDash);
+                        finish();
                     }
                 }
             };

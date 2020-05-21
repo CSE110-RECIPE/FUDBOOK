@@ -63,8 +63,7 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     public void exitExplore(View v) {
-         Intent main_intent = new Intent(getBaseContext(), MainActivity.class);
-         startActivity(main_intent);
+       finish();
     }
 
     /** DEPRECATED
