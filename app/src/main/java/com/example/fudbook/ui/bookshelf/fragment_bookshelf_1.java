@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fudbook.R;
+import com.example.fudbook.objects.Book;
 import com.example.fudbook.ui.explore.fragment_explore_recipe;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,10 @@ public class fragment_bookshelf_1 extends Fragment {
     private bookshelf_adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    // cell variables
+    ArrayList<String> titles;
+    ArrayList<String> images;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,51 +41,39 @@ public class fragment_bookshelf_1 extends Fragment {
 
         recyclerView.setHasFixedSize(true);
 
+        Bundle data = getArguments();
+
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        /**
-         * TESTING HERE
-         *
-         * Need to load "favorites"
-         * Need to load "saved for later"
-         * Need to load "my recipes"
-         *
-         */
-
-        // test load for text
-        ArrayList<String> images = new ArrayList<>(); // images
-        ArrayList<String> input = new ArrayList<>(); // titles
-//        for (int i = 0; i < 10; i++) {
-//            input.add("Test" + i);
-//        }
-
-
-        input.add("Big Green Smoothie");
-        // images
-
-        images.add("https://www.cookingclassy.com/wp-content/uploads/2019/07/green-smoothie-10.jpg");
-
-        // define an adapter
-        mAdapter = new bookshelf_adapter(getContext(), input, images);
+        // define an adapter --> send context, titles, images
+        mAdapter = new bookshelf_adapter(getContext(), titles, images);
         recyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new bookshelf_adapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-
-                // load book's recipes
-                FragmentManager fm = getParentFragmentManager();
-                fm.beginTransaction().add(R.id.bookshelf_container, new fragment_bookshelf_2()).commit();
-
-                // send array of recipes to next fragment loaded into Bundle
-            }
-        });
-
-        /**
-         * END TESTING
-         */
+        // set on click listener for each item
+        mAdapter.setOnItemClickListener(adapter_lister);
 
         return view;
     }
+
+    private void addBook(String title, String image){
+        titles.add(title);
+        images.add(image);
+    }
+
+    private bookshelf_adapter.OnItemClickListener adapter_lister = new bookshelf_adapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(int position) {
+
+            // load book's recipes
+            FragmentManager fm = getParentFragmentManager();
+            fm.beginTransaction()
+                    .add(R.id.bookshelf_container, new fragment_bookshelf_2())
+                    .commit();
+            // send array of recipes to next fragment loaded into Bundle
+        }
+    };
+
 }
+
+

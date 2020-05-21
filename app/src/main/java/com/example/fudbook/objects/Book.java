@@ -6,6 +6,11 @@ public class Book {
     private String author;
     private String[] recipeIds;
 
+    public Book(String name, String author){
+        bookName = name;
+        this.author = author;
+    }
+
     //contructor
     public Book(String name, String author, String[] ids) {
         bookName = name;

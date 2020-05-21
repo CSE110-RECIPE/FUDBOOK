@@ -29,6 +29,7 @@
             android:adjustViewBounds="true"
             android:layout_below="@id/add_photo_title"
             android:background="@drawable/dotted_rectangle"
+            android:layout_margin="15dp"
             />
 
         <Button

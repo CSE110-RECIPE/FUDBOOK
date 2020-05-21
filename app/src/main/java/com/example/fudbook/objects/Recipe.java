@@ -2,7 +2,7 @@ package com.example.fudbook.objects;
 import java.io.Serializable;
 
 /**Stores all recipe information relevant to recipe creation such as title, author, ingredients, instructions, and image.*/
-public class Recipe implements Serializable {
+public class Recipe{
     private String title;
     private String author;
     private String[] ingredients;
