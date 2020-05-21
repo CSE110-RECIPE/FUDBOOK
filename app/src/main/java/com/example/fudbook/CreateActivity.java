@@ -16,7 +16,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fudbook.objects.Recipe;
 import com.example.fudbook.ui.FragmentAdapter;
 import com.example.fudbook.ui.create.fragment_create_1;
@@ -24,8 +33,13 @@ import com.example.fudbook.ui.create.fragment_create_2;
 import com.example.fudbook.ui.create.fragment_create_3;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CreateActivity extends AppCompatActivity {
@@ -37,19 +51,21 @@ public class CreateActivity extends AppCompatActivity {
     private FragmentAdapter fragmentAdapter;
     private ViewPager2 viewPager;
 
-    private ArrayList<String> currentIngredientList, prevIngredientList;
-
     // overlaying buttons
     Button next_button;
     Button back_button; // need to implement
 
     Bundle bundle;
-    Recipe recipe;
     // For memory sharing
     SharedPreferences sharedPreferences;
     public static final String CREATE_PREFERENCES = "Create_Prefs";
 
     private Fragment create1, create2, create3;
+
+    // Volley API request field
+    private RequestQueue requestQueue;
+    private static final String API_URL = "http://10.0.2.2:3000";
+    private static final String ADMIN_UID = "Lajm0tmKJEhTHNGxVR6OsQR9rAZ2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +75,7 @@ public class CreateActivity extends AppCompatActivity {
         // log activity
         Log.d(TAG, "onCreate: Started\n");
 
-//        FragmentManager fm = getSupportFragmentManager();
-//        fm.beginTransaction().add(R.id.create_container, new fragment_create_1()).commit();
+        requestQueue = Volley.newRequestQueue(this);
 
         // for memory sharing
         sharedPreferences = getSharedPreferences(CREATE_PREFERENCES, Context.MODE_PRIVATE);
@@ -79,7 +94,6 @@ public class CreateActivity extends AppCompatActivity {
         back_button.setOnClickListener(back_listener);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -87,6 +101,7 @@ public class CreateActivity extends AppCompatActivity {
         // clear memory after destroyed
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
+        requestQueue.stop();
     }
 
     private Button.OnClickListener back_listener =
@@ -96,9 +111,11 @@ public class CreateActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // bring up last create page
                     int current = viewPager.getCurrentItem();
-                    if (current != 0)
+                    if (current != 0) {
                         setViewPager(current - 1);
-                    else {
+                        Button btn = (Button) findViewById(R.id.next_btn);
+                        btn.setText("Next");
+                    } else {
                         Intent goToDash = new Intent(getBaseContext(), MainActivity.class);
                         startActivity(goToDash);
                     }
@@ -114,6 +131,28 @@ public class CreateActivity extends AppCompatActivity {
                     int current = viewPager.getCurrentItem();
                     if(current != 3) {
                         setViewPager(current + 1);
+
+                        if (current + 1 == 2) {
+                            Button btn = (Button) findViewById(R.id.next_btn);
+                            btn.setText("Post");
+                        }
+
+                        if (current + 1 == 3) {
+                            // POST action
+
+                            String[] ingredientArr = (String []) bundle.get("ingredients");
+                            String recipeName = (String) bundle.get("recipe name");
+                            String[] steps = (String[]) bundle.get("instructions");
+
+                            if (ingredientArr != null && steps != null && ingredientArr.length > 0
+                                    && !recipeName.equals("")
+                                    && steps.length > 0)
+                                postRecipe(ingredientArr, recipeName, steps);
+                            else {
+                                Toast.makeText(getApplicationContext(), "Form not completed :(",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
                         fragmentAdapter.notifyItemChanged(2);
                     }
@@ -150,5 +189,60 @@ public class CreateActivity extends AppCompatActivity {
     public void setViewPager(int fragmentNumber){
         Log.d(TAG, "setViewPager");
         viewPager.setCurrentItem(fragmentNumber);
+    }
+
+    private void postRecipe(String[] ingredientArr, String recipeName, String[] steps) {
+
+        JSONObject recipeJSON = new JSONObject();
+        JSONArray ingredientJsonArr = new JSONArray();
+        JSONArray stepsJsonArr = new JSONArray();
+
+        try {
+            recipeJSON.accumulate("uid", ADMIN_UID);
+            recipeJSON.accumulate("name", recipeName);
+            for (String n : ingredientArr) {
+                ingredientJsonArr.put(n);
+            }
+            recipeJSON.accumulate("ingredients", ingredientJsonArr);
+            stepsJsonArr.put(steps[0]);
+            recipeJSON.accumulate("steps", stepsJsonArr);
+            recipeJSON.accumulate("author", ADMIN_UID);
+            recipeJSON.accumulate("editor", "");
+            // TODO: upload image
+            recipeJSON.accumulate("image", "https://image.com");
+        } catch (Exception e) { }
+
+        final String requestBody = recipeJSON.toString();
+
+        StringRequest sr = new StringRequest(Request.Method.POST, API_URL + "/recipe",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+                        Intent dash_intent = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(dash_intent);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+        };
+
+        requestQueue.add(sr);
     }
 }
