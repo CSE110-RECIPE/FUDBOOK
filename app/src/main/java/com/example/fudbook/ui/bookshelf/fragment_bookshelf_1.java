@@ -35,21 +35,26 @@ public class fragment_bookshelf_1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // View set up
         View view = inflater.inflate(R.layout.fragment_bookshelf_1, container, false);
-
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
-
         recyclerView.setHasFixedSize(true);
 
+        // memory set up
         Bundle data = getArguments();
+        
+        // dummy favorites 
+        String image = "https://pluspng.com/img-png/star-png-star-png-image-2156.png";
+        addBook("Favorites", image);
 
+        // set up layout manager
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         // define an adapter --> send context, titles, images
         mAdapter = new bookshelf_adapter(getContext(), titles, images);
         recyclerView.setAdapter(mAdapter);
-
         // set on click listener for each item
         mAdapter.setOnItemClickListener(adapter_lister);
 
@@ -57,6 +62,10 @@ public class fragment_bookshelf_1 extends Fragment {
     }
 
     private void addBook(String title, String image){
+        if (titles == null && images == null){
+            titles = new ArrayList<String>();
+            images = new ArrayList<String>();
+        }
         titles.add(title);
         images.add(image);
     }
@@ -65,12 +74,16 @@ public class fragment_bookshelf_1 extends Fragment {
         @Override
         public void onItemClick(int position) {
 
+            // store clicked item title into bundle
+            
             // load book's recipes
             FragmentManager fm = getParentFragmentManager();
             fm.beginTransaction()
-                    .add(R.id.bookshelf_container, new fragment_bookshelf_2())
+                    .replace(R.id.bookshelf_container, new fragment_bookshelf_2())
                     .commit();
-            // send array of recipes to next fragment loaded into Bundle
+
+            // send recipe id's
+
         }
     };
 

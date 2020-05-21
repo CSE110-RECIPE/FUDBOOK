@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment_recipe"
     android:padding="15dp"
+    android:backgroundTint="@color/white"
     >
 
     <!-- View to store all content  -->

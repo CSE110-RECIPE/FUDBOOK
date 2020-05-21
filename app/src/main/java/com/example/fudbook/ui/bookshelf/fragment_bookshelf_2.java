@@ -1,11 +1,13 @@
 package com.example.fudbook.ui.bookshelf;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,11 +28,15 @@ public class fragment_bookshelf_2 extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private FragmentManager fm;
+    private Bundle data;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookshelf_2, container, false);
+
+        data = new Bundle();
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
 
@@ -45,7 +51,6 @@ public class fragment_bookshelf_2 extends Fragment {
 
         String[] ingredients = {"Peanuts", "Eggs", "Love"};
         String[] instr = {"Put all the stuff in the stuff\n then get more stuff and put stuff in it."};
-        String[] tags = {"Peanuts"};
         String img = "https://www.seriouseats.com/images/20070401istockpbjbeauty.jpg";
 
         /**
@@ -55,7 +60,6 @@ public class fragment_bookshelf_2 extends Fragment {
                                 "Jeremiah",
                                         ingredients,
                                         instr,
-                                        tags,
                                         img);
 
         ArrayList<Recipe> recipe_cont = new ArrayList<Recipe>();
@@ -73,17 +77,23 @@ public class fragment_bookshelf_2 extends Fragment {
             public void onItemClick(int position) {
                 Toast.makeText(getContext(),"Loading Recipe",Toast.LENGTH_SHORT).show();
 
+                // load recipe
+                Recipe toSend = mAdapter.getRecipe(position);
+                data.putString("title", toSend.getTitle());
+                data.putString("author", toSend.getAuthor());
+                data.putStringArray("ingredients", toSend.getIngr());
+                data.putStringArray("instructions", toSend.getInstr());
+                data.putString("image", toSend.getImage());
+
                 // open recipe
                 fm = getParentFragmentManager();
-                fm.beginTransaction().add(R.id.bookshelf_container, new fragment_recipe()).commit();
-
-                // send specific recipe to loaded fragment into Bundle
-
-
+                Fragment f = new fragment_recipe();
+                f.setArguments(data); // send data
+                fm.beginTransaction().replace(R.id.bookshelf_container, f).commit();
             }
         });
 
-
         return view;
     }
+
 }

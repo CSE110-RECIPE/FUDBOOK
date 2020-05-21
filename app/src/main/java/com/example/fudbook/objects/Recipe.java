@@ -1,4 +1,7 @@
 package com.example.fudbook.objects;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**Stores all recipe information relevant to recipe creation such as title, author, ingredients, instructions, and image.*/
@@ -20,7 +23,7 @@ public class Recipe{
     }
 
     //constructor
-    public Recipe(String title, String author, String[] ingr, String[] instr, String[] tags, String image) {
+    public Recipe(String title, String author, String[] ingr, String[] instr, String image) {
         this.title = title;
         this.author = author;
         this.ingredients = ingr;
