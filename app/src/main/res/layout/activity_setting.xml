@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_marginLeft="20dp"
-            android:text="Ingredients"
+            android:text="Include Ingredient"
             android:textAlignment="viewStart"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp" />
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Ingredients"
+            android:text="Exclude Ingredient"
             android:layout_below="@+id/include_container"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"

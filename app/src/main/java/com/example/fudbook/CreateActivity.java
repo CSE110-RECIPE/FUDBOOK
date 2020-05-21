@@ -218,8 +218,7 @@ public class CreateActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         System.out.println(response);
-                        Intent dash_intent = new Intent(getBaseContext(), MainActivity.class);
-                        startActivity(dash_intent);
+                        finish();
                     }
                 }, new Response.ErrorListener() {
             @Override
