@@ -1,14 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment_recipe">
+    tools:context=".ui.fragment_recipe"
+    android:padding="15dp"
+    android:backgroundTint="@color/white"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- View to store all content  -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-</FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/recipe_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Recipe Name"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/user_recipe_title"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:text="User's Title"
+                android:layout_below="@id/recipe_title"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/photo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Photo"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:layout_below="@id/user_recipe_title"
+                />
+
+            <ImageView
+                android:id="@+id/recipe_photo"
+                android:layout_width="match_parent"
+                android:layout_height="375dp"
+                android:adjustViewBounds="true"
+                android:layout_below="@id/photo_title"
+                android:background="@drawable/dotted_rectangle"
+                android:layout_margin="15dp"
+                />
+
+            <Space
+                android:id="@+id/spacer_1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@id/recipe_photo"/>
+
+            <TextView
+                android:id="@+id/ingredient_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Ingredients"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:layout_below="@id/spacer_1"/>
+
+
+            <!-- enter ingredient list here -->
+
+            <HorizontalScrollView
+                android:id="@+id/chip_container"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ingredient_title"
+                android:layout_centerHorizontal="true">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <!-- Chips can be declared here, or added dynamically. -->
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <Space
+                android:id="@+id/spacer_2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@id/chip_container"/>
+
+            <TextView
+                android:id="@+id/instructions_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Instructions"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:layout_below="@id/spacer_2"/>
+
+            <TextView
+                android:id="@+id/user_instructions_input"
+                android:lines="10"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/instructions_title"
+                android:padding="10dp"
+                android:layout_centerHorizontal="true"
+                android:text="User Instructions List"
+                />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

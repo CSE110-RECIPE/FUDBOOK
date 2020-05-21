@@ -48,7 +48,7 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
             layout = v;
             book_title = (TextView) v.findViewById(R.id.book_title);
             book_icon = (ImageView) v.findViewById(R.id.icon);
-
+            
             v.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -75,14 +75,18 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
     // add selected items to the adapter
     public void add(int position, String name, String image) {
         mNames.add(position, name);
-        mImages.add(position,image);
+        
+        // if not default book
+        if (image != null)
+            mImages.add(position,image);
+            
         notifyItemInserted(position);
     }
 
     // remove selected item from the adapter
     public void remove(int position) {
         mNames.remove(position);
-        mImages.remove(position);
+        // mImages.remove(position);
         notifyItemRemoved(position);
     }
 
@@ -105,15 +109,16 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         // - replace the contents of the view with that element
 
         Log.d(TAG, "OnBindViewHolder: created");
-
         final String name = mNames.get(position);
 
-
-        Glide.with(mContext)
-                .asBitmap()
-                .load(mImages.get(position))
-                .centerCrop()
-                .into(holder.book_icon);
+        // if default image
+        if (position <= mImages.size()){
+            Glide.with(mContext)
+                    .asBitmap()
+                    .load(mImages.get(position))
+                    .centerCrop()
+                    .into(holder.book_icon);
+        }
 
         // set name of column text
         holder.book_title.setText(name);

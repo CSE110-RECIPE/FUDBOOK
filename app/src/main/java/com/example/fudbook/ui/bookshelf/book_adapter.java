@@ -65,6 +65,10 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
         notifyItemRemoved(position);
     }
 
+    public Recipe getRecipe(int position){
+        return mRecipes.get(position);
+    }
+
     /** End of test */
     // interface for listener
     public interface OnItemClickListener{

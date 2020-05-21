@@ -126,14 +126,4 @@ public class fragment_create_3 extends Fragment {
                 : "No instructions...");
     }
 
-    // load bundle from last fragment
-    private void handleBundle(Bundle bundle){
-        if (bundle != null) {
-            recipeTitle = bundle.getString("", "Recipe Title");
-            recipeImage = bundle.getString("", null); // if null, display android image or missing image
-            recipeIngredients = bundle.getStringArray("");
-            recipeInstructions = bundle.getStringArray("");
-        }
-    }
-
 }
