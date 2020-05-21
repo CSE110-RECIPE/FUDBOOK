@@ -24,9 +24,6 @@ public class ExploreActivity extends AppCompatActivity {
     // name of activity
     private static final String TAG = "ExploreActivity";
 
-    // buttons
-    private FloatingActionButton basket_button;
-
     // fragment for basket
     private Fragment FragmentBasket;
     private FragmentManager fm;
@@ -48,9 +45,6 @@ public class ExploreActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.exp_container, new fragment_explore_1()).commit();
 
-        basket_button = findViewById(R.id.basket_btn);
-        basket_button.setOnClickListener(basket_listener);
-
     }
 
     public void exitBasket(View v) {
@@ -59,20 +53,6 @@ public class ExploreActivity extends AppCompatActivity {
 
         isBasketOpen = false;
     }
-
-    // open basket
-    private FloatingActionButton.OnClickListener basket_listener =
-            new ImageButton.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    if (!isBasketOpen) {
-                        FragmentBasket = new fragment_basket();
-                        fm.beginTransaction().add(R.id.exp_container, FragmentBasket).commit();
-                        isBasketOpen = true;
-                    }
-                }
-            };
 
     public void enterBasket(View v) {
         if (!isBasketOpen) {
@@ -83,7 +63,8 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     public void exitExplore(View v) {
-
+         Intent main_intent = new Intent(getBaseContext(), MainActivity.class);
+         startActivity(main_intent);
     }
 
     /** DEPRECATED
