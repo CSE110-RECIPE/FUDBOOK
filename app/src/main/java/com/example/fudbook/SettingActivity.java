@@ -92,9 +92,10 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     public void exitSetting(View v) {
-        Intent res = new Intent();
-        res.putStringArrayListExtra("include_filter", selectedIncludeFilter);
-        res.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+        Intent res = new Intent(getBaseContext(), SettingActivity.class);
+        res.putStringArrayListExtra("include filter", selectedIncludeFilter);
+        res.putStringArrayListExtra("exclude filter", selectedExcludeFilter);
+        res.putExtra("reload request", true);
         setResult(1, res);
         finish();
     }

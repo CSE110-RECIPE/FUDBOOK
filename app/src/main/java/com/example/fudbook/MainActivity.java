@@ -40,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
     // filter
     private ArrayList<String> selectedIncludeFilter, selectedExcludeFilter;
 
+    // Intent field
+    private Intent settingIntent;
+    private Intent exploreIntent;
+
+    // Reload request
+    private boolean reloadRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,13 +75,21 @@ public class MainActivity extends AppCompatActivity {
         // Maybe will include API calls to fetch user filter, but for now nah
         selectedIncludeFilter = new ArrayList<>();
         selectedExcludeFilter = new ArrayList<>();
+
+        reloadRequest = false;
     }
 
     public void enterSetting(View v) {
-        Intent setting_intent = new Intent(getBaseContext(), SettingActivity.class);
-        setting_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
-        setting_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
-        startActivityForResult(setting_intent, 1);
+        if (settingIntent == null) {
+            Intent setting_intent = new Intent(getBaseContext(), SettingActivity.class);
+            setting_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+            setting_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
+            startActivityForResult(setting_intent, 1);
+        } else {
+            settingIntent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+            settingIntent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
+            startActivityForResult(settingIntent, 1);
+        }
     }
 
     private FloatingActionButton.OnClickListener explore_listener =
@@ -83,11 +98,21 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // Go to explore activity
-                    Intent exp_intent = new Intent(getBaseContext(), ExploreActivity.class);
-                    exp_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
-                    exp_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
-                    startActivity(exp_intent);
-
+                    if (exploreIntent == null) {
+                        Intent exp_intent = new Intent(getBaseContext(), ExploreActivity.class);
+                        exp_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
+                        exp_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+                        startActivityForResult(exp_intent, 1);
+                    } else {
+                        if (reloadRequest) {
+                            exploreIntent.putExtra("reload request", true);
+                        }
+                        exploreIntent.putStringArrayListExtra("include_filter",
+                                selectedIncludeFilter);
+                        exploreIntent.putStringArrayListExtra("exclude_filter",
+                                selectedExcludeFilter);
+                        startActivityForResult(exploreIntent, 1);
+                    }
                 }
             };
 
@@ -121,11 +146,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (resultCode == 1) {
-                selectedIncludeFilter = data.getStringArrayListExtra("include_filter");
-                selectedExcludeFilter = data.getStringArrayListExtra("exclude_filter");
+                settingIntent = data;
 
-                for (String n: selectedIncludeFilter)
-                    System.out.println(n);
+                reloadRequest = data.getBooleanExtra("reload request", false);
+                selectedIncludeFilter = data.getStringArrayListExtra("include filter");
+                selectedExcludeFilter = data.getStringArrayListExtra("exclude filter");
+            } else if (resultCode == 2) {
+                exploreIntent = data;
+
+                reloadRequest = data.getBundleExtra("progress data")
+                        .getBoolean("reload request");
             }
         }
     }
