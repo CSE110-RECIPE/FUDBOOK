@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,6 +47,7 @@ public class fragment_bookshelf_1 extends Fragment {
     private ArrayList<String> titles;
     private ArrayList<String> images;
     private ArrayList<Book> books;
+    private ArrayList<String> recipeList;
 
     // Connection
     private RequestQueue requestQueue;
@@ -56,10 +58,13 @@ public class fragment_bookshelf_1 extends Fragment {
                              Bundle savedInstanceState) {
         // View set up
         View view = inflater.inflate(R.layout.fragment_bookshelf_1, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
         recyclerView.setHasFixedSize(true);
 
         titles = new ArrayList<String>();
+        books = new ArrayList<Book>();
+
+
         // memory set up
         Bundle data = getArguments();
         
@@ -90,37 +95,36 @@ public class fragment_bookshelf_1 extends Fragment {
 
                     System.out.println(response);
 
+                    // change to typecheck
                     try {
-//                        JSONObject jo = response.getJSONObject("-M7GhOakF1BvqzTvlcgT");
-//                        System.out.println(jo.getString("name"));
-
                         // for loop to get every book title
                         Iterator<String> book_iterator = response.keys();
                         while(book_iterator.hasNext()) {
                             String key = book_iterator.next();
-                            try {
+                            //Extract information from each book
+                            JSONObject jo = response.getJSONObject(key);
+                            String author = jo.getString("author");
+                            boolean def = jo.getBoolean("default");
+                            String name = jo.getString("name");
 
-                                //Extract information from each book
-                                JSONObject jo = response.getJSONObject(key);
-                                String author = jo.getString("author");
-                                boolean def = jo.getBoolean("default");
-                                String name = jo.getString("name");
-
-                                //Extract recipes from each book
-//                                JSONObject rc = jo.getJSONObject("recipes");
-//                                Iterator<String> recipe_iterator = rc.keys();
-//                                ArrayList<String> recipeList = new ArrayList<String>();
-//                                while(recipe_iterator.hasNext()) {
-//                                    key = recipe_iterator.next();
-//                                    recipeList.add(rc.getString(key));
-//                                }
-
-                            //Book newBook = new Book(name, author, def, recipeList);
-                            //books.add(newBook);
-                                titles.add(name);
-
-                            }catch (Exception e){System.out.println("Book Error");}
+                            //Extract recipes from each book
+                            JSONArray rec_arr = jo.getJSONArray("recipes");
+                            recipeList = new ArrayList<String>();
+                            for(int i = 0; i < rec_arr.length(); i++) {
+                                recipeList.add(rec_arr.getString(i));
+                            }
+                            books.add(new Book(name, author, def, recipeList));
+                            titles.add(name);
                         }
+                        // set up layout manager
+                        layoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        // define an adapter --> send context, titles, images
+                        mAdapter = new bookshelf_adapter(getContext(), titles, images);
+                        recyclerView.setAdapter(mAdapter);
+                        // set on click listener for each item
+                        mAdapter.setOnItemClickListener(adapter_lister);
 
                     } catch (Exception e)
                     {
@@ -133,21 +137,7 @@ public class fragment_bookshelf_1 extends Fragment {
                     System.out.println(error);
                 }
             });
-
-
-
-        System.out.println(titles);
         requestQueue.add(jor);
-        // set up layout manager
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        // define an adapter --> send context, titles, images
-        mAdapter = new bookshelf_adapter(getContext(), titles, images);
-        recyclerView.setAdapter(mAdapter);
-        // set on click listener for each item
-        mAdapter.setOnItemClickListener(adapter_lister);
-
         return view;
     }
 

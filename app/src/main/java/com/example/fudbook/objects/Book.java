@@ -19,6 +19,7 @@ public class Book {
         bookName = name;
         this.author = author;
         recipeIds = ids;
+        this.def = def;
     }
 
     //setter methods
