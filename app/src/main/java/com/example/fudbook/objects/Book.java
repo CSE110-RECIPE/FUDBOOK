@@ -1,10 +1,13 @@
 package com.example.fudbook.objects;
 
+import java.util.ArrayList;
+
 /**Stores information about a book such as name, author, and recipes contained within the book.*/
 public class Book {
     private String bookName;
     private String author;
-    private String[] recipeIds;
+    private boolean def;
+    private ArrayList<String> recipeIds;
 
     public Book(String name, String author){
         bookName = name;
@@ -12,7 +15,7 @@ public class Book {
     }
 
     //contructor
-    public Book(String name, String author, String[] ids) {
+    public Book(String name, String author, boolean def, ArrayList<String> ids) {
         bookName = name;
         this.author = author;
         recipeIds = ids;
@@ -27,7 +30,9 @@ public class Book {
         this.author = author;
     }
 
-    public void setRecipes(String[] ids) {
+    public void setDefault(boolean def) {this.def = def; }
+
+    public void setRecipes(ArrayList<String> ids) {
         recipeIds = ids;
     }
 
@@ -40,7 +45,9 @@ public class Book {
         return author;
     }
 
-    public String[] getRecipes() {
+    public boolean getDefault() { return def; }
+
+    public ArrayList<String> getRecipes() {
         return recipeIds;
     }
 }

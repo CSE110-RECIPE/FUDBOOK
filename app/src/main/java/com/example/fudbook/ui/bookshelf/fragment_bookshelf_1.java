@@ -37,14 +37,15 @@ import java.util.List;
 public class fragment_bookshelf_1 extends Fragment {
 
     private static final String TAG = "fragment_bookshelf_1";
-
+    //private String recipeList;
     private RecyclerView recyclerView;
     private bookshelf_adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     // cell variables
-    ArrayList<String> titles;
-    ArrayList<String> images;
+    private ArrayList<String> titles;
+    private ArrayList<String> images;
+    private ArrayList<Book> books;
 
     // Connection
     private RequestQueue requestQueue;
@@ -53,30 +54,18 @@ public class fragment_bookshelf_1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         // View set up
         View view = inflater.inflate(R.layout.fragment_bookshelf_1, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
         recyclerView.setHasFixedSize(true);
 
+        titles = new ArrayList<String>();
         // memory set up
         Bundle data = getArguments();
         
-        // dummy favorites 
-        String image = "https://pluspng.com/img-png/star-png-star-png-image-2156.png";
-        addBook("Favorites", image);
-
-        // set up layout manager
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        // define an adapter --> send context, titles, images
-        mAdapter = new bookshelf_adapter(getContext(), titles, images);
-        recyclerView.setAdapter(mAdapter);
-        // set on click listener for each item
-        mAdapter.setOnItemClickListener(adapter_lister);
+//        // dummy favorites
+//        String image = "https://pluspng.com/img-png/star-png-star-png-image-2156.png";
+//        addBook("Favorites", image);
 
         // API request
         requestQueue = Volley.newRequestQueue(getContext());
@@ -111,13 +100,27 @@ public class fragment_bookshelf_1 extends Fragment {
                             String key = book_iterator.next();
                             try {
 
-                            } catch (Exception e) {
-                            }
+                                //Extract information from each book
+                                JSONObject jo = response.getJSONObject(key);
+                                String author = jo.getString("author");
+                                boolean def = jo.getBoolean("default");
+                                String name = jo.getString("name");
 
+                                //Extract recipes from each book
+//                                JSONObject rc = jo.getJSONObject("recipes");
+//                                Iterator<String> recipe_iterator = rc.keys();
+//                                ArrayList<String> recipeList = new ArrayList<String>();
+//                                while(recipe_iterator.hasNext()) {
+//                                    key = recipe_iterator.next();
+//                                    recipeList.add(rc.getString(key));
+//                                }
+
+                            //Book newBook = new Book(name, author, def, recipeList);
+                            //books.add(newBook);
+                                titles.add(name);
+
+                            }catch (Exception e){System.out.println("Book Error");}
                         }
-
-                        // parse object
-
 
                     } catch (Exception e)
                     {
@@ -131,19 +134,31 @@ public class fragment_bookshelf_1 extends Fragment {
                 }
             });
 
+
+
+        System.out.println(titles);
         requestQueue.add(jor);
+        // set up layout manager
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // define an adapter --> send context, titles, images
+        mAdapter = new bookshelf_adapter(getContext(), titles, images);
+        recyclerView.setAdapter(mAdapter);
+        // set on click listener for each item
+        mAdapter.setOnItemClickListener(adapter_lister);
 
         return view;
     }
 
-    private void addBook(String title, String image){
-        if (titles == null && images == null){
-            titles = new ArrayList<String>();
-            images = new ArrayList<String>();
-        }
-        titles.add(title);
-        images.add(image);
-    }
+//    private void addBook(String title, String image){
+//        if (titles == null && images == null){
+//            titles = new ArrayList<String>();
+//            images = new ArrayList<String>();
+//        }
+//        titles.add(title);
+//        images.add(image);
+//    }
 
     private bookshelf_adapter.OnItemClickListener adapter_lister = new bookshelf_adapter.OnItemClickListener() {
         @Override
