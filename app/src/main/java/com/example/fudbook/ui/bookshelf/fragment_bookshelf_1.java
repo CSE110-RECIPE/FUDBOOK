@@ -141,15 +141,6 @@ public class fragment_bookshelf_1 extends Fragment {
         return view;
     }
 
-//    private void addBook(String title, String image){
-//        if (titles == null && images == null){
-//            titles = new ArrayList<String>();
-//            images = new ArrayList<String>();
-//        }
-//        titles.add(title);
-//        images.add(image);
-//    }
-
     private bookshelf_adapter.OnItemClickListener adapter_lister = new bookshelf_adapter.OnItemClickListener() {
         @Override
         public void onItemClick(int position) {
