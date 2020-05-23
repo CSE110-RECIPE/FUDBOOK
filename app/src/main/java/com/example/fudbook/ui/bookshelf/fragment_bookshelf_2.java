@@ -49,25 +49,25 @@ public class fragment_bookshelf_2 extends Fragment {
          * Load specific book
          */
 
-        String[] ingredients = {"Peanuts", "Eggs", "Love"};
-        String[] instr = {"Put all the stuff in the stuff\n then get more stuff and put stuff in it."};
-        String img = "https://www.seriouseats.com/images/20070401istockpbjbeauty.jpg";
+//        String[] ingredients = {"Peanuts", "Eggs", "Love"};
+//        String[] instr = {"Put all the stuff in the stuff\n then get more stuff and put stuff in it."};
+//        String img = "https://www.seriouseats.com/images/20070401istockpbjbeauty.jpg";
 
-        /**
-         * test
-         */
-        Recipe test_recipe = new Recipe("test recipe",
-                                "Jeremiah",
-                                        ingredients,
-                                        instr,
-                                        img);
-
-        ArrayList<Recipe> recipe_cont = new ArrayList<Recipe>();
-        recipe_cont.add(test_recipe);
-
-        /**
-         * End test
-         */
+//        /**
+//         * test
+//         */
+//        Recipe test_recipe = new Recipe("test recipe",
+//                                "Jeremiah",
+//                                        ingredients,
+//                                        instr,
+//                                        img);
+//
+//        ArrayList<Recipe> recipe_cont = new ArrayList<Recipe>();
+//        recipe_cont.add(test_recipe);
+//
+//        /**
+//         * End test
+//         */
 
         mAdapter = new book_adapter(getContext(), recipe_cont);
         recyclerView.setAdapter(mAdapter);

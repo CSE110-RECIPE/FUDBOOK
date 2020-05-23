@@ -49,6 +49,8 @@ public class fragment_bookshelf_1 extends Fragment {
     private ArrayList<Book> books;
     private ArrayList<String> recipeList;
 
+    Bundle data;
+
     // Connection
     private RequestQueue requestQueue;
     private String API_URL = "http://10.0.2.2:3000";
@@ -66,7 +68,7 @@ public class fragment_bookshelf_1 extends Fragment {
 
 
         // memory set up
-        Bundle data = getArguments();
+        data = getArguments();
         
 //        // dummy favorites
 //        String image = "https://pluspng.com/img-png/star-png-star-png-image-2156.png";
@@ -115,6 +117,7 @@ public class fragment_bookshelf_1 extends Fragment {
                             }
                             books.add(new Book(name, author, def, recipeList));
                             titles.add(name);
+                            data.putStringArrayList("recipe id", recipeList); // key for recipe id's
                         }
                         // set up layout manager
                         layoutManager = new LinearLayoutManager(getActivity());
@@ -149,11 +152,13 @@ public class fragment_bookshelf_1 extends Fragment {
             
             // load book's recipes
             FragmentManager fm = getParentFragmentManager();
-            fm.beginTransaction()
-                    .replace(R.id.bookshelf_container, new fragment_bookshelf_2())
-                    .commit();
+            Fragment book_frag = new fragment_bookshelf_2();
 
             // send recipe id's
+            book_frag.setArguments(data);
+            fm.beginTransaction()
+                    .replace(R.id.bookshelf_container, book_frag)
+                    .commit();
 
         }
     };
