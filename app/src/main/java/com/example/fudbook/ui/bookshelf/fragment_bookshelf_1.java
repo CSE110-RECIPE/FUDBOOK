@@ -11,9 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Book;
 import com.example.fudbook.ui.explore.fragment_explore_recipe;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,6 +40,10 @@ public class fragment_bookshelf_1 extends Fragment {
     // cell variables
     ArrayList<String> titles;
     ArrayList<String> images;
+
+    // Connection
+    private RequestQueue requestQueue;
+    private String API_URL = "http://10.0.2.2:3000";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +70,38 @@ public class fragment_bookshelf_1 extends Fragment {
         recyclerView.setAdapter(mAdapter);
         // set on click listener for each item
         mAdapter.setOnItemClickListener(adapter_lister);
+
+        // API request
+        requestQueue = Volley.newRequestQueue(getContext());
+
+        JSONObject bookshelfBody = new JSONObject();
+        JSONArray bookIdArr = new JSONArray();
+
+        bookIdArr.put("-M7GhOakF1BvqzTvlcgT");
+        bookIdArr.put("-M7UtJzTbCzmwpHdpgaQ");
+
+        try {
+            bookshelfBody.accumulate("bookshelf", bookIdArr);
+        } catch (Exception e ) { }
+
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, API_URL + "/book/bookshelf",
+                bookshelfBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    System.out.println(response);
+
+                    try {
+                        response.getJSONObject("-M7GhOakF1BvqzTvlcgT");
+                    } catch (Exception e) {}
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println(error);
+                }
+            });
+
+        requestQueue.add(jor);
 
         return view;
     }
