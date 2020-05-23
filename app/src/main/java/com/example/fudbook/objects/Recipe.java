@@ -3,14 +3,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**Stores all recipe information relevant to recipe creation such as title, author, ingredients, instructions, and image.*/
 public class Recipe{
     private String title;
     private String author;
-    private String[] ingredients;
-    private String[] instructions;
+    private ArrayList<String> ingredients;
+    private ArrayList<String> instructions;
     private String image;
+    private ArrayList<String> tags;
     //private String recipeId;   //add this in when we figure out what to put in Id
 
     // default constructor
@@ -24,13 +26,17 @@ public class Recipe{
     }
 
     //constructor
-    public Recipe(String title, String author, String[] ingr, String[] instr, String image) {
+    public Recipe(String title, String author,
+                  ArrayList<String> ingr,
+                  ArrayList<String> instr,
+                  String image,
+                  ArrayList<String>tags) {
         this.title = title;
         this.author = author;
         this.ingredients = ingr;
         this.instructions = instr;
         this.image = image;
-        //this.recipeId = recipeId;
+        this.tags = tags;
     }
 
     //setter methods
@@ -42,36 +48,32 @@ public class Recipe{
         this.author = author;
     }
 
-    public void setIngr(String[] ingr) {
+    public void setIngr(ArrayList<String> ingr) {
         this.ingredients = ingr;
     }
 
-    public void setInstr(String[] instr) {
-        if(instr.length < 2) {
+    public void setInstr(ArrayList<String> instr) {
+        if(instr.size() < 2) {
             this.instructions = instr;
         }
         else
         {
             //combine instructions into a single string and store in array
             String str = "";
-            for(int i=0; i< instr.length; i++)
+            for(int i=0; i< instr.size(); i++)
             {
-                str += instr[i];
+                str += instr.get(i);
                 str += "\n";
             }
-            this.instructions = new String[]{str};
+            this.instructions = new ArrayList<String>();
+            instructions.add(str);
         }
     }
-
 
     public void setImage(String image) {
         this.image = image;
     }
-    /*
-    public void setRecipeId(String recipeId) {
-        this.recipeId = recipeId;
-    }
-    */
+
     //getter methods
     public String getTitle() {
         return title;
@@ -81,20 +83,18 @@ public class Recipe{
         return author;
     }
 
-    public String[] getIngr() {
+    public ArrayList<String> getIngr() {
         return ingredients;
     }
 
-    public String[] getInstr() {
+    public ArrayList<String> getInstr() {
         return instructions;
     }
 
     public String getImage() {
         return image;
     }
-    /*
-    public String getRecipeId() {
-        return recipeId;
-    }
-     */
+
+    public ArrayList<String> getTags() { return tags; }
+
 }

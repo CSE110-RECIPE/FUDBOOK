@@ -66,9 +66,8 @@ public class fragment_bookshelf_1 extends Fragment {
         titles = new ArrayList<String>();
         books = new ArrayList<Book>();
 
-
         // memory set up
-        data = getArguments();
+        data = new Bundle();
         
 //        // dummy favorites
 //        String image = "https://pluspng.com/img-png/star-png-star-png-image-2156.png";
@@ -114,10 +113,10 @@ public class fragment_bookshelf_1 extends Fragment {
                             recipeList = new ArrayList<String>();
                             for(int i = 0; i < rec_arr.length(); i++) {
                                 recipeList.add(rec_arr.getString(i));
+                                System.out.println("Recipe ID: " + rec_arr.getString(i));
                             }
                             books.add(new Book(name, author, def, recipeList));
                             titles.add(name);
-                            data.putStringArrayList("recipe id", recipeList); // key for recipe id's
                         }
                         // set up layout manager
                         layoutManager = new LinearLayoutManager(getActivity());
@@ -149,7 +148,8 @@ public class fragment_bookshelf_1 extends Fragment {
         public void onItemClick(int position) {
 
             // store clicked item title into bundle
-            
+            data.putStringArrayList("recipe id", books.get(position).getRecipes()); // key for recipe id's
+
             // load book's recipes
             FragmentManager fm = getParentFragmentManager();
             Fragment book_frag = new fragment_bookshelf_2();

@@ -12,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.GlideException;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Recipe;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 
 /**
@@ -48,8 +51,9 @@ public class fragment_recipe extends Fragment {
     // variables
     private String title;
     private String author;
-    private String[] ingredients;
-    private String[] instructions;
+    private ArrayList<String> ingredients;
+    private ArrayList<String> instructions;
+    private ArrayList<String> tags;
     private String image;
 
     @Override
@@ -62,8 +66,9 @@ public class fragment_recipe extends Fragment {
         /** load variables */
         title = data.getString("title");
         author = data.getString("author");
-        ingredients = data.getStringArray("ingredients");
-        instructions = data.getStringArray("instructions");
+        ingredients = data.getStringArrayList("ingredients");
+        instructions = data.getStringArrayList("instructions");
+        tags = data.getStringArrayList("tags");
         image = data.getString("image");
 
         setView(view);
@@ -89,26 +94,20 @@ public class fragment_recipe extends Fragment {
         // load image
         if(image != null) {
             //Convert string back to Uri
-            Uri imageUri = Uri.parse(image);
-
-            Glide.with(getContext())
-                    .asBitmap()
-                    .load(imageUri)
-                    .centerCrop()
-                    .into(recipeImageView);
-        }
-        else
-        {
-            Glide.with(getContext())
-                    .asBitmap()
-                    .load(image)
-                    .centerCrop()
-                    .into(recipeImageView);
+            try {
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(image)
+                        .centerCrop()
+                        .into(recipeImageView);
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }
 
         // load chip groups
-        if (ingredients != null) {
-            for (String ing : ingredients) {
+        if (tags != null) {
+            for (String ing : tags) {
                 Chip c = new Chip(getContext());
                 c.setTextSize(16);
                 c.setPadding(3, 3, 3, 3);
@@ -118,7 +117,7 @@ public class fragment_recipe extends Fragment {
         }
 
         // load instructions
-        recipeInstructionsView.setText(instructions != null ? instructions[0]
+        recipeInstructionsView.setText(instructions != null ? instructions.get(0)
                 : "No instructions...");
     }
     
