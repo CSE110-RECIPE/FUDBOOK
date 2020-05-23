@@ -112,13 +112,13 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         final String name = mNames.get(position);
 
         // if default image
-        if (position <= mImages.size()){
-            Glide.with(mContext)
-                    .asBitmap()
-                    .load(mImages.get(position))
-                    .centerCrop()
-                    .into(holder.book_icon);
-        }
+//        if (position <= mImages.size()){
+//            Glide.with(mContext)
+//                    .asBitmap()
+//                    .load(mImages.get(position))
+//                    .centerCrop()
+//                    .into(holder.book_icon);
+//        }
 
         // set name of column text
         holder.book_title.setText(name);
