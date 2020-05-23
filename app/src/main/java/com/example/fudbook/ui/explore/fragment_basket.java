@@ -106,7 +106,7 @@ public class fragment_basket extends Fragment {
         itemList = new ArrayList<Item>();
         int count = 0;
 
-        for (int i = 0; i < selectedRecipeId.size(); i++) {
+        for (int i = 0; selectedRecipeId != null && i < selectedRecipeId.size(); i++) {
             ArrayList<String> currentIngredientList = new ArrayList<>();
 
             // parse ingredient for each recipe
