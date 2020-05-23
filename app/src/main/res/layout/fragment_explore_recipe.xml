@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="580dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
+    android:paddingHorizontal="10dp"
+    android:paddingTop="5dp"
     tools:context=".ui.explore.fragment_explore_recipe">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:elevation="8dp"
+        android:elevation="5dp"
         android:divider="@android:color/background_dark"
         android:dividerHeight="0.0px"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:cardElevation="10dp"
+        app:cardElevation="1dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         >
@@ -30,10 +31,12 @@
                 android:id="@+id/explore_recipe_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:text="Recipe Name"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
                 android:textColor="@color/colorPrimary"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/explore_recipe_author"
@@ -41,18 +44,20 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="Author"
-                android:layout_below="@id/explore_recipe_name"/>
+                android:layout_below="@id/explore_recipe_name"
+                android:paddingBottom="5dp"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="380dp"
+                android:layout_height="350dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="5dp"
                 android:id="@+id/explore_recipe_image"
                 android:layout_below="@id/explore_recipe_author"/>
 
             <HorizontalScrollView
                 android:id="@+id/chip_container"
-                android:layout_width="360dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="5dp"
