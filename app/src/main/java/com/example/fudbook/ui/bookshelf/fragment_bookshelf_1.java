@@ -111,9 +111,7 @@ public class fragment_bookshelf_1 extends Fragment {
                             String key = book_iterator.next();
                             try {
                                 
-                            }catch (JSONException e){
-
-                            }
+                            }catch (Exception e){}
                         }
 
 

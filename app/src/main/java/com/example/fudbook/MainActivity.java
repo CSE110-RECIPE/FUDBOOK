@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     exp_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
                     exp_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
                     startActivity(exp_intent);
+
                 }
             };
 

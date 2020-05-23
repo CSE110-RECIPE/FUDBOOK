@@ -39,7 +39,9 @@ public class ExploreActivity extends AppCompatActivity {
     private ArrayList<String> selectedIncludeFilter, selectedExcludeFilter;
 
     // basket recipes
-    private ArrayList<String> selectedRecipeName, selectedRecipeId;
+    private ArrayList<String> selectedRecipeName, selectedRecipeId, ingredientList,
+            selectedRecipeImageURL;
+    private ArrayList<Integer> ingredientKey;
 
     // recipe list
     private JSONObject recipeList;
@@ -69,6 +71,9 @@ public class ExploreActivity extends AppCompatActivity {
         selectedExcludeFilter = getIntent().getStringArrayListExtra("exclude_filter");
         selectedRecipeName = new ArrayList<>();
         selectedRecipeId = new ArrayList<>();
+        selectedRecipeImageURL = new ArrayList<>();
+        ingredientList = new ArrayList<>();
+        ingredientKey = new ArrayList<>();
 
         JSONArray includeFilter = new JSONArray(selectedIncludeFilter);
         JSONArray excludeFilter = new JSONArray(selectedExcludeFilter);
@@ -99,7 +104,7 @@ public class ExploreActivity extends AppCompatActivity {
                                 JSONObject recipeObj = recipeList.getJSONObject(recipeIdList.get(0).toString());
 
                                 // parse ingredients
-                                JSONArray ingredientArr = recipeObj.getJSONArray("ingredients");
+                                JSONArray ingredientArr = recipeObj.getJSONArray("tags");
                                 ArrayList<String> ingredientList = new ArrayList<>();
 
                                 for (int i = 0; i < ingredientArr.length(); i++)
@@ -147,6 +152,11 @@ public class ExploreActivity extends AppCompatActivity {
         requestQueue.add(sr);
     }
 
+    public void onPause() {
+        super.onPause();
+
+    }
+
     public void exitBasket(View v) {
         if (basketFragment != null)
             fm.beginTransaction().remove(basketFragment).commit();
@@ -160,6 +170,9 @@ public class ExploreActivity extends AppCompatActivity {
             Bundle data = new Bundle();
             data.putStringArrayList("recipe ID list", selectedRecipeId);
             data.putStringArrayList("recipe name list", selectedRecipeName);
+            data.putIntegerArrayList("ingredients key", ingredientKey);
+            data.putStringArrayList("ingredients list", ingredientList);
+            data.putStringArrayList("imageURL", selectedRecipeImageURL);
             basketFragment.setArguments(data);
             fm.beginTransaction().add(R.id.exp_container, basketFragment).commit();
             isBasketOpen = true;
@@ -167,7 +180,7 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     public void exitExplore(View v) {
-       finish();
+       ;
     }
 
     public void saveInBasket(View v) {
@@ -176,6 +189,14 @@ public class ExploreActivity extends AppCompatActivity {
 
             selectedRecipeId.add(recipeIdList.get(0).toString());
             selectedRecipeName.add(recipeObj.getString("name"));
+            selectedRecipeImageURL.add(recipeObj.getString("image"));
+
+            int keySize = recipeObj.getJSONArray("tags").length();
+            ingredientKey.add(keySize);
+
+            for (int i = 0; i < keySize; i++) {
+                ingredientList.add(recipeObj.getJSONArray("tags").getString(i));
+            }
 
             recipeIdList.remove(0);
 
@@ -186,7 +207,7 @@ public class ExploreActivity extends AppCompatActivity {
                 Bundle data = new Bundle();
 
                 // parse ingredients
-                JSONArray ingredientArr = recipeObj.getJSONArray("ingredients");
+                JSONArray ingredientArr = recipeObj.getJSONArray("tags");
                 ArrayList<String> ingredientList = new ArrayList<>();
 
                 for (int i = 0; i < ingredientArr.length(); i++)
@@ -224,7 +245,7 @@ public class ExploreActivity extends AppCompatActivity {
                 Bundle data = new Bundle();
 
                 // parse ingredients
-                JSONArray ingredientArr = recipeObj.getJSONArray("ingredients");
+                JSONArray ingredientArr = recipeObj.getJSONArray("tags");
                 ArrayList<String> ingredientList = new ArrayList<>();
 
                 for (int i = 0; i < ingredientArr.length(); i++)

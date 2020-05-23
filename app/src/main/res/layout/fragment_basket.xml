@@ -45,7 +45,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/basket_container"
-            android:layout_below="@+id/basket_top">
+            android:layout_below="@+id/basket_top"
+            android:divider="@null"
+            android:dividerHeight="0dp">
 
         </ListView>
 

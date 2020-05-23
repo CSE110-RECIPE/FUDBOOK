@@ -1,29 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.explore.fragment_basket_item">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_basket_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:minHeight="80dp"
         android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            tools:layout_editor_absoluteX="7dp"
+            tools:layout_editor_absoluteY="-1dp" />
 
         <TextView
             android:id="@+id/basket_recipe_name"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/basket_item_image"
             android:paddingHorizontal="5dp"
-            android:text="Recipe Name" />
+            android:text="Recipe Name"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.022"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.114" />
 
-        <ImageView
-            android:id="@+id/basket_item_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-    </RelativeLayout>
+        <HorizontalScrollView
+            android:id="@+id/chip_container"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/basket_recipe_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/basket_recipe_name">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:paddingVertical="5dp">
+                <!--
+                                    1. User inputs
+                                    2. System stores into an array for recipe object
+                                    3. Takes value and generate chip for value
+                -->
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.714"
+            app:layout_constraintStart_toEndOf="@+id/chip_container"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.253" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
