@@ -107,14 +107,14 @@ public class fragment_bookshelf_1 extends Fragment {
 
                         // for loop to get every book title
                         Iterator<String> book_iterator = response.keys();
-                        while(book_iterator.hasNext()){
+                        while(book_iterator.hasNext()) {
                             String key = book_iterator.next();
                             try {
-                                
-                            }catch (Exception e){}
+
+                            } catch (Exception e) {
+                            }
+
                         }
-
-
 
                         // parse object
 

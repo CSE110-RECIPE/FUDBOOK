@@ -54,24 +54,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/explore_1_top"
-        android:background="#E3E3E3">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/explore_container"
+        android:background="#e3e3e3"
+        >
+        <RelativeLayout
+            android:id="@+id/exp_card_container"
             android:layout_width="match_parent"
-            android:layout_height="580dp" />
+            android:layout_height="match_parent"
+            android:layout_above="@id/recipe_buttons"
+            >
 
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/explore_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/recipe_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/explore_container"
             android:layout_alignParentBottom="true"
             >
             <RelativeLayout
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                >
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/imageView8"
@@ -82,7 +92,14 @@
                     app:maxImageSize="50dp"
                     app:tint="@color/white"
                     android:onClick="discard"
-                    android:backgroundTint="#B1B9FF"/>
+                    android:backgroundTint="#B1B9FF"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:borderWidth="0dp"
+                    android:layout_margin="8dp"
+                    />
+
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
@@ -93,11 +110,17 @@
                     android:scaleType="center"
                     android:src="@drawable/ic_happy_face"
                     android:onClick="saveInBasket"
-                    android:backgroundTint="@color/colorPrimary"/>
+                    android:backgroundTint="@color/colorPrimary"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:borderWidth="0dp"
+                    android:layout_margin="8dp"/>
             </RelativeLayout>
 
         </RelativeLayout>
-
     </RelativeLayout>
+
+
 
 </RelativeLayout>

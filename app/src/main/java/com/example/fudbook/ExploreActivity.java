@@ -180,7 +180,7 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     public void exitExplore(View v) {
-       ;
+       finish();
     }
 
     public void saveInBasket(View v) {

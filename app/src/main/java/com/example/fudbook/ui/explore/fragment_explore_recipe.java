@@ -39,7 +39,7 @@ public class fragment_explore_recipe extends Fragment {
          */
         Picasso.get().load("https:" + data.getString("imageURL"))
                 .networkPolicy(NetworkPolicy.OFFLINE)
-                .resize(300,300)
+                .fit()
                 .centerCrop()
                 .into(imageView);
 
