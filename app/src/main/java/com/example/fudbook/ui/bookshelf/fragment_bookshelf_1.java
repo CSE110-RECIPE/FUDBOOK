@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +23,20 @@ import com.example.fudbook.objects.Book;
 import com.example.fudbook.ui.explore.fragment_explore_recipe;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
 
 // View bookshelf
 public class fragment_bookshelf_1 extends Fragment {
+
+    private static final String TAG = "fragment_bookshelf_1";
 
     private RecyclerView recyclerView;
     private bookshelf_adapter mAdapter;
@@ -48,6 +53,8 @@ public class fragment_bookshelf_1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
 
         // View set up
         View view = inflater.inflate(R.layout.fragment_bookshelf_1, container, false);
@@ -77,9 +84,11 @@ public class fragment_bookshelf_1 extends Fragment {
         JSONObject bookshelfBody = new JSONObject();
         JSONArray bookIdArr = new JSONArray();
 
-        bookIdArr.put("-M7GhOakF1BvqzTvlcgT");
-        bookIdArr.put("-M7UtJzTbCzmwpHdpgaQ");
+        /** Test Recipes */
+        bookIdArr.put("-M7GhOakF1BvqzTvlcgT"); // favorite
+        bookIdArr.put("-M7UtJzTbCzmwpHdpgaQ"); // my recipes
 
+        // creates a body for request
         try {
             bookshelfBody.accumulate("bookshelf", bookIdArr);
         } catch (Exception e ) { }
@@ -88,11 +97,34 @@ public class fragment_bookshelf_1 extends Fragment {
                 bookshelfBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Log.d(TAG, "Printing response");
+
                     System.out.println(response);
 
                     try {
-                        response.getJSONObject("-M7GhOakF1BvqzTvlcgT");
-                    } catch (Exception e) {}
+//                        JSONObject jo = response.getJSONObject("-M7GhOakF1BvqzTvlcgT");
+//                        System.out.println(jo.getString("name"));
+
+                        // for loop to get every book title
+                        Iterator<String> book_iterator = response.keys();
+                        while(book_iterator.hasNext()){
+                            String key = book_iterator.next();
+                            try {
+                                
+                            }catch (JSONException e){
+
+                            }
+                        }
+
+
+
+                        // parse object
+
+
+                    } catch (Exception e)
+                    {
+                        System.out.print(e);
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
