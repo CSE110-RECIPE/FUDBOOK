@@ -20,6 +20,8 @@ import com.google.android.material.chip.ChipGroup;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class fragment_basket extends Fragment {
@@ -31,6 +33,8 @@ public class fragment_basket extends Fragment {
     private ArrayList<Integer> ingredientKey;
 
     private ArrayList<Item> itemList;
+
+    private ItemAdapter adapter;
 
     public class Item {
         private String name;
@@ -67,26 +71,27 @@ public class fragment_basket extends Fragment {
             Item item = getItem(position);
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_basket_item, parent, false);
+                ChipGroup chipGroup = convertView.findViewById(R.id.chip_group);
+                ImageView imageView = convertView.findViewById(R.id.imageView);
+
+                ArrayList<String> ingredientList = item.getIngredientList();
+
+                for (int i = 0; i < ingredientList.size(); i++) {
+                    Chip c = new Chip(convertView.getContext());
+                    c.setText(ingredientList.get(i));
+                    chipGroup.addView(c);
+                }
+
+                Picasso.get().load("https:" + item.getImageURL()).networkPolicy(NetworkPolicy.OFFLINE)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+
+                TextView nameTV = convertView.findViewById(R.id.basket_recipe_name);
+                TextView variable = convertView.findViewById(R.id.basket_item_var);
+                variable.setId(position);
+                nameTV.setText(item.getName());
             }
-
-            ChipGroup chipGroup = convertView.findViewById(R.id.chip_group);
-            ImageView imageView = convertView.findViewById(R.id.imageView);
-
-            ArrayList<String> ingredientList = item.getIngredientList();
-
-            for (int i = 0; i < ingredientList.size(); i++) {
-                Chip c = new Chip(convertView.getContext());
-                c.setText(ingredientList.get(i));
-                chipGroup.addView(c);
-            }
-
-            Picasso.get().load("https:" + item.getImageURL()).networkPolicy(NetworkPolicy.OFFLINE)
-                    .fit()
-                    .centerCrop()
-                    .into(imageView);
-
-            TextView nameTV = convertView.findViewById(R.id.basket_recipe_name);
-            nameTV.setText(item.getName());
             return convertView;
         }
     }
@@ -122,7 +127,7 @@ public class fragment_basket extends Fragment {
                     ,selectedRecipeImage.get(i), currentIngredientList));
         }
 
-        ItemAdapter adapter = new ItemAdapter(getContext(), itemList);
+        adapter = new ItemAdapter(getContext(), itemList);
 
         ListView list = view.findViewById(R.id.basket_container);
         list.setAdapter(adapter);

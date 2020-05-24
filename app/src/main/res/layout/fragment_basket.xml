@@ -11,7 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:id="@+id/basket_top"
@@ -28,26 +29,26 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/basket_exit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/basket_exit_btn"
-                android:text="X"
-                android:textSize="20sp"
                 android:layout_marginLeft="15dp"
-                android:padding="3dp"
+                android:clickable="true"
                 android:onClick="exitBasket"
-                android:clickable="true"/>
+                android:padding="3dp"
+                android:text="X"
+                android:textSize="20sp" />
 
         </RelativeLayout>
 
         <ListView
+            android:id="@+id/basket_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/basket_container"
             android:layout_below="@+id/basket_top"
             android:divider="@null"
-            android:dividerHeight="0dp">
+            android:dividerHeight="0dp"
+            android:orientation="vertical">
 
         </ListView>
 

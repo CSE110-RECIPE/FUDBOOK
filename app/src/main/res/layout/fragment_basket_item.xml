@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingHorizontal="5dp"
+            android:layout_marginLeft="10dp"
             android:text="Recipe Name"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,11 +39,12 @@
 
         <HorizontalScrollView
             android:id="@+id/chip_container"
-            android:layout_width="250dp"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/basket_recipe_name"
             android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="5dp"
+            android:paddingHorizontal="5dp"
+            android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/basket_recipe_name">
@@ -63,16 +65,18 @@
         </HorizontalScrollView>
 
         <TextView
+            android:id="@+id/basket_item_var"
+            android:onClick="basketFunctionKey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="X"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.714"
+            app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toEndOf="@+id/chip_container"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.253" />
+            app:layout_constraintVertical_bias="0.507" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.fudbook;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class ExploreActivity extends AppCompatActivity {
     private static final String TAG = "ExploreActivity";
 
     // fragment for basket
-    private Fragment basketFragment;
+    private fragment_basket basketFragment;
     private FragmentManager fm;
 
     // checks if basket is open
@@ -230,6 +231,38 @@ public class ExploreActivity extends AppCompatActivity {
         setResult(2, exploreIntent);
         requestQueue.stop();
         finish();
+    }
+
+
+    public void basketFunctionKey(View v) {
+        Bundle data = new Bundle();
+        int idx = v.getId();
+        selectedRecipeId.remove(idx);
+        selectedRecipeName.remove(idx);
+        selectedRecipeImageURL.remove(idx);
+        int key = ingredientKey.remove(idx);
+
+        int count = 0;
+
+        for (int i = 0; i < idx; i++) {
+            count += ingredientKey.get(i);
+        }
+
+        for (int i = 0; i < key; i++) {
+            ingredientList.remove(count);
+        }
+
+        data.putStringArrayList("recipe ID list", selectedRecipeId);
+        data.putStringArrayList("recipe name list", selectedRecipeName);
+        data.putIntegerArrayList("ingredients key", ingredientKey);
+        data.putStringArrayList("ingredients list", ingredientList);
+        data.putStringArrayList("imageURL", selectedRecipeImageURL);
+
+        FragmentTransaction ft = fm.beginTransaction().remove(basketFragment);
+
+        basketFragment = new fragment_basket();
+        basketFragment.setArguments(data);
+        ft.add(R.id.exp_container, basketFragment).commit();
     }
 
     public void saveInBasket(View v) {
