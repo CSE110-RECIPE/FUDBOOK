@@ -23,6 +23,7 @@ import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
     private String personal;
     private ArrayList<String> other;
 
+    // user info
+    private FirebaseAuth auth;
+
     // API request
     private RequestQueue requestQueue;
     private static final String API_URL = "http://10.0.2.2:3000";
@@ -88,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         bookshelf_button.setOnClickListener(bookshelf_listener);
         explore_button.setOnClickListener(explore_listener);
 
+        // user setup
+        auth = FirebaseAuth.getInstance();
 
         // API Calls
         // Maybe will include API calls to fetch user filter, but for now nah
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         JSONObject userJSON = new JSONObject();
 
         try {
-            userJSON.accumulate("uid", "Lajm0tmKJEhTHNGxVR6OsQR9rAZ2");
+            userJSON.accumulate("uid", auth.getCurrentUser().getUid());
         } catch (Exception e) {}
 
         JsonObjectRequest joR = new JsonObjectRequest(Request.Method.POST, API_URL + "/book/user",
