@@ -13,10 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 /*
@@ -47,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
     // Reload request
     private boolean reloadRequest;
 
+    // user books id
+    private String favorite;
+    private String personal;
+    private ArrayList<String> other;
+
+    // API request
+    private RequestQueue requestQueue;
+    private static final String API_URL = "http://10.0.2.2:3000";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -75,6 +93,48 @@ public class MainActivity extends AppCompatActivity {
         // Maybe will include API calls to fetch user filter, but for now nah
         selectedIncludeFilter = new ArrayList<>();
         selectedExcludeFilter = new ArrayList<>();
+
+        requestQueue = Volley.newRequestQueue(getBaseContext());
+
+        JSONObject userJSON = new JSONObject();
+
+        try {
+            userJSON.accumulate("uid", "Lajm0tmKJEhTHNGxVR6OsQR9rAZ2");
+        } catch (Exception e) {}
+
+        JsonObjectRequest joR = new JsonObjectRequest(Request.Method.POST, API_URL + "/book/user",
+                userJSON,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+
+                        try {
+                            favorite = response.getString("favorite");
+
+                            personal = response.getString("personal");
+
+                            other = new ArrayList<>();
+
+                            // parse other books
+                            JSONObject otherJSON = response.getJSONObject("other");
+
+                            JSONArray bookIdArray = otherJSON.names();
+
+                            for (int i = 0; i < bookIdArray.length(); i++)
+                                other.add(bookIdArray.getString(i));
+
+                        } catch (Exception e) {}
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error);
+                    }
+                });
+
+        requestQueue.add(joR);
 
         reloadRequest = false;
     }
