@@ -4,50 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.bookshelf.fragment_bookshelf_1"
-    android:paddingTop="15dp"
-    android:paddingHorizontal="15dp"
     android:paddingBottom="80dp"
     android:background="@color/white">
 
-    <!-- View to store all content  -->
     <RelativeLayout
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/title_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            >
+        android:layout_height="?actionBarSize"
+        android:padding="5dp"
+        android:paddingHorizontal="10dp"
+        >
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/book_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                >
-                <TextView
-                    android:id="@+id/book_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/open_sans"
-                    android:text="Bookshelf 2"
-                    android:textColor="@color/darkText"
-                    android:textSize="16sp" />
+                android:fontFamily="@font/open_sans"
+                android:text="Book Title"
+                android:textColor="@color/darkText"
+                android:textSize="16sp" />
 
-            </RelativeLayout>
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="@color/darkGray"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"/>
 
-
-            
         </RelativeLayout>
 
-        <!-- Need list view -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/books_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/title_layout"/>
 
-    </RelativeLayout>
+    <!-- Need list view -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/books_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_layout"/>
+
 
 </RelativeLayout>
