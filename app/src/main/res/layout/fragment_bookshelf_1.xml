@@ -3,46 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.bookshelf.fragment_bookshelf_1"
-    android:paddingTop="15dp"
-    android:paddingHorizontal="15dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    tools:context=".ui.bookshelf.fragment_bookshelf_1">
 
     <!-- View to store all content  -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/title_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_height="?actionBarSize"
+            android:padding="5dp"
+            android:paddingHorizontal="10dp"
             >
-
-            <RelativeLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                >
+                android:fontFamily="@font/open_sans"
+                android:text="Bookshelf"
+                android:textColor="@color/darkText"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/open_sans"
-                    android:text="Bookshelf"
-                    android:textColor="@color/darkText"
-                    android:textSize="16sp" />
+            <Button
+                android:id="@+id/new_book_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="+ New" />
 
-                <Button
-                    android:id="@+id/new_book_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="+ New" />
-
-            </RelativeLayout>
-            
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="@color/darkGray"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
 
         <!-- Need list view -->
@@ -51,7 +47,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/title_layout"/>
-
-    </RelativeLayout>
 
 </RelativeLayout>
