@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private static final String API_URL = "http://10.0.2.2:3000";
 
+    // account guard
+    private boolean isLoggedin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -103,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getBaseContext());
 
         JSONObject userJSON = new JSONObject();
+
+        // Account guards
+        isLoggedin = false;
 
         try {
             userJSON.accumulate("uid", auth.getCurrentUser().getUid());
@@ -149,7 +155,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null)
-                    finish();
+                    if (isLoggedin)
+                        finish();
+                    else
+                        isLoggedin = true;
             }
         });
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.explore.fragment_basket"
-    android:paddingTop="15dp"
+    android:paddingTop="5dp"
     android:background="#FFFFFF">
 
     <RelativeLayout
@@ -36,8 +36,17 @@
                 android:clickable="true"
                 android:onClick="exitBasket"
                 android:padding="3dp"
+                android:layout_centerVertical="true"
                 android:text="X"
                 android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="+ Add"
+                android:layout_marginRight="10dp"/>
 
         </RelativeLayout>
 
