@@ -3,9 +3,7 @@ package com.example.fudbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -21,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -69,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private static final String API_URL = "http://10.0.2.2:3000";
 
+    // Bundle to send to bookshelf
+    private Bundle book_bundle;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -81,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.container, new fragment_dashboard()).commit();
+
+        // initiate bundle
+        book_bundle = new Bundle();
 
         // button set up
         dashboard_button = findViewById(R.id.dash_btn);
@@ -116,19 +120,23 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println(response);
 
                         try {
+                            // get book ids
                             favorite = response.getString("favorite");
-
                             personal = response.getString("personal");
-
                             other = new ArrayList<>();
 
                             // parse other books
                             JSONObject otherJSON = response.getJSONObject("other");
-
                             JSONArray bookIdArray = otherJSON.names();
 
+                            // get other books
                             for (int i = 0; i < bookIdArray.length(); i++)
                                 other.add(bookIdArray.getString(i));
+
+                            // send book ids to bundle
+                            book_bundle.putString("favorite book", favorite);
+                            book_bundle.putString("personal book", personal);
+                            book_bundle.putStringArrayList("other books", other);
 
                         } catch (Exception e) {}
                     }
@@ -207,9 +215,13 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
+                    // initiate bundle into fragment
+                    Fragment frag_bookshelf = new fragment_bookshelf();
+                    frag_bookshelf.setArguments(book_bundle);
+
                     // bring up bookshelf
                     FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.container, new fragment_bookshelf()).commit();
+                    fm.beginTransaction().replace(R.id.container, frag_bookshelf).commit();
                 }
             };
 

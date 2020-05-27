@@ -1,17 +1,15 @@
 package com.example.fudbook.ui.bookshelf;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,16 +19,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Book;
-import com.example.fudbook.ui.explore.fragment_explore_recipe;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 
 
@@ -49,11 +43,14 @@ public class fragment_bookshelf_1 extends Fragment {
     private ArrayList<Book> books;
     private ArrayList<String> recipeList;
 
-    Bundle data;
+    private Bundle data;
+    private Bundle book_bundle;
 
     // Connection
     private RequestQueue requestQueue;
     private String API_URL = "http://10.0.2.2:3000";
+
+    //
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,22 +65,27 @@ public class fragment_bookshelf_1 extends Fragment {
 
         // memory set up
         data = new Bundle();
-        
-//        // dummy favorites
-//        String image = "https://pluspng.com/img-png/star-png-star-png-image-2156.png";
-//        addBook("Favorites", image);
-
-        // API request
-        requestQueue = Volley.newRequestQueue(getContext());
+        book_bundle = getArguments();
 
         JSONObject bookshelfBody = new JSONObject();
         JSONArray bookIdArr = new JSONArray();
 
-        /** Test Recipes */
-        bookIdArr.put("-M7GhOakF1BvqzTvlcgT"); // favorite
-        bookIdArr.put("-M7UtJzTbCzmwpHdpgaQ"); // my recipes
+        // API request
+        requestQueue = Volley.newRequestQueue(getContext());
 
-        // creates a body for request
+        // place favorite book id
+        bookIdArr.put(book_bundle.getString("favorite book"));
+
+        // place personal book id
+        bookIdArr.put(book_bundle.getString("personal book"));
+
+        // other book ids
+        ArrayList<String> other_books = book_bundle.getStringArrayList("other books");
+        for (String str : other_books){
+            bookIdArr.put(str);
+        }
+
+        // create a body for request
         try {
             bookshelfBody.accumulate("bookshelf", bookIdArr);
         } catch (Exception e ) { }
