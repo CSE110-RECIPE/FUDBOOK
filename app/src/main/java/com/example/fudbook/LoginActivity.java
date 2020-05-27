@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,8 +43,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
-
-
     }
 
 
@@ -71,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 AuthCredential credit = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signInWithCredential(credit);
-                System.out.println(auth.getCurrentUser().getUid());
             } catch (ApiException e) {
                 System.out.println(e);
             }

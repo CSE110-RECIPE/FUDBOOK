@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class SettingActivity extends AppCompatActivity {
     private AutoCompleteTextView includeAView, excludeAView;
 
     private ChipGroup includeChip, excludeChip;
+
+    private Button logOutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,16 @@ public class SettingActivity extends AppCompatActivity {
         excludeAView = findViewById(R.id.exclude_filter_input);
         includeChip = findViewById(R.id.include_filter_chip);
         excludeChip = findViewById(R.id.exclude_filter_chip);
+        logOutBtn = findViewById(R.id.log_out);
+
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
+                finish();
+            }
+        });
 
         for (String n : selectedIncludeFilter) {
             final Chip c = new Chip(this);

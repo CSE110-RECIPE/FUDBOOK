@@ -143,6 +143,15 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(joR);
 
         reloadRequest = false;
+
+        // Listening for sign out
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null)
+                    finish();
+            }
+        });
     }
 
     public void enterSetting(View v) {
