@@ -1,13 +1,12 @@
 package com.example.fudbook.ui.bookshelf;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.fudbook.R;
 
@@ -19,7 +18,11 @@ public class fragment_bookshelf extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bookshelf, container, false);
 
+        Bundle bundle = getArguments();
+
         FragmentManager fm = getChildFragmentManager();
+        Fragment bookshelf = new fragment_bookshelf_1();
+        bookshelf.setArguments(bundle);
         fm.beginTransaction().add(R.id.bookshelf_container, new fragment_bookshelf_1()).commit();
 
         return view;
