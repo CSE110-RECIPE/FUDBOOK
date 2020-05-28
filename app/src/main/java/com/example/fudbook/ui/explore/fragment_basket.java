@@ -10,16 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fudbook.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -35,6 +45,14 @@ public class fragment_basket extends Fragment {
     private ArrayList<Item> itemList;
 
     private ItemAdapter adapter;
+
+    private RequestQueue requestQueue;
+
+    private String favorite;
+
+    private boolean done;
+
+    private static final String API_URL = "http://10.0.2.2:3000";
 
     public class Item {
         private String name;
@@ -103,14 +121,63 @@ public class fragment_basket extends Fragment {
         View view = inflater.inflate(R.layout.fragment_basket, container, false);
         Bundle data = getArguments();
 
+        // Initiate Request queue;
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.start();
+
+        // Button view
+        Button addBtn = view.findViewById(R.id.add_btn);
+
+        // Button Listener
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JSONObject dataJSON = new JSONObject();
+                JSONArray recipesJSON = new JSONArray(selectedRecipeId);
+
+                try {
+                    dataJSON.accumulate("book_id", favorite);
+                    dataJSON.accumulate("recipes", recipesJSON);
+                } catch (Exception e) {}
+
+                JsonObjectRequest joR = new JsonObjectRequest(Request.Method.POST,
+                        API_URL + "/book/recipe",
+                        dataJSON,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                System.out.println("Added to favorite");
+                                adapter.clear();
+                                done = true;
+                                Bundle data = new Bundle();
+                                data.putBoolean("done", done);
+                                getParentFragmentManager().setFragmentResult("isClear", data);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                System.out.println(error);
+                            }
+                        });
+
+                requestQueue.add(joR);
+            }
+        });
+
+        // Initialize field
         selectedRecipeId = data.getStringArrayList("recipe ID list");
         selectedRecipeName = data.getStringArrayList("recipe name list");
         selectedRecipeImage = data.getStringArrayList("imageURL");
         ingredientKey = data.getIntegerArrayList("ingredients key");
         ingredientList = data.getStringArrayList("ingredients list");
         itemList = new ArrayList<Item>();
+        favorite = data.getString("favorite");
+        done = false;
+
         int count = 0;
 
+        // Parse ArrayList to Items
         for (int i = 0; selectedRecipeId != null && i < selectedRecipeId.size(); i++) {
             ArrayList<String> currentIngredientList = new ArrayList<>();
 
@@ -132,5 +199,11 @@ public class fragment_basket extends Fragment {
         ListView list = view.findViewById(R.id.basket_container);
         list.setAdapter(adapter);
         return view;
+    }
+
+    public void onStop() {
+        super.onStop();
+
+        requestQueue.stop();
     }
 }

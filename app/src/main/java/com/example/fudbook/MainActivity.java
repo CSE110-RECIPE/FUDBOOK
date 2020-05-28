@@ -207,11 +207,13 @@ public class MainActivity extends AppCompatActivity {
                         Intent exp_intent = new Intent(getBaseContext(), ExploreActivity.class);
                         exp_intent.putStringArrayListExtra("include_filter", selectedIncludeFilter);
                         exp_intent.putStringArrayListExtra("exclude_filter", selectedExcludeFilter);
+                        exp_intent.putExtra("favorite", favorite);
                         startActivityForResult(exp_intent, 1);
                     } else {
                         if (reloadRequest) {
                             exploreIntent.putExtra("reload request", true);
                         }
+                        exploreIntent.putExtra("favorite", favorite);
                         exploreIntent.putStringArrayListExtra("include_filter",
                                 selectedIncludeFilter);
                         exploreIntent.putStringArrayListExtra("exclude_filter",

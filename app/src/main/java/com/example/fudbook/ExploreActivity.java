@@ -1,9 +1,12 @@
 package com.example.fudbook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,6 +54,9 @@ public class ExploreActivity extends AppCompatActivity {
             selectedRecipeImageURL;
     private ArrayList<Integer> ingredientKey;
 
+    // User's favorite book ID
+    private String favorite;
+
     // recipe list
     private JSONObject recipeList;
     private JSONArray recipeIdList;
@@ -61,7 +67,6 @@ public class ExploreActivity extends AppCompatActivity {
     private int recipeProgressCount;
     private boolean reloadRequest;
     private static final String API_URL = "http://10.0.2.2:3000";
-    private static final String ADMIN_UID = "Lajm0tmKJEhTHNGxVR6OsQR9rAZ2";
 
     // On Starting Explore Activity
     @Override
@@ -72,8 +77,13 @@ public class ExploreActivity extends AppCompatActivity {
         // log activity
         Log.d(TAG, "onCreate: Started\n");
 
+        // Initialize field
         isBasketOpen = false;
+        favorite = getIntent().getStringExtra("favorite");
 
+        System.out.println(favorite);
+
+        // cache set up
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
 
         // Set up the network to use HttpURLConnection as the HTTP client.
@@ -130,8 +140,6 @@ public class ExploreActivity extends AppCompatActivity {
                     Fragment currentRecipeFrag = new fragment_explore_1();
                     Bundle data = new Bundle();
 
-                    System.out.println(response);
-                    System.out.println(recipeIdList);
                     if (isLoaded && !reloadRequest) {
                         for (int i = 0; i < recipeProgressCount; i++) {
                             recipeIdList.remove(0);
@@ -208,8 +216,24 @@ public class ExploreActivity extends AppCompatActivity {
             data.putIntegerArrayList("ingredients key", ingredientKey);
             data.putStringArrayList("ingredients list", ingredientList);
             data.putStringArrayList("imageURL", selectedRecipeImageURL);
+            data.putString("favorite", favorite);
             basketFragment.setArguments(data);
+            fm.setFragmentResultListener("isClear", basketFragment, new FragmentResultListener() {
+                @Override
+                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                    if (requestKey == "isClear") {
+                        if (result.getBoolean("done")) {
+                            selectedRecipeId.clear();
+                            selectedRecipeImageURL.clear();
+                            selectedRecipeName.clear();
+                            ingredientKey.clear();
+                            ingredientList.clear();
+                        }
+                    }
+                }
+            });
             fm.beginTransaction().add(R.id.exp_container, basketFragment).commit();
+
             isBasketOpen = true;
         }
     }
@@ -262,6 +286,20 @@ public class ExploreActivity extends AppCompatActivity {
 
         basketFragment = new fragment_basket();
         basketFragment.setArguments(data);
+        fm.setFragmentResultListener("isClear", basketFragment, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                if (requestKey == "isClear") {
+                    if (result.getBoolean("done")) {
+                        selectedRecipeId.clear();
+                        selectedRecipeImageURL.clear();
+                        selectedRecipeName.clear();
+                        ingredientKey.clear();
+                        ingredientList.clear();
+                    }
+                }
+            }
+        });
         ft.add(R.id.exp_container, basketFragment).commit();
     }
 
