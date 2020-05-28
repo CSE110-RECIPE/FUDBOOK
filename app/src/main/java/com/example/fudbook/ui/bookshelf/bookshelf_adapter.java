@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fudbook.R;
+import com.example.fudbook.objects.Book;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
 
     private ArrayList<String> mNames; // store bookshelf titles
     private ArrayList<String> mImages; // store images
+    private ArrayList<Book> mBooks;
     private Context mContext;
     OnItemClickListener mListener;
 
@@ -64,18 +66,19 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
     }
 
     // Constructor for the adapter
-    public bookshelf_adapter(Context newcontext, ArrayList<String> newnames, ArrayList<String> newimages) {
+    public bookshelf_adapter(Context newcontext, ArrayList<String> newnames, ArrayList<String> newimages, ArrayList<Book> books) {
 
         mNames = newnames;
         mImages = newimages;
+        mBooks = books;
         mContext = newcontext;
 
     }
 
     // add selected items to the adapter
-    public void add(int position, String name, String image) {
+    public void add(int position, String name, String image, Book book) {
         mNames.add(position, name);
-        
+        mBooks.add(position, book);
         // if not default book
         if (image != null)
             mImages.add(position,image);
@@ -86,9 +89,12 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
     // remove selected item from the adapter
     public void remove(int position) {
         mNames.remove(position);
+        mBooks.remove(position);
         // mImages.remove(position);
         notifyItemRemoved(position);
     }
+
+    public Book getBook(int position){ return mBooks.get(position);}
 
     // creates cell
     @Override

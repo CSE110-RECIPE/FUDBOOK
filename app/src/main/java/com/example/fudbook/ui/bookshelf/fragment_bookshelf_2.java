@@ -59,6 +59,8 @@ public class fragment_bookshelf_2 extends Fragment {
 
 
         recipe_id = data.getStringArrayList("recipe id"); //
+
+        System.out.println(recipe_id);
         recipe_list = new ArrayList<Recipe>();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
@@ -89,6 +91,7 @@ public class fragment_bookshelf_2 extends Fragment {
                 bookBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                System.out.println("Adding recipes");
                 System.out.println(response);
                 try {
                     Iterator<String> recipe_iterator = response.keys();
