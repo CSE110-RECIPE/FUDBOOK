@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     // API request
+    private JSONObject userJSON;
+    private JsonObjectRequest joR;
     private RequestQueue requestQueue;
     private static final String API_URL = "http://10.0.2.2:3000";
 
@@ -87,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.container, new fragment_dashboard()).commit();
+
+        reloadRequest = false;
 
         // initiate bundle
         book_bundle = new Bundle();
@@ -111,72 +115,71 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(getBaseContext());
 
-        JSONObject userJSON = new JSONObject();
-
         // Account guards
         isLoggedin = false;
 
-        System.out.println(auth.getCurrentUser());
+        userJSON = new JSONObject();
 
-        try {
-            userJSON.accumulate("uid", auth.getCurrentUser().getUid());
-        } catch (Exception e) {System.out.println(e);}
-
-        JsonObjectRequest joR = new JsonObjectRequest(Request.Method.POST, API_URL + "/book/user",
-                userJSON,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, "It's working!");
-                        System.out.println(response);
-
-                        try {
-                            System.out.println("building bundle");
-                            // get book ids
-                            favorite = response.getString("favorite");
-                            personal = response.getString("personal");
-
-                            // send book ids to bundle
-                            book_bundle.putString("favorite book", favorite);
-                            book_bundle.putString("personal book", personal);
-
-                            // parse other books
-                            try {
-                                JSONObject otherJSON = response.getJSONObject("other");
-                                other = new ArrayList<>();
-                                JSONArray bookIdArray = otherJSON.names();
-
-                                // get other books
-                                for (int i = 0; i < bookIdArray.length(); i++)
-                                    other.add(bookIdArray.getString(i));
-                            }catch(Exception e){
-                                System.out.println("No other books found");
-                                book_bundle.putStringArrayList("other books", other);
-                            }
-
-                        } catch (Exception e) {System.out.println(e);}
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println(error);
-                    }
-                });
-
-        requestQueue.add(joR);
-
-        reloadRequest = false;
-
-        // Listening for sign out
+        // Listening auth state
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null)
+                if (firebaseAuth.getCurrentUser() == null) {
                     if (isLoggedin)
                         finish();
-                    else
-                        isLoggedin = true;
+                } else {
+                    try {
+                        userJSON.accumulate("uid", firebaseAuth.getCurrentUser().getUid());
+                        System.out.println(firebaseAuth.getCurrentUser().getUid());
+
+                        joR = new JsonObjectRequest(Request.Method.POST, API_URL + "/book/user",
+                                userJSON,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        Log.d(TAG, "It's working!");
+                                        System.out.println(response);
+
+                                        try {
+                                            System.out.println("building bundle");
+                                            // get book ids
+                                            favorite = response.getString("favorite");
+                                            personal = response.getString("personal");
+
+                                            // send book ids to bundle
+                                            book_bundle.putString("favorite book", favorite);
+                                            book_bundle.putString("personal book", personal);
+
+                                            // parse other books
+                                            try {
+                                                JSONObject otherJSON = response.getJSONObject("other");
+                                                other = new ArrayList<>();
+                                                JSONArray bookIdArray = otherJSON.names();
+
+                                                // get other books
+                                                for (int i = 0; i < bookIdArray.length(); i++)
+                                                    other.add(bookIdArray.getString(i));
+                                            }catch(Exception e){
+                                                System.out.println("No other books found");
+                                                book_bundle.putStringArrayList("other books", other);
+                                            }
+
+                                        } catch (Exception e) {System.out.println(e);}
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        System.out.println(error);
+                                    }
+                                });
+
+                        requestQueue.add(joR);
+
+                    } catch (Exception e) {System.out.println(e);}
+                }
+
+                isLoggedin = true;
             }
         });
     }
