@@ -116,17 +116,13 @@ public class fragment_bookshelf_1 extends Fragment {
                                 JSONObject rec_obj = jo.getJSONObject("recipes");
                                 Iterator<String> recipe_iterator = rec_obj.keys();
                                 recipeList = new ArrayList<String>();
+
                                 while(recipe_iterator.hasNext()) {
                                     String rec_key = recipe_iterator.next();
                                     System.out.println("Recipe ID: " + rec_key);
                                     recipeList.add(rec_key);
                                 }
 
-
-//                                for (int i = 0; i < rec_arr.length(); i++) {
-//                                    recipeList.add(rec_arr.getString(i));
-//
-//                                }
                                 books.add(new Book(name, author, def, recipeList));
                             }catch(Exception e){
                                 System.out.println(e);

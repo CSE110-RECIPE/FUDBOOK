@@ -17,6 +17,8 @@ import com.example.fudbook.R;
 import com.example.fudbook.objects.Recipe;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -91,19 +93,24 @@ public class fragment_recipe extends Fragment {
         // load title
         recipeTitleView.setText(title);
 
-        // load image
-        if(image != null) {
-            //Convert string back to Uri
-            try {
-                Glide.with(getContext())
-                        .asBitmap()
-                        .load(image)
-                        .centerCrop()
-                        .into(recipeImageView);
-            }catch(Exception e){
-                System.out.println(e);
-            }
-        }
+//        // load image
+//        if(image != null) {
+//            //Convert string back to Uri
+//            try {
+//                Glide.with(getContext())
+//                        .asBitmap()
+//                        .load(image)
+//                        .centerCrop()
+//                        .into(recipeImageView);
+//            }catch(Exception e){
+//                System.out.println(e);
+//            }
+//        }
+        Picasso.get().load("https:" + image)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .fit()
+                .centerCrop()
+                .into(recipeImageView);
 
         // load chip groups
         if (tags != null) {
