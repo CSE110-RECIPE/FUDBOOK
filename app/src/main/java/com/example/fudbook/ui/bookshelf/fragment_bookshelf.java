@@ -19,11 +19,12 @@ public class fragment_bookshelf extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bookshelf, container, false);
 
         Bundle bundle = getArguments();
+        System.out.println(bundle.getString("favorite book"));
 
         FragmentManager fm = getChildFragmentManager();
         Fragment bookshelf = new fragment_bookshelf_1();
         bookshelf.setArguments(bundle);
-        fm.beginTransaction().add(R.id.bookshelf_container, new fragment_bookshelf_1()).commit();
+        fm.beginTransaction().add(R.id.bookshelf_container, bookshelf).commit();
 
         return view;
     }

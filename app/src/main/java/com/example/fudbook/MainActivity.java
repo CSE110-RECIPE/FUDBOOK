@@ -23,9 +23,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 /*
         MAIN ACTIVITY:
             HOLDS ALL FRAGMENTS FOR DASHBOARD:
@@ -66,14 +69,11 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private static final String API_URL = "http://10.0.2.2:3000";
 
-<<<<<<< HEAD
     // account guard
     private boolean isLoggedin;
-=======
     // Bundle to send to bookshelf
     private Bundle book_bundle;
 
->>>>>>> d6e441a9df904fe0890d8c4ce64a00f05ec862a8
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,37 +116,45 @@ public class MainActivity extends AppCompatActivity {
         // Account guards
         isLoggedin = false;
 
+        System.out.println(auth.getCurrentUser());
+
         try {
             userJSON.accumulate("uid", auth.getCurrentUser().getUid());
-        } catch (Exception e) {}
+        } catch (Exception e) {System.out.println(e);}
 
         JsonObjectRequest joR = new JsonObjectRequest(Request.Method.POST, API_URL + "/book/user",
                 userJSON,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d(TAG, "It's working!");
                         System.out.println(response);
 
                         try {
+                            System.out.println("building bundle");
                             // get book ids
                             favorite = response.getString("favorite");
                             personal = response.getString("personal");
-                            other = new ArrayList<>();
-
-                            // parse other books
-                            JSONObject otherJSON = response.getJSONObject("other");
-                            JSONArray bookIdArray = otherJSON.names();
-
-                            // get other books
-                            for (int i = 0; i < bookIdArray.length(); i++)
-                                other.add(bookIdArray.getString(i));
 
                             // send book ids to bundle
                             book_bundle.putString("favorite book", favorite);
                             book_bundle.putString("personal book", personal);
-                            book_bundle.putStringArrayList("other books", other);
 
-                        } catch (Exception e) {}
+                            // parse other books
+                            try {
+                                JSONObject otherJSON = response.getJSONObject("other");
+                                other = new ArrayList<>();
+                                JSONArray bookIdArray = otherJSON.names();
+
+                                // get other books
+                                for (int i = 0; i < bookIdArray.length(); i++)
+                                    other.add(bookIdArray.getString(i));
+                            }catch(Exception e){
+                                System.out.println("No other books found");
+                                book_bundle.putStringArrayList("other books", other);
+                            }
+
+                        } catch (Exception e) {System.out.println(e);}
                     }
                 },
                 new Response.ErrorListener() {
@@ -217,7 +225,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // bring up dashboard
                     FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.container, new fragment_dashboard()).commit();
+                    fm.beginTransaction()
+                                .replace(R.id.container, new fragment_dashboard())
+                                .addToBackStack(null)
+                                .commit();
                 }
             };
 
@@ -232,7 +243,10 @@ public class MainActivity extends AppCompatActivity {
 
                     // bring up bookshelf
                     FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.container, frag_bookshelf).commit();
+                    fm.beginTransaction()
+                            .replace(R.id.container, frag_bookshelf)
+                            .addToBackStack(null)
+                            .commit();
                 }
             };
 

@@ -66,6 +66,7 @@ public class fragment_bookshelf_1 extends Fragment {
         // memory set up
         data = new Bundle();
         book_bundle = getArguments();
+        System.out.println(book_bundle.getString("favorite book"));
 
         JSONObject bookshelfBody = new JSONObject();
         JSONArray bookIdArr = new JSONArray();
@@ -80,10 +81,10 @@ public class fragment_bookshelf_1 extends Fragment {
         bookIdArr.put(book_bundle.getString("personal book"));
 
         // other book ids
-        ArrayList<String> other_books = book_bundle.getStringArrayList("other books");
-        for (String str : other_books){
-            bookIdArr.put(str);
-        }
+//        ArrayList<String> other_books = book_bundle.getStringArrayList("other books");
+//        for (String str : other_books){
+//            bookIdArr.put(str);
+//        }
 
         // create a body for request
         try {
@@ -111,13 +112,17 @@ public class fragment_bookshelf_1 extends Fragment {
                             String name = jo.getString("name");
 
                             //Extract recipes from each book
-                            JSONArray rec_arr = jo.getJSONArray("recipes");
-                            recipeList = new ArrayList<String>();
-                            for(int i = 0; i < rec_arr.length(); i++) {
-                                recipeList.add(rec_arr.getString(i));
-                                System.out.println("Recipe ID: " + rec_arr.getString(i));
+                            try {
+                                JSONArray rec_arr = jo.getJSONArray("recipes"); // ERROR CHECK
+                                recipeList = new ArrayList<String>();
+                                for (int i = 0; i < rec_arr.length(); i++) {
+                                    recipeList.add(rec_arr.getString(i));
+                                    System.out.println("Recipe ID: " + rec_arr.getString(i));
+                                }
+                                books.add(new Book(name, author, def, recipeList));
+                            }catch(Exception e){
+                                books.add(new Book(name, author, def, new ArrayList<String>()));
                             }
-                            books.add(new Book(name, author, def, recipeList));
                             titles.add(name);
                         }
                         // set up layout manager
@@ -160,6 +165,7 @@ public class fragment_bookshelf_1 extends Fragment {
             book_frag.setArguments(data);
             fm.beginTransaction()
                     .replace(R.id.bookshelf_container, book_frag)
+                    .addToBackStack("going back to bookshelf")
                     .commit();
 
         }

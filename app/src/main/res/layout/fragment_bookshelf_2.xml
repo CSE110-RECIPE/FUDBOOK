@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.bookshelf.fragment_bookshelf_1"
-    android:paddingBottom="80dp"
     android:background="@color/white">
 
     <RelativeLayout

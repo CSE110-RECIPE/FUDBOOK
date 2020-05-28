@@ -89,12 +89,7 @@ public class fragment_bookshelf_2 extends Fragment {
                 bookBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
-
                 System.out.println(response);
-
-
-
                 try {
                     Iterator<String> recipe_iterator = response.keys();
                     while(recipe_iterator.hasNext()){
@@ -129,7 +124,6 @@ public class fragment_bookshelf_2 extends Fragment {
                     recyclerView.setLayoutManager(layoutManager);
                     mAdapter = new book_adapter(getContext(), recipe_list);
                     recyclerView.setAdapter(mAdapter);
-
                     mAdapter.setOnItemClickListener(adapter_listener);
 
                 } catch (Exception e)
@@ -183,5 +177,4 @@ public class fragment_bookshelf_2 extends Fragment {
         }
         return listdata;
     };
-
 }
