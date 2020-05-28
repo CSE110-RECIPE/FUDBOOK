@@ -32,6 +32,7 @@ import com.example.fudbook.ui.create.fragment_create_1;
 import com.example.fudbook.ui.create.fragment_create_2;
 import com.example.fudbook.ui.create.fragment_create_3;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,10 +63,14 @@ public class CreateActivity extends AppCompatActivity {
 
     private Fragment create1, create2, create3;
 
+    // Firebase access
+    FirebaseAuth auth;
+
     // Volley API request field
     private RequestQueue requestQueue;
     private static final String API_URL = "http://10.0.2.2:3000";
-    private static final String ADMIN_UID = "Lajm0tmKJEhTHNGxVR6OsQR9rAZ2";
+    private String uid;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +97,14 @@ public class CreateActivity extends AppCompatActivity {
         // listener set up
         next_button.setOnClickListener(next_listener);
         back_button.setOnClickListener(back_listener);
+
+        // Firebase access
+        auth = FirebaseAuth.getInstance();
+
+        uid = auth.getCurrentUser().getUid();
+        username = auth.getCurrentUser().getDisplayName();
+
+        System.out.println(uid);
     }
 
     @Override
@@ -206,7 +219,7 @@ public class CreateActivity extends AppCompatActivity {
         JSONArray stepsJsonArr = new JSONArray();
 
         try {
-            recipeJSON.accumulate("uid", ADMIN_UID);
+            recipeJSON.accumulate("uid", uid);
             recipeJSON.accumulate("name", recipeName);
             for (String n : ingredientArr) {
                 ingredientJsonArr.put(n);
@@ -214,7 +227,7 @@ public class CreateActivity extends AppCompatActivity {
             recipeJSON.accumulate("ingredients", ingredientJsonArr);
             stepsJsonArr.put(steps[0]);
             recipeJSON.accumulate("steps", stepsJsonArr);
-            recipeJSON.accumulate("author", ADMIN_UID);
+            recipeJSON.accumulate("author", username);
             recipeJSON.accumulate("editor", "");
             // TODO: upload image
             recipeJSON.accumulate("image", "https://image.com");
@@ -230,11 +243,11 @@ public class CreateActivity extends AppCompatActivity {
                         finish();
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error.toString());
-            }
-        }) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.toString());
+                    }
+                }) {
             @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
