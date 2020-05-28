@@ -23,6 +23,7 @@ import com.example.fudbook.R;
 import com.example.fudbook.objects.Book;
 import com.example.fudbook.objects.Recipe;
 import com.example.fudbook.ui.fragment_recipe;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -103,6 +104,10 @@ public class fragment_bookshelf_2 extends Fragment {
                         String author = jo.getString("author");
                         String name = jo.getString("name");
                         String image = jo.getString("image");
+
+                        // pre load image
+                        Picasso.get().load("https:" + image).fetch();
+
                         JSONArray ingredients_ja = jo.getJSONArray("ingredients");
                         JSONArray instructions_ja = jo.getJSONArray("steps");
                         JSONArray tags_ja = jo.getJSONArray("tags");
