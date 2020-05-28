@@ -104,6 +104,16 @@ public class CreateActivity extends AppCompatActivity {
         requestQueue.stop();
     }
 
+    @Override
+    public void onBackPressed() {
+        int current = viewPager.getCurrentItem();
+        if(current != 0) {
+            viewPager.setCurrentItem(current-1, true);
+        } else {
+            super.onBackPressed(); // This will pop the Activity from the stack.
+        }
+    }
+
     private Button.OnClickListener back_listener =
             new ImageButton.OnClickListener(){
 
@@ -138,7 +148,6 @@ public class CreateActivity extends AppCompatActivity {
 
                         if (current + 1 == 3) {
                             // POST action
-
                             String[] ingredientArr = (String []) bundle.get("ingredients");
                             String recipeName = (String) bundle.get("recipe name");
                             String[] steps = (String[]) bundle.get("instructions");

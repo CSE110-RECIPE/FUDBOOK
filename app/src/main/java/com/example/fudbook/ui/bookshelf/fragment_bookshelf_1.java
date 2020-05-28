@@ -165,6 +165,7 @@ public class fragment_bookshelf_1 extends Fragment {
             book_frag.setArguments(data);
             fm.beginTransaction()
                     .replace(R.id.bookshelf_container, book_frag)
+                    .addToBackStack("going back to bookshelf")
                     .commit();
 
         }

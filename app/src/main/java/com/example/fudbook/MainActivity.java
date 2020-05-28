@@ -225,7 +225,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // bring up dashboard
                     FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.container, new fragment_dashboard()).commit();
+                    fm.beginTransaction()
+                                .replace(R.id.container, new fragment_dashboard())
+                                .addToBackStack(null)
+                                .commit();
                 }
             };
 
@@ -240,7 +243,10 @@ public class MainActivity extends AppCompatActivity {
 
                     // bring up bookshelf
                     FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.container, frag_bookshelf).commit();
+                    fm.beginTransaction()
+                            .replace(R.id.container, frag_bookshelf)
+                            .addToBackStack(null)
+                            .commit();
                 }
             };
 
