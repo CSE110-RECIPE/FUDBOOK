@@ -80,12 +80,6 @@ public class fragment_bookshelf_1 extends Fragment {
         // place personal book id
         bookIdArr.put(book_bundle.getString("personal book"));
 
-        // other book ids
-//        ArrayList<String> other_books = book_bundle.getStringArrayList("other books");
-//        for (String str : other_books){
-//            bookIdArr.put(str);
-//        }
-
         // create a body for request
         try {
             bookshelfBody.accumulate("bookshelf", bookIdArr);
@@ -97,10 +91,36 @@ public class fragment_bookshelf_1 extends Fragment {
                 public void onResponse(JSONObject response) {
                     Log.d(TAG, "Printing response");
 
-                    System.out.println(response);
-
                     // change to typecheck
                     try {
+<<<<<<< HEAD
+
+                        // for loop to get every book title
+                        Iterator<String> book_iterator = response.keys();
+                        while(book_iterator.hasNext()) {
+                            String key = book_iterator.next();
+                            //Extract information from each book
+                            JSONObject jo = response.getJSONObject(key);
+                            String author = jo.getString("author");
+                            boolean def = jo.getBoolean("default");
+                            String name = jo.getString("name");
+
+                            //Extract recipes from each book
+                            try {
+                                JSONObject rec_obj = jo.getJSONObject("recipes");
+                                Iterator<String> recipe_iterator = rec_obj.keys();
+                                recipeList = new ArrayList<String>();
+
+                                while(recipe_iterator.hasNext()) {
+                                    String rec_key = recipe_iterator.next();
+                                    recipeList.add(rec_key);
+                                }
+
+                                books.add(new Book(name, author, def, recipeList));
+                            }catch(Exception e){
+                                System.out.println(e);
+                                books.add(new Book(name, author, def, new ArrayList<String>()));
+=======
                         JSONArray ja = response.names();
                         JSONObject curr;
                         String author = null;
@@ -123,6 +143,7 @@ public class fragment_bookshelf_1 extends Fragment {
                             while(it.hasNext()){
                                 recipe_key = it.next();
                                 recipeList.add(recipe_key);
+>>>>>>> 8c91b4177656cd95feca0907f7126e5e33cd81e1
                             }
 
                             books.add(new Book(name, author, def, recipeList));

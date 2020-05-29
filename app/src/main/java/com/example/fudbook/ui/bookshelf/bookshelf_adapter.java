@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Book;
 
@@ -104,7 +103,12 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         // - replace the contents of the view with that element
 
         Log.d(TAG, "OnBindViewHolder: created");
+<<<<<<< HEAD
+        final String name = mNames.get(position);
+
+=======
         final String name = mBooks.get(position).getName();
+>>>>>>> 8c91b4177656cd95feca0907f7126e5e33cd81e1
 
         // set name of column text
         holder.book_title.setText(name);

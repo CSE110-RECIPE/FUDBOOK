@@ -30,12 +30,6 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
     /** Will be deprecated later */
     private ArrayList<Recipe> mRecipes; // necessary recipe
 
-//    public void addRecipe(String title, String author, String[] ingr, String[] instr, String[] tags, String image){
-//
-//        Recipe recipeToAdd = new Recipe(title, author, ingr, instr, tags, image);
-//
-//    }
-
     // constructor for the adapter
     public book_adapter(Context newcontext, ArrayList<Recipe> newRecipes){
 
@@ -127,12 +121,6 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
         Log.d(TAG, "OnBindViewHolder: created");
 
         final String name = mNames.get(position);
-
-        Glide.with(mContext)
-                .asBitmap()
-                .load(mImages.get(position))
-                .centerCrop()
-                .into(holder.recipe_icon);
 
         // set name of column text
         holder.recipe_title.setText(name);
