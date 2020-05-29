@@ -8,6 +8,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,11 +36,16 @@ import com.example.fudbook.ui.create.fragment_create_1;
 import com.example.fudbook.ui.create.fragment_create_2;
 import com.example.fudbook.ui.create.fragment_create_3;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +74,9 @@ public class CreateActivity extends AppCompatActivity {
 
     // Firebase access
     FirebaseAuth auth;
+
+    // Firestore instances
+    FirebaseStorage firestore;
 
     // Volley API request field
     private RequestQueue requestQueue;
@@ -100,6 +112,9 @@ public class CreateActivity extends AppCompatActivity {
 
         // Firebase access
         auth = FirebaseAuth.getInstance();
+
+        // Firestore access
+        firestore = FirebaseStorage.getInstance();
 
         uid = auth.getCurrentUser().getUid();
         username = auth.getCurrentUser().getDisplayName();
@@ -168,7 +183,7 @@ public class CreateActivity extends AppCompatActivity {
                             if (ingredientArr != null && steps != null && ingredientArr.length > 0
                                     && !recipeName.equals("")
                                     && steps.length > 0)
-                                postRecipe(ingredientArr, recipeName, steps);
+                                uploadRecipeImage(ingredientArr, recipeName, steps);
                             else {
                                 Toast.makeText(getApplicationContext(), "Form not completed :(",
                                         Toast.LENGTH_SHORT).show();
@@ -212,7 +227,47 @@ public class CreateActivity extends AppCompatActivity {
         viewPager.setCurrentItem(fragmentNumber);
     }
 
-    private void postRecipe(String[] ingredientArr, String recipeName, String[] steps) {
+    private void uploadRecipeImage(final String[] ingredientArr, final String recipeName, final String[] steps) {
+        final String name = recipeName;
+        ImageView imageView = findViewById(R.id.recipe_photo);
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = firestore.getReference().child(name+uid).putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+                // Handle unsuccessful uploads
+                System.out.println(exception);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                System.out.println("Upload success");
+
+                firestore.getReference().child(name+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        postRecipe(ingredientArr, recipeName, steps, uri.toString());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+        });
+    }
+
+    private void postRecipe(String[] ingredientArr, String recipeName, String[] steps, String uri) {
 
         JSONObject recipeJSON = new JSONObject();
         JSONArray ingredientJsonArr = new JSONArray();
@@ -229,8 +284,7 @@ public class CreateActivity extends AppCompatActivity {
             recipeJSON.accumulate("steps", stepsJsonArr);
             recipeJSON.accumulate("author", username);
             recipeJSON.accumulate("editor", "");
-            // TODO: upload image
-            recipeJSON.accumulate("image", "https://image.com");
+            recipeJSON.accumulate("image", uri);
         } catch (Exception e) { }
 
         final String requestBody = recipeJSON.toString();

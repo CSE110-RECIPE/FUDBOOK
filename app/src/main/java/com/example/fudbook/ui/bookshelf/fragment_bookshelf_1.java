@@ -80,12 +80,6 @@ public class fragment_bookshelf_1 extends Fragment {
         // place personal book id
         bookIdArr.put(book_bundle.getString("personal book"));
 
-        // other book ids
-//        ArrayList<String> other_books = book_bundle.getStringArrayList("other books");
-//        for (String str : other_books){
-//            bookIdArr.put(str);
-//        }
-
         // create a body for request
         try {
             bookshelfBody.accumulate("bookshelf", bookIdArr);
@@ -97,10 +91,9 @@ public class fragment_bookshelf_1 extends Fragment {
                 public void onResponse(JSONObject response) {
                     Log.d(TAG, "Printing response");
 
-                    System.out.println(response);
-
                     // change to typecheck
                     try {
+
                         // for loop to get every book title
                         Iterator<String> book_iterator = response.keys();
                         while(book_iterator.hasNext()) {
@@ -119,7 +112,6 @@ public class fragment_bookshelf_1 extends Fragment {
 
                                 while(recipe_iterator.hasNext()) {
                                     String rec_key = recipe_iterator.next();
-                                    System.out.println("Recipe ID: " + rec_key);
                                     recipeList.add(rec_key);
                                 }
 
