@@ -20,8 +20,6 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
     // TAG
     private static final String TAG = "bookshelf_adapter";
 
-    private ArrayList<String> mNames; // store bookshelf titles
-    private ArrayList<String> mImages; // store images
     private ArrayList<Book> mBooks;
     private Context mContext;
     OnItemClickListener mListener;
@@ -65,29 +63,20 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
     }
 
     // Constructor for the adapter
-    public bookshelf_adapter(Context newcontext, ArrayList<String> newnames, ArrayList<String> newimages, ArrayList<Book> books) {
-
-        mNames = newnames;
-        mImages = newimages;
+    public bookshelf_adapter(Context newcontext, ArrayList<Book> books) {
         mBooks = books;
         mContext = newcontext;
 
     }
 
     // add selected items to the adapter
-    public void add(int position, String name, String image, Book book) {
-        mNames.add(position, name);
+    public void add(int position, Book book) {
         mBooks.add(position, book);
-        // if not default book
-        if (image != null)
-            mImages.add(position,image);
-            
         notifyItemInserted(position);
     }
 
     // remove selected item from the adapter
     public void remove(int position) {
-        mNames.remove(position);
         mBooks.remove(position);
         // mImages.remove(position);
         notifyItemRemoved(position);
@@ -114,17 +103,20 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         // - replace the contents of the view with that element
 
         Log.d(TAG, "OnBindViewHolder: created");
+<<<<<<< HEAD
         final String name = mNames.get(position);
 
+=======
+        final String name = mBooks.get(position).getName();
+>>>>>>> 8c91b4177656cd95feca0907f7126e5e33cd81e1
 
         // set name of column text
         holder.book_title.setText(name);
-
     }
 
     @Override
     public int getItemCount() {
-        return mNames.size();
+        return mBooks.size();
     }
 
 }

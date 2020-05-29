@@ -93,6 +93,7 @@ public class fragment_bookshelf_1 extends Fragment {
 
                     // change to typecheck
                     try {
+<<<<<<< HEAD
 
                         // for loop to get every book title
                         Iterator<String> book_iterator = response.keys();
@@ -119,15 +120,41 @@ public class fragment_bookshelf_1 extends Fragment {
                             }catch(Exception e){
                                 System.out.println(e);
                                 books.add(new Book(name, author, def, new ArrayList<String>()));
+=======
+                        JSONArray ja = response.names();
+                        JSONObject curr;
+                        String author = null;
+                        boolean def = false;
+                        String name = null;
+                        String recipe_key;
+                        Iterator<String> it;
+
+                        System.out.println(ja);
+
+                        for (int i = 0; i < ja.length(); i++){
+                            curr = response.getJSONObject(ja.getString(i));
+                            author = curr.getString("author");
+                            def = curr.getBoolean("default");
+                            name = curr.getString("name");
+
+                            it = curr.getJSONObject("recipes").keys();
+                            recipeList = new ArrayList<String>();
+
+                            while(it.hasNext()){
+                                recipe_key = it.next();
+                                recipeList.add(recipe_key);
+>>>>>>> 8c91b4177656cd95feca0907f7126e5e33cd81e1
                             }
-                            titles.add(name);
+
+                            books.add(new Book(name, author, def, recipeList));
                         }
+
                         // set up layout manager
                         layoutManager = new LinearLayoutManager(getActivity());
                         recyclerView.setLayoutManager(layoutManager);
 
                         // define an adapter --> send context, titles, images
-                        mAdapter = new bookshelf_adapter(getContext(), titles, images, books);
+                        mAdapter = new bookshelf_adapter(getContext(), books);
                         recyclerView.setAdapter(mAdapter);
                         // set on click listener for each item
                         mAdapter.setOnItemClickListener(adapter_listener);
@@ -151,10 +178,11 @@ public class fragment_bookshelf_1 extends Fragment {
         @Override
         public void onItemClick(int position) {
 
-            System.out.println("Printing book's recipe");
+            System.out.println("Printing recipe ids");
             for(String i : mAdapter.getBook(position).getRecipes()){
-                System.out.println(i);
+                System.out.println("recipe:" + i);
             }
+
             // store clicked item title into bundle
             data.putStringArrayList("recipe id", mAdapter.getBook(position).getRecipes()); // key for recipe id's
 
