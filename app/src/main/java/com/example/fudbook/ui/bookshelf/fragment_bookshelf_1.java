@@ -101,41 +101,39 @@ public class fragment_bookshelf_1 extends Fragment {
 
                     // change to typecheck
                     try {
-                        // for loop to get every book title
-                        Iterator<String> book_iterator = response.keys();
-                        while(book_iterator.hasNext()) {
-                            String key = book_iterator.next();
-                            //Extract information from each book
-                            JSONObject jo = response.getJSONObject(key);
-                            String author = jo.getString("author");
-                            boolean def = jo.getBoolean("default");
-                            String name = jo.getString("name");
+                        JSONArray ja = response.names();
+                        JSONObject curr;
+                        String author = null;
+                        boolean def = false;
+                        String name = null;
+                        String recipe_key;
+                        Iterator<String> it;
 
-                            //Extract recipes from each book
-                            try {
-                                JSONObject rec_obj = jo.getJSONObject("recipes");
-                                Iterator<String> recipe_iterator = rec_obj.keys();
-                                recipeList = new ArrayList<String>();
+                        System.out.println(ja);
 
-                                while(recipe_iterator.hasNext()) {
-                                    String rec_key = recipe_iterator.next();
-                                    System.out.println("Recipe ID: " + rec_key);
-                                    recipeList.add(rec_key);
-                                }
+                        for (int i = 0; i < ja.length(); i++){
+                            curr = response.getJSONObject(ja.getString(i));
+                            author = curr.getString("author");
+                            def = curr.getBoolean("default");
+                            name = curr.getString("name");
 
-                                books.add(new Book(name, author, def, recipeList));
-                            }catch(Exception e){
-                                System.out.println(e);
-                                books.add(new Book(name, author, def, new ArrayList<String>()));
+                            it = curr.getJSONObject("recipes").keys();
+                            recipeList = new ArrayList<String>();
+
+                            while(it.hasNext()){
+                                recipe_key = it.next();
+                                recipeList.add(recipe_key);
                             }
-                            titles.add(name);
+
+                            books.add(new Book(name, author, def, recipeList));
                         }
+
                         // set up layout manager
                         layoutManager = new LinearLayoutManager(getActivity());
                         recyclerView.setLayoutManager(layoutManager);
 
                         // define an adapter --> send context, titles, images
-                        mAdapter = new bookshelf_adapter(getContext(), titles, images, books);
+                        mAdapter = new bookshelf_adapter(getContext(), books);
                         recyclerView.setAdapter(mAdapter);
                         // set on click listener for each item
                         mAdapter.setOnItemClickListener(adapter_listener);
@@ -159,10 +157,11 @@ public class fragment_bookshelf_1 extends Fragment {
         @Override
         public void onItemClick(int position) {
 
-            System.out.println("Printing book's recipe");
+            System.out.println("Printing recipe ids");
             for(String i : mAdapter.getBook(position).getRecipes()){
-                System.out.println(i);
+                System.out.println("recipe:" + i);
             }
+
             // store clicked item title into bundle
             data.putStringArrayList("recipe id", mAdapter.getBook(position).getRecipes()); // key for recipe id's
 
