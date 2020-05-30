@@ -28,16 +28,15 @@ public class fragment_explore_recipe extends Fragment {
         TextView recipeNameTV = view.findViewById(R.id.explore_recipe_name);
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);
         ImageView imageView = view.findViewById(R.id.explore_recipe_image);
+        TextView authorName = view.findViewById(R.id.explore_recipe_author);
         Bundle data = getArguments();
 
         recipeNameTV.setText(data.getString("name"));
+        authorName.setText("Author: " + data.getString("author"));
 
         ArrayList<String> ingredientList = data.getStringArrayList("ingredients");
 
-        /**
-         * TODO: need to change URI after full setup
-         */
-        Picasso.get().load("https:" + data.getString("imageURL"))
+        Picasso.get().load(data.getString("imageURL"))
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()

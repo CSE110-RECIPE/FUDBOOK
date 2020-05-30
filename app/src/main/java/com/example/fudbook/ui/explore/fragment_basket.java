@@ -100,7 +100,7 @@ public class fragment_basket extends Fragment {
                     chipGroup.addView(c);
                 }
 
-                Picasso.get().load("https:" + item.getImageURL()).networkPolicy(NetworkPolicy.OFFLINE)
+                Picasso.get().load(item.getImageURL()).networkPolicy(NetworkPolicy.OFFLINE)
                         .fit()
                         .centerCrop()
                         .into(imageView);

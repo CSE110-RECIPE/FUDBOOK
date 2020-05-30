@@ -169,12 +169,13 @@ public class ExploreActivity extends AppCompatActivity {
                                 /**
                                  * TODO: Need to change URL
                                  */
-                                Picasso.get().load("https:" + recipeList.getJSONObject(
+                                Picasso.get().load(recipeList.getJSONObject(
                                         recipeIdList.getString(i)).getString("image"))
                                         .fetch();
                             }
 
                             data.putString("name", recipeObj.getString("name"));
+                            data.putString("author", recipeObj.getString("author"));
                             data.putStringArrayList("ingredients", ingredientList);
                             data.putStringArrayList("steps", stepsList);
                             data.putString("imageURL", recipeObj.getString("image"));
@@ -343,6 +344,7 @@ public class ExploreActivity extends AppCompatActivity {
                     stepsList.add(stepsArr.getString(i));
 
                 data.putString("name", recipeObj.getString("name"));
+                data.putString("author", recipeObj.getString("author"));
                 data.putStringArrayList("ingredients", ingredientList);
                 data.putStringArrayList("steps", stepsList);
                 data.putString("imageURL", recipeObj.getString("image"));
@@ -383,6 +385,7 @@ public class ExploreActivity extends AppCompatActivity {
                     stepsList.add(stepsArr.getString(i));
 
                 data.putString("name", recipeObj.getString("name"));
+                data.putString("author", recipeObj.getString("author"));
                 data.putStringArrayList("ingredients", ingredientList);
                 data.putStringArrayList("steps", stepsList);
                 data.putString("imageURL", recipeObj.getString("image"));

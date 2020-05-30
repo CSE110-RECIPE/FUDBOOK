@@ -106,7 +106,7 @@ public class fragment_bookshelf_2 extends Fragment {
                         String image = jo.getString("image");
 
                         // pre load image
-                        Picasso.get().load("https:" + image).fetch();
+                        Picasso.get().load(image).fetch();
 
                         JSONArray ingredients_ja = jo.getJSONArray("ingredients");
                         JSONArray instructions_ja = jo.getJSONArray("steps");

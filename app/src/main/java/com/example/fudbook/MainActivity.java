@@ -2,9 +2,12 @@ package com.example.fudbook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +24,12 @@ import com.example.fudbook.ui.bookshelf.fragment_bookshelf;
 import com.example.fudbook.ui.dashboard.fragment_dashboard;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -76,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
     // Bundle to send to bookshelf
     private Bundle book_bundle;
 
+    // recipe field
+    TextView recipeTitle, authorName, description;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +127,47 @@ public class MainActivity extends AppCompatActivity {
         isLoggedin = false;
 
         userJSON = new JSONObject();
+
+        // get top recipe
+        JsonObjectRequest topRecipeRequest = new JsonObjectRequest(Request.Method.GET,
+                API_URL + "/recipe/recommended",
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // recipe view
+                        recipeTitle = findViewById(R.id.recipe_title_text);
+                        authorName = findViewById(R.id.author_text);
+                        description = findViewById(R.id.description_text);
+                        imageView = findViewById(R.id.recipe_photo);
+
+                        try {
+                            System.out.println(response);
+                            JSONObject topRecipe = response.getJSONObject("topRecipe");
+                            System.out.println(topRecipe);
+                            System.out.println(topRecipe.getString("name"));
+                            System.out.println(topRecipe.getString("author"));
+                            recipeTitle.setText(topRecipe.getString("name"));
+                            authorName.setText(topRecipe.getString("author"));
+
+                            Picasso.get().load(topRecipe.getString("image"))
+                                    .fit()
+                                    .centerCrop()
+                                    .into(imageView);
+
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error);
+                    }
+                });
+
+        requestQueue.add(topRecipeRequest);
 
         // Listening auth state
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
