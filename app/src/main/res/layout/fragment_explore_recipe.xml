@@ -4,22 +4,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="10dp"
-    android:paddingTop="5dp"
     tools:context=".ui.explore.fragment_explore_recipe">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:elevation="5dp"
-        android:divider="@android:color/background_dark"
-        android:dividerHeight="0.0px"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        app:cardElevation="1dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
         >
 
         <RelativeLayout
@@ -31,46 +21,36 @@
                 android:id="@+id/explore_recipe_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recipe Name"
                 android:layout_marginHorizontal="5dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="5dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp" />
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:text="Recipe Name"
+                android:textColor="#51AA80"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/explore_recipe_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="18dp"
+                android:padding="5dp"
                 android:text="Author"
-                android:layout_below="@id/explore_recipe_name"
-                android:paddingBottom="5dp"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="380dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="5dp"
-                android:id="@+id/explore_recipe_image"
-                android:layout_below="@id/explore_recipe_author"/>
+                android:textSize="14sp"
+                android:layout_below="@id/explore_recipe_name" />
 
             <HorizontalScrollView
                 android:id="@+id/chip_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="5dp"
-                android:layout_below="@id/explore_recipe_image"
+                android:layout_marginHorizontal="10dp"
+
+                android:layout_below="@id/explore_recipe_author"
                 >
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chip_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
                     android:layout_marginVertical="12dp">
                     <!--
                                         1. User inputs
@@ -80,10 +60,20 @@
 
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
+
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:layout_below="@+id/chip_container"/>
+                android:layout_height="5dp"
+                android:layout_below="@+id/chip_container"
+                android:id="@+id/chip_separator"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="390dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/explore_recipe_image"
+                android:layout_below="@id/chip_separator"/>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

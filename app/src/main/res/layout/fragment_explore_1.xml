@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/explore_1_top"
-        android:background="#e3e3e3"
+        android:background="#fff"
         >
         <RelativeLayout
             android:id="@+id/exp_card_container"
