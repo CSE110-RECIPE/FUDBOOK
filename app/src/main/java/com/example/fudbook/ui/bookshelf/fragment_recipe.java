@@ -1,13 +1,16 @@
-package com.example.fudbook.ui;
+package com.example.fudbook.ui.bookshelf;
 
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,6 +52,9 @@ public class fragment_recipe extends Fragment {
     // Recipe Instructions
     private TextView recipeInstructionsView;
 
+    //Back button
+    private ImageButton back_btn;
+
 
     // variables
     private String title;
@@ -72,6 +78,10 @@ public class fragment_recipe extends Fragment {
         instructions = data.getStringArrayList("instructions");
         tags = data.getStringArrayList("tags");
         image = data.getString("image");
+
+        //back button
+        back_btn = view.findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(b_listener);
 
         setView(view);
 
@@ -127,5 +137,17 @@ public class fragment_recipe extends Fragment {
         recipeInstructionsView.setText(instructions != null ? instructions.get(0)
                 : "No instructions...");
     }
+
+    //back button listener
+    private Button.OnClickListener b_listener = new ImageButton.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FragmentManager fm2 = getParentFragmentManager();
+            Fragment fragment = fm2.findFragmentByTag("RECIPE");
+            if(fragment !=null) {
+                fm2.beginTransaction().remove(fragment).commit();
+            }
+        }
+    };
     
 }

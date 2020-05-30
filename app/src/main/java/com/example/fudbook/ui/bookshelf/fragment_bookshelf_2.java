@@ -1,13 +1,13 @@
 package com.example.fudbook.ui.bookshelf;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,9 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fudbook.R;
-import com.example.fudbook.objects.Book;
 import com.example.fudbook.objects.Recipe;
-import com.example.fudbook.ui.fragment_recipe;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -30,7 +28,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 
 // View a book
@@ -41,10 +38,13 @@ public class fragment_bookshelf_2 extends Fragment {
     private RecyclerView recyclerView;
 
     private FragmentManager fm;
+    private Fragment f;
     private Bundle data;
 
     private ArrayList<Recipe> recipe_list;
     private ArrayList<String> recipe_id;
+
+    private ImageButton back_btn;
 
     // Connection
     private RequestQueue requestQueue;
@@ -54,6 +54,10 @@ public class fragment_bookshelf_2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookshelf_2, container, false);
+
+        //button listener
+        back_btn = view.findViewById(R.id.back_butn);
+        back_btn.setOnClickListener(b_listener);
 
         // initialize values
         data = getArguments();
@@ -166,9 +170,9 @@ public class fragment_bookshelf_2 extends Fragment {
 
             // open recipe
             fm = getParentFragmentManager();
-            Fragment f = new fragment_recipe();
+            f = new fragment_recipe();
             f.setArguments(data); // send data
-            fm.beginTransaction().replace(R.id.bookshelf_container, f).commit();
+            fm.beginTransaction().add(R.id.bookshelf_container, f, "RECIPE").commit();
         }
     };
 
@@ -184,5 +188,17 @@ public class fragment_bookshelf_2 extends Fragment {
             }
         }
         return listdata;
+    };
+
+    //back button listener
+    private Button.OnClickListener b_listener = new ImageButton.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FragmentManager fm2 = getParentFragmentManager();
+            Fragment fragment = fm2.findFragmentByTag("BOOKSHELF2");
+            if(fragment !=null) {
+                fm2.beginTransaction().remove(fragment).commit();
+            }
+        }
     };
 }
