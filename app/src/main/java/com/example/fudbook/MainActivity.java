@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     // filter
     private ArrayList<String> selectedIncludeFilter, selectedExcludeFilter;
 
+    // Fragment
+    private Fragment dashboardFragment;
+
     // Intent field
     private Intent settingIntent;
     private Intent exploreIntent;
@@ -81,9 +84,8 @@ public class MainActivity extends AppCompatActivity {
     // Bundle to send to bookshelf
     private Bundle book_bundle;
 
-    // recipe field
-    TextView recipeTitle, authorName, description;
-    ImageView imageView;
+    // top recipe
+    JSONObject topRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
         // log activity
         Log.d(TAG, "onCreate: Started\n");
 
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(R.id.container, new fragment_dashboard()).commit();
+        final FragmentManager fm = getSupportFragmentManager();
+
+        if (dashboardFragment == null) {
+            dashboardFragment = new fragment_dashboard();
+        }
 
         reloadRequest = false;
 
@@ -135,25 +140,21 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // recipe view
-                        recipeTitle = findViewById(R.id.recipe_title_text);
-                        authorName = findViewById(R.id.author_text);
-                        description = findViewById(R.id.description_text);
-                        imageView = findViewById(R.id.recipe_photo);
 
+
+                        Bundle topRecipeData = new Bundle();
                         try {
-                            JSONObject topRecipe = response.getJSONObject("topRecipe");
-                            recipeTitle.setText(topRecipe.getString("name"));
-                            authorName.setText(topRecipe.getString("author"));
-
-                            Picasso.get().load(topRecipe.getString("image"))
-                                    .fit()
-                                    .centerCrop()
-                                    .into(imageView);
+                            topRecipe = response.getJSONObject("topRecipe");
+                            topRecipeData.putString("title", topRecipe.getString("name"));
+                            topRecipeData.putString("author", topRecipe.getString("author"));
+                            topRecipeData.putString("image", topRecipe.getString("image"));
 
                         } catch (Exception e) {
                             System.out.println(e);
                         }
+
+                        dashboardFragment.setArguments(topRecipeData);
+                        fm.beginTransaction().add(R.id.container, dashboardFragment).commit();
                     }
                 },
                 new Response.ErrorListener() {
@@ -275,8 +276,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // bring up dashboard
                     FragmentManager fm = getSupportFragmentManager();
+                    if (dashboardFragment == null) {
+                        dashboardFragment = new fragment_dashboard();
+                    }
+
                     fm.beginTransaction()
-                                .replace(R.id.container, new fragment_dashboard())
+                                .replace(R.id.container, dashboardFragment)
                                 .addToBackStack(null)
                                 .commit();
                 }

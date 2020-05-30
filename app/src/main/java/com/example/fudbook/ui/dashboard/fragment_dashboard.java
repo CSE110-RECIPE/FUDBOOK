@@ -9,15 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.fudbook.CreateActivity;
 import com.example.fudbook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 public class fragment_dashboard extends Fragment {
     private static final String TAG = "dashboard";
 
     Button create_button;
+
+    // recipe data field
+    private TextView recipeTitle, authorName, description;
+    private ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +35,24 @@ public class fragment_dashboard extends Fragment {
         // create_button set up
         create_button = view.findViewById(R.id.create_btn);
         create_button.setOnClickListener(create_listener);
+
+        // View field
+        // recipe view
+        recipeTitle = view.findViewById(R.id.recipe_title_text);
+        authorName = view.findViewById(R.id.author_text);
+        description = view.findViewById(R.id.description_text);
+        imageView = view.findViewById(R.id.recipe_photo);
+
+        // recipe data field
+        Bundle recipeData = getArguments();
+
+        recipeTitle.setText(recipeData.getString("title"));
+        authorName.setText(recipeData.getString("author"));
+
+        Picasso.get().load(recipeData.getString("image"))
+                .fit()
+                .centerCrop()
+                .into(imageView);
 
         return view;
     }
