@@ -6,26 +6,26 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="15dp"
+        android:layout_height="80dp"
         >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="1dp" />
 
         <TextView
             android:id="@+id/book_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Book Title"
-            android:textSize="20sp"
             android:layout_centerVertical="true"
-            />
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            />
+            android:layout_toRightOf="@+id/icon"
+            android:layout_marginLeft="15dp"
+            android:text="Recipe Title"
+            android:textSize="15sp" />
 
 
     </RelativeLayout>

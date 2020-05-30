@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Recipe;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,29 +34,18 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
 
     // constructor for the adapter
     public book_adapter(Context newcontext, ArrayList<Recipe> newRecipes){
-
         mRecipes = newRecipes;
-        mNames = new ArrayList<String>();
-        mImages = new ArrayList<String>();
-        for (Recipe r : newRecipes){
-            mNames.add(r.getTitle());
-            mImages.add(r.getImage());
-        }
         mContext = newcontext;
     }
 
     // add selected items to the adapter
-    public void add(int position, String name, String image, Recipe recipe) {
-        mNames.add(position, name);
-        mImages.add(position,image);
+    public void add(int position, Recipe recipe) {
         mRecipes.add(position, recipe);
         notifyItemInserted(position);
     }
 
     // remove selected item from the adapter
     public void remove(int position) {
-        mNames.remove(position);
-        mImages.remove(position);
         mRecipes.remove(position);
         notifyItemRemoved(position);
     }
@@ -109,7 +100,7 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
         // create a new view
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View v = inflater.inflate(R.layout.layout_listitem, parent, false);
+        View v = inflater.inflate(R.layout.layout_recipeitem, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
         book_adapter.ViewHolder vh = new book_adapter.ViewHolder(v, mListener);
@@ -120,14 +111,25 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "OnBindViewHolder: created");
 
-        final String name = mNames.get(position);
+        final String name = mRecipes.get(position).getTitle();
 
         // set name of column text
         holder.recipe_title.setText(name);
+
+        final String image = mRecipes.get(position).getImage();
+
+
+        System.out.println("Loading image");
+        // load image
+        Picasso.get().load(image)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .fit()
+                .centerCrop()
+                .into(holder.recipe_icon);
     }
 
     @Override
     public int getItemCount() {
-        return mNames.size();
+        return mRecipes.size();
     }
 }
