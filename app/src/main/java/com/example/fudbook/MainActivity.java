@@ -142,11 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         imageView = findViewById(R.id.recipe_photo);
 
                         try {
-                            System.out.println(response);
                             JSONObject topRecipe = response.getJSONObject("topRecipe");
-                            System.out.println(topRecipe);
-                            System.out.println(topRecipe.getString("name"));
-                            System.out.println(topRecipe.getString("author"));
                             recipeTitle.setText(topRecipe.getString("name"));
                             authorName.setText(topRecipe.getString("author"));
 

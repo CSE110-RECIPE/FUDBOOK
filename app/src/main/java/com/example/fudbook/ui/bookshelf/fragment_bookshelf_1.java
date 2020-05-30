@@ -165,7 +165,7 @@ public class fragment_bookshelf_1 extends Fragment {
             // send recipe id's
             book_frag.setArguments(data);
             fm.beginTransaction()
-                    .replace(R.id.bookshelf_container, book_frag)
+                    .add(R.id.bookshelf_container, book_frag, "BOOKSHELF2")
                     .addToBackStack("going back to bookshelf")
                     .commit();
 
