@@ -103,20 +103,8 @@ public class fragment_recipe extends Fragment {
         // load title
         recipeTitleView.setText(title);
 
-//        // load image
-//        if(image != null) {
-//            //Convert string back to Uri
-//            try {
-//                Glide.with(getContext())
-//                        .asBitmap()
-//                        .load(image)
-//                        .centerCrop()
-//                        .into(recipeImageView);
-//            }catch(Exception e){
-//                System.out.println(e);
-//            }
-//        }
-        Picasso.get().load("https:" + image)
+        // load image
+        Picasso.get().load(image)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()
