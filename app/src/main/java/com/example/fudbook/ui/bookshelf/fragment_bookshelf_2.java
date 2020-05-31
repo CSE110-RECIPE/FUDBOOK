@@ -127,13 +127,18 @@ public class fragment_bookshelf_2 extends Fragment {
                         ArrayList<String> tags = toArrayList(tags_ja);
 
                         // place into Recipe List
-                        recipe_list.add(new Recipe( key,
-                                            name,
-                                            author,
-                                            ingredients,
-                                            instructions,
-                                            image,
-                                            tags));
+                        Recipe rec = new Recipe( key,
+                                name,
+                                author,
+                                ingredients,
+                                instructions,
+                                image,
+                                tags);
+
+                        //combine the recipe instructions
+                        rec.setInstr(instructions);
+
+                        recipe_list.add(rec);
                     }
 
                     // set up layout manager
