@@ -201,6 +201,10 @@ public class fragment_basket extends Fragment {
         return view;
     }
 
+    public void removeItem(int position) {
+        adapter.remove(adapter.getItem(position));
+    }
+
     public void onStop() {
         super.onStop();
 

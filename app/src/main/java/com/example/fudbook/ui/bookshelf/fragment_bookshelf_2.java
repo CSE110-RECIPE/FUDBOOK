@@ -244,13 +244,14 @@ public class fragment_bookshelf_2 extends Fragment {
                             requestQueue = Volley.newRequestQueue(getContext());
 
                             JSONObject deleteBody = new JSONObject();
+                            String uid = FirebaseAuth.getInstance().getUid();
 
                             System.out.println("accumulating body request for DELETE");
 
                             // creates a body for request
                             try {
                                 // get user id
-                                deleteBody.accumulate("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                deleteBody.accumulate("uid", uid);
 
                                 // get book id
                                 deleteBody.accumulate("book_id", data.getString("book id"));
@@ -258,35 +259,38 @@ public class fragment_bookshelf_2 extends Fragment {
                                 String x = mAdapter.getRecipe(position).getRecipeId();
                                 // get recipe id
                                 deleteBody.accumulate("recipe_id", mAdapter.getRecipe(position).getRecipeId());
+
+                                System.out.println(mAdapter.getRecipe(position).getRecipeId());
                             } catch (Exception e) {
                                 System.out.println("accumulation error");
                             }
 
 
                             // DELETE request to delete a recipe from a book
-                            JsonObjectRequest jor = new JsonObjectRequest(Request.Method.DELETE,
-                        API_URL + "/recipe/book",
-                            deleteBody, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    System.out.println(response);
-                                    try {
-                                        System.out.println("TRYING DELETE");
-                                        Bundle bundle = new Bundle();
+                            JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST,
+                                    API_URL + "/recipe/book/delete",
+                                    deleteBody,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            System.out.println(response);
+                                            try {
+                                                System.out.println("TRYING DELETE");
+                                                Bundle bundle = new Bundle();
 
-                                        // remove from adapter
-                                        mAdapter.remove(position);
+                                                // remove from adapter
+                                                mAdapter.remove(position);
 
-                                    } catch (Exception e) {
-                                        System.out.print(e);
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
+                                            } catch (Exception e) {
+                                                System.out.print(e);
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    System.out.println(error);
-                                }
-                            });
+                                            System.out.println(error);
+                                        }
+                                    });
                             requestQueue.add(jor);
                         }
                     })
