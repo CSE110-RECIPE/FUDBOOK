@@ -105,21 +105,29 @@ public class fragment_bookshelf_2 extends Fragment {
                 System.out.println("Adding recipes");
                 System.out.println(response);
                 try {
-                    Iterator<String> recipe_iterator = response.keys();
-                    while(recipe_iterator.hasNext()){
-                        String key = recipe_iterator.next();
-                        JSONObject jo = response.getJSONObject(key);
-                        // grab values from response
-                        String author = jo.getString("author");
-                        String name = jo.getString("name");
-                        String image = jo.getString("image");
 
-                        // pre load image
+                    JSONArray ja = response.names();
+                    JSONObject curr;
+                    String author = null;
+                    String name = null;
+                    String id = null;
+                    String image = null;
+                    String recipe_key;
+
+                    System.out.println(ja);
+                    System.out.println(response);
+
+                    for(int i = 0; i < ja.length(); i++){
+                        curr = response.getJSONObject(ja.getString(i));
+                        author = curr.getString("author");
+                        name = curr.getString("name");
+                        image = curr.getString("image");
+
                         Picasso.get().load(image).fetch();
 
-                        JSONArray ingredients_ja = jo.getJSONArray("ingredients");
-                        JSONArray instructions_ja = jo.getJSONArray("steps");
-                        JSONArray tags_ja = jo.getJSONArray("tags");
+                        JSONArray ingredients_ja = curr.getJSONArray("ingredients");
+                        JSONArray instructions_ja = curr.getJSONArray("steps");
+                        JSONArray tags_ja = curr.getJSONArray("tags");
 
                         // convert from JSONArray to ArrayList
                         ArrayList<String> ingredients = toArrayList(ingredients_ja);
@@ -127,7 +135,7 @@ public class fragment_bookshelf_2 extends Fragment {
                         ArrayList<String> tags = toArrayList(tags_ja);
 
                         // place into Recipe List
-                        Recipe rec = new Recipe( key,
+                        Recipe rec = new Recipe( ja.getString(i),
                                 name,
                                 author,
                                 ingredients,
@@ -139,7 +147,46 @@ public class fragment_bookshelf_2 extends Fragment {
                         rec.setInstr(instructions);
 
                         recipe_list.add(rec);
+
+
                     }
+//                    // change using names and a for loop
+//                    Iterator<String> recipe_iterator = response.keys();
+//                    while(recipe_iterator.hasNext()){
+//                        String key = recipe_iterator.next();
+//                        JSONObject jo = response.getJSONObject(key);
+//
+//                        // grab values from response
+//                        String author = jo.getString("author");
+//                        String name = jo.getString("name");
+//                        String image = jo.getString("image");
+//
+//                        // pre load image
+//                        Picasso.get().load(image).fetch();
+//
+//                        JSONArray ingredients_ja = jo.getJSONArray("ingredients");
+//                        JSONArray instructions_ja = jo.getJSONArray("steps");
+//                        JSONArray tags_ja = jo.getJSONArray("tags");
+//
+//                        // convert from JSONArray to ArrayList
+//                        ArrayList<String> ingredients = toArrayList(ingredients_ja);
+//                        ArrayList<String> instructions = toArrayList(instructions_ja);
+//                        ArrayList<String> tags = toArrayList(tags_ja);
+//
+//                        // place into Recipe List
+//                        Recipe rec = new Recipe( key,
+//                                name,
+//                                author,
+//                                ingredients,
+//                                instructions,
+//                                image,
+//                                tags);
+//
+//                        //combine the recipe instructions
+//                        rec.setInstr(instructions);
+//
+//                        recipe_list.add(rec);
+//                    }
 
                     // set up layout manager
                     layoutManager = new LinearLayoutManager(getActivity());

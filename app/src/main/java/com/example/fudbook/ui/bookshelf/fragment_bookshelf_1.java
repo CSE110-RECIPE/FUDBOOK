@@ -114,7 +114,6 @@ public class fragment_bookshelf_1 extends Fragment {
                             def = curr.getBoolean("default");
                             name = curr.getString("name");
 
-
                             it = curr.getJSONObject("recipes").keys();
                             recipeList = new ArrayList<String>();
 
