@@ -46,13 +46,15 @@ public class fragment_dashboard extends Fragment {
         // recipe data field
         Bundle recipeData = getArguments();
 
-        recipeTitle.setText(recipeData.getString("title"));
-        authorName.setText(recipeData.getString("author"));
+        if (recipeData != null) {
+            recipeTitle.setText(recipeData.getString("title"));
+            authorName.setText(recipeData.getString("author"));
 
-        Picasso.get().load(recipeData.getString("image"))
-                .fit()
-                .centerCrop()
-                .into(imageView);
+            Picasso.get().load(recipeData.getString("image"))
+                    .fit()
+                    .centerCrop()
+                    .into(imageView);
+        }
 
         return view;
     }

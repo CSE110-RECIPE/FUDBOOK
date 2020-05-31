@@ -96,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         // log activity
         Log.d(TAG, "onCreate: Started\n");
-
-        final FragmentManager fm = getSupportFragmentManager();
-
+        
         if (dashboardFragment == null) {
             dashboardFragment = new fragment_dashboard();
         }
@@ -127,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         selectedExcludeFilter = new ArrayList<>();
 
         requestQueue = Volley.newRequestQueue(getBaseContext());
+        requestQueue.start();
 
         // Account guards
         isLoggedin = false;
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        FragmentManager fm = getSupportFragmentManager();
 
                         Bundle topRecipeData = new Bundle();
                         try {
@@ -155,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
                         dashboardFragment.setArguments(topRecipeData);
                         fm.beginTransaction().add(R.id.container, dashboardFragment).commit();
+
                     }
                 },
                 new Response.ErrorListener() {

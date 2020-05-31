@@ -57,7 +57,7 @@ public class fragment_bookshelf_1 extends Fragment {
                              Bundle savedInstanceState) {
         // View set up
         View view = inflater.inflate(R.layout.fragment_bookshelf_1, container, false);
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
         recyclerView.setHasFixedSize(true);
 
         titles = new ArrayList<String>();
@@ -90,19 +90,19 @@ public class fragment_bookshelf_1 extends Fragment {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d(TAG, "Printing response");
+                    System.out.println(response);
+                    RecyclerView recyclerView = getView().findViewById(R.id.books_recycler);
 
                     // change to typecheck
                     try {
 
                         JSONArray ja = response.names();
                         JSONObject curr;
-                        String author = null;
+                        String author = "";
                         boolean def = false;
-                        String name = null;
+                        String name = "";
                         String recipe_key;
                         Iterator<String> it;
-
-                        System.out.println(ja);
 
                         for (int i = 0; i < ja.length(); i++){
                             curr = response.getJSONObject(ja.getString(i));
@@ -131,8 +131,7 @@ public class fragment_bookshelf_1 extends Fragment {
                         // set on click listener for each item
                         mAdapter.setOnItemClickListener(adapter_listener);
 
-                    } catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.out.print(e);
                     }
                 }
