@@ -50,6 +50,8 @@ public class fragment_dashboard extends Fragment {
         if (recipeData != null) {
             recipeTitle.setText(recipeData.getString("title"));
             authorName.setText(recipeData.getString("author"));
+            description.setText("Crispy on the outside, juicy on the inside." +
+             " Time to impress yourself.");
 
             Picasso.get().load(recipeData.getString("image"))
                     .fit()
