@@ -53,7 +53,7 @@
         <ListView
             android:id="@+id/basket_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="700dp"
             android:layout_below="@+id/basket_top"
             android:divider="@null"
             android:dividerHeight="0dp"

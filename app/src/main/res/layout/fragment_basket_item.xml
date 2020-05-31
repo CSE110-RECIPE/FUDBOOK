@@ -11,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:minHeight="80dp"
+        android:minHeight="110dp"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            tools:layout_editor_absoluteX="7dp"
-            tools:layout_editor_absoluteY="-1dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/basket_recipe_name"
@@ -29,7 +30,7 @@
             android:paddingHorizontal="5dp"
             android:layout_marginLeft="10dp"
             android:text="Recipe Name"
-            android:textSize="18sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.022"
