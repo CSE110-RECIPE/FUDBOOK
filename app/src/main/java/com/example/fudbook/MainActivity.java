@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         // log activity
         Log.d(TAG, "onCreate: Started\n");
-        
+
         if (dashboardFragment == null) {
             dashboardFragment = new fragment_dashboard();
         }

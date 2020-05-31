@@ -13,10 +13,11 @@ public class Recipe{
     private ArrayList<String> instructions;
     private String image;
     private ArrayList<String> tags;
-    //private String recipeId;   //add this in when we figure out what to put in Id
+    private String recipeId;   //add this in when we figure out what to put in Id
 
     // default constructor
     public Recipe(){
+        this.recipeId = "";
         this.title = "";
         this.author = "";
         this.ingredients = null;
@@ -26,11 +27,12 @@ public class Recipe{
     }
 
     //constructor
-    public Recipe(String title, String author,
+    public Recipe(String recipeId, String title, String author,
                   ArrayList<String> ingr,
                   ArrayList<String> instr,
                   String image,
                   ArrayList<String>tags) {
+        this.recipeId = recipeId;
         this.title = title;
         this.author = author;
         this.ingredients = ingr;
@@ -97,4 +99,11 @@ public class Recipe{
 
     public ArrayList<String> getTags() { return tags; }
 
+    public String getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
+    }
 }
