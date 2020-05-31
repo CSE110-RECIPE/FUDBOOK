@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Book;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -105,6 +107,14 @@ public class bookshelf_adapter extends RecyclerView.Adapter<bookshelf_adapter.Vi
         Log.d(TAG, "OnBindViewHolder: created");
 
         final String name = mBooks.get(position).getName();
+
+        if(name.equals("Favorite")){
+            holder.book_icon.setImageResource(R.drawable.ic_star);
+        }
+
+        if(name.equals("My Book")){
+            holder.book_icon.setImageResource(R.drawable.ic_fudbookicon_orange);
+        }
 
         // set name of column text
         holder.book_title.setText(name);
