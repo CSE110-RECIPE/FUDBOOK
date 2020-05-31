@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Recipe;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -95,6 +96,8 @@ public class fragment_bookshelf_2 extends Fragment {
             System.out.println("accumulation error");
         }
 
+
+        // POST request to get recipes for book
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, API_URL + "/recipe/book",
                 bookBody, new Response.Listener<JSONObject>() {
             @Override
@@ -106,7 +109,6 @@ public class fragment_bookshelf_2 extends Fragment {
                     while(recipe_iterator.hasNext()){
                         String key = recipe_iterator.next();
                         JSONObject jo = response.getJSONObject(key);
-
                         // grab values from response
                         String author = jo.getString("author");
                         String name = jo.getString("name");
@@ -125,7 +127,7 @@ public class fragment_bookshelf_2 extends Fragment {
                         ArrayList<String> tags = toArrayList(tags_ja);
 
                         // place into Recipe List
-                        recipe_list.add(new Recipe(
+                        recipe_list.add(new Recipe( key,
                                             name,
                                             author,
                                             ingredients,
@@ -179,19 +181,66 @@ public class fragment_bookshelf_2 extends Fragment {
         }
 
         @Override
-        public void onImageButtonClick(int position) {
+        public void onImageButtonClick(final int position) {
             AlertDialog dialog = new MaterialAlertDialogBuilder(getContext())
                     .setTitle("Remove recipe from book?")
                     .setMessage("Are you sure you want to remove this recipe?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            // API request
+                            requestQueue = Volley.newRequestQueue(getContext());
 
+                            JSONObject deleteBody = new JSONObject();
+
+                            System.out.println("accumulating body request for DELETE");
+
+                            // creates a body for request
+                            try {
+                                // get user id
+                                deleteBody.accumulate("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                                // get book id
+                                deleteBody.accumulate("book_id", data.getString("book id"));
+
+                                String x = mAdapter.getRecipe(position).getRecipeId();
+                                // get recipe id
+                                deleteBody.accumulate("recipe_id", mAdapter.getRecipe(position).getRecipeId());
+                            } catch (Exception e) {
+                                System.out.println("accumulation error");
+                            }
+
+
+                            // DELETE request to delete a recipe from a book
+                            JsonObjectRequest jor = new JsonObjectRequest(Request.Method.DELETE,
+                        API_URL + "/recipe/book",
+                            deleteBody, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    System.out.println(response);
+                                    try {
+                                        System.out.println("TRYING DELETE");
+                                        Bundle bundle = new Bundle();
+
+                                        // remove from adapter
+                                        mAdapter.remove(position);
+
+                                    } catch (Exception e) {
+                                        System.out.print(e);
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    System.out.println(error);
+                                }
+                            });
+                            requestQueue.add(jor);
                         }
                     })
                     .setNegativeButton("No", null)
                     .show();
+
         }
     };
 

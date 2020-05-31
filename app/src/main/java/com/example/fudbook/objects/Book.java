@@ -8,6 +8,7 @@ public class Book {
     private String author;
     private boolean def;
     private ArrayList<String> recipeIds;
+    private String BookId;
 
     public Book(String name, String author){
         bookName = name;
@@ -15,7 +16,8 @@ public class Book {
     }
 
     //contructor
-    public Book(String name, String author, boolean def, ArrayList<String> ids) {
+    public Book(String bookId, String name, String author, boolean def, ArrayList<String> ids) {
+        this.BookId = bookId;
         bookName = name;
         this.author = author;
         recipeIds = ids;
@@ -50,5 +52,13 @@ public class Book {
 
     public ArrayList<String> getRecipes() {
         return recipeIds;
+    }
+
+    public String getBookId() {
+        return BookId;
+    }
+
+    public void setBookId(String bookId) {
+        BookId = bookId;
     }
 }

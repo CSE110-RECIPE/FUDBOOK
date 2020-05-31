@@ -99,16 +99,21 @@ public class fragment_bookshelf_1 extends Fragment {
                         String author = null;
                         boolean def = false;
                         String name = null;
+                        String id = null;
                         String recipe_key;
                         Iterator<String> it;
 
                         System.out.println(ja);
+                        System.out.println(response);
 
                         for (int i = 0; i < ja.length(); i++){
-                            curr = response.getJSONObject(ja.getString(i));
+                            id = ja.getString(i);
+                            System.out.println("current id" + id);
+                            curr = response.getJSONObject(id);
                             author = curr.getString("author");
                             def = curr.getBoolean("default");
                             name = curr.getString("name");
+
 
                             it = curr.getJSONObject("recipes").keys();
                             recipeList = new ArrayList<String>();
@@ -118,7 +123,7 @@ public class fragment_bookshelf_1 extends Fragment {
                                 recipeList.add(recipe_key);
                             }
 
-                            books.add(new Book(name, author, def, recipeList));
+                            books.add(new Book(id, name, author, def, recipeList));
                         }
 
                         // set up layout manager
@@ -157,6 +162,7 @@ public class fragment_bookshelf_1 extends Fragment {
 
             // store clicked item title into bundle
             data.putStringArrayList("recipe id", mAdapter.getBook(position).getRecipes()); // key for recipe id's
+            data.putString("book id", mAdapter.getBook(position).getBookId());
 
             // load book's recipes
             FragmentManager fm = getParentFragmentManager();
