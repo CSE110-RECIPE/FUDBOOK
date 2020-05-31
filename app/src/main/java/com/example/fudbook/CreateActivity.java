@@ -293,7 +293,9 @@ public class CreateActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println(response);
+                        Intent res = new Intent();
+                        res.putExtra("posted", true);
+                        setResult(3, res);
                         finish();
                     }
                 }, new Response.ErrorListener() {

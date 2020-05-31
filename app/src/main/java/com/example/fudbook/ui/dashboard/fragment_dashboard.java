@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fudbook.CreateActivity;
 import com.example.fudbook.R;
@@ -66,9 +67,20 @@ public class fragment_dashboard extends Fragment {
                 public void onClick(View v) {
                     // Go to create recipe activity
                     Intent create_intent = new Intent(getContext(), CreateActivity.class);
-                    startActivity(create_intent);
+                    startActivityForResult(create_intent, 1);
                 }
             };
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == 3) {
+                System.out.println("posted");
+                Toast.makeText(getContext(), "Recipe posted.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
 
 
