@@ -36,7 +36,7 @@ public class fragment_explore_1 extends Fragment {
             recipeFrag.setArguments(data);
             fm.beginTransaction().add(R.id.explore_container, recipeFrag).commit();
         } else {
-            Toast.makeText(getContext(), "Nothing here :(", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "No matches :(", Toast.LENGTH_LONG).show();
         }
 
         return view;
