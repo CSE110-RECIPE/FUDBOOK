@@ -1,5 +1,6 @@
 package com.example.fudbook.ui.bookshelf;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fudbook.R;
 import com.example.fudbook.objects.Recipe;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -154,10 +157,10 @@ public class fragment_bookshelf_2 extends Fragment {
         return view;
     }
 
-    private book_adapter.OnItemClickListener adapter_listener = new book_adapter.OnItemClickListener() {
+    private final book_adapter.OnItemClickListener adapter_listener = new book_adapter.OnItemClickListener() {
         @Override
         public void onItemClick(int position) {
-            Toast.makeText(getContext(),"Loading Recipe",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Loading Recipe", Toast.LENGTH_SHORT).show();
 
             // load recipe
             Recipe toSend = mAdapter.getRecipe(position);
@@ -173,6 +176,22 @@ public class fragment_bookshelf_2 extends Fragment {
             f = new fragment_recipe();
             f.setArguments(data); // send data
             fm.beginTransaction().add(R.id.bookshelf_container, f, "RECIPE").commit();
+        }
+
+        @Override
+        public void onImageButtonClick(int position) {
+            AlertDialog dialog = new MaterialAlertDialogBuilder(getContext())
+                    .setTitle("Remove recipe from book?")
+                    .setMessage("Are you sure you want to remove this recipe?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         }
     };
 

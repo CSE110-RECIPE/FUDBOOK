@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.bookshelf.fragment_recipe"
     android:backgroundTint="@color/white"
-    android:background="@android:color/white"
-    >
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:id="@+id/title_layout"
@@ -113,29 +113,24 @@
 
             <!-- enter ingredient list here -->
 
-            <HorizontalScrollView
-                android:id="@+id/chip_container"
-                android:layout_width="360dp"
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ingredient_title"
-                android:layout_centerHorizontal="true">
+                app:chipSpacingVertical="10dp"
+                >
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                <!-- Chips can be declared here, or added dynamically. -->
 
-                    <!-- Chips can be declared here, or added dynamically. -->
-
-                </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+            </com.google.android.material.chip.ChipGroup>
 
             <Space
                 android:id="@+id/spacer_2"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_below="@id/chip_container"/>
+                android:layout_below="@id/chip_group"/>
 
             <TextView
                 android:id="@+id/instructions_title"

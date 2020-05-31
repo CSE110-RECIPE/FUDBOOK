@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +30,7 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
 
     private Context mContext;
     OnItemClickListener mListener;
+    OnItemClickListener mListener2;
 
     /** Will be deprecated later */
     private ArrayList<Recipe> mRecipes; // necessary recipe
@@ -54,10 +57,10 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
         return mRecipes.get(position);
     }
 
-    /** End of test */
     // interface for listener
     public interface OnItemClickListener{
         void onItemClick(int position);
+        void onImageButtonClick(int position);
     }
 
     // set up onclick listener
@@ -71,13 +74,16 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
         // hold book title, icon, and layout
         public TextView recipe_title;
         public ImageView recipe_icon;
+        public AppCompatImageButton remove_button;
         public View layout;
+        public OnItemClickListener adapter_listener;
 
         public ViewHolder(View v, final book_adapter.OnItemClickListener listener) {
             super(v);
             layout = v;
             recipe_title = (TextView) v.findViewById(R.id.book_title);
             recipe_icon = (ImageView) v.findViewById(R.id.icon);
+            remove_button = (AppCompatImageButton) v.findViewById(R.id.remove_btn);
 
             v.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -86,6 +92,18 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
                             listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            remove_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onImageButtonClick(position);
                         }
                     }
                 }
@@ -127,6 +145,7 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
                 .centerCrop()
                 .into(holder.recipe_icon);
     }
+
 
     @Override
     public int getItemCount() {
