@@ -145,7 +145,6 @@
 
             <TextView
                 android:id="@+id/user_instructions_input"
-                android:lines="10"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/instructions_title"
@@ -154,6 +153,11 @@
                 android:text="User Instructions List"
                 />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/user_instructions_input"
+            />
 
         </RelativeLayout>
 

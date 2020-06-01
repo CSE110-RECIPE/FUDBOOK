@@ -55,7 +55,7 @@ public class Recipe{
     }
 
     public void setInstr(ArrayList<String> instr) {
-        if(instr.size() < 2) {
+        if(instr.size() < 1) {
             this.instructions = instr;
         }
         else
@@ -65,8 +65,24 @@ public class Recipe{
             for(int i=0; i< instr.size(); i++)
             {
                 str += instr.get(i);
-                str += "\n";
             }
+
+            //split string into sentences
+            String [] newInstr = str.split("[\\.|\\?|\\!][\\s]", -1);
+
+            //remove period from last step
+            newInstr[newInstr.length-1] = newInstr[newInstr.length-1].substring(0,newInstr[newInstr.length-1].length()-1);
+
+            //build new string in correct format with step numbers
+            str = "";
+            int count = 1;
+            for(String s: newInstr)
+            {
+                str += count + ") " + s + ".";
+                str += "\n\n";
+                count ++;
+            }
+
             this.instructions = new ArrayList<String>();
             instructions.add(str);
         }
