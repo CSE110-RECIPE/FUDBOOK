@@ -70,21 +70,30 @@ public class Recipe{
             //split string into sentences
             String [] newInstr = str.split("[\\.|\\?|\\!][\\s]", -1);
 
-            //remove period from last step
-            newInstr[newInstr.length-1] = newInstr[newInstr.length-1].substring(0,newInstr[newInstr.length-1].length()-1);
-
             //build new string in correct format with step numbers
             str = "";
             int count = 1;
-            for(String s: newInstr)
-            {
-                str += count + ") " + s + ".";
-                str += "\n\n";
-                count ++;
-            }
 
-            this.instructions = new ArrayList<String>();
-            instructions.add(str);
+            //if text is a single block, don't do anything. If multiple blocks, add step numbers
+            if(newInstr.length == 1)
+            {
+                str = newInstr[0];
+                this.instructions = new ArrayList<String>();
+                instructions.add(str);
+            }
+            else {
+                for (String s : newInstr) {
+                    str += count + ") " + s + ".";
+                    str += "\n\n";
+                    count++;
+                }
+
+                //remove period from last step
+                str = str.substring(0,str.length()-3);
+
+                this.instructions = new ArrayList<String>();
+                instructions.add(str);
+            }
         }
     }
 
