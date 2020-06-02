@@ -89,7 +89,6 @@
                 android:layout_height="375dp"
                 android:adjustViewBounds="true"
                 android:layout_below="@id/photo_title"
-                android:background="@drawable/dotted_rectangle"
                 android:layout_margin="15dp"
                 />
 
@@ -116,6 +115,7 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group"
+                android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ingredient_title"

@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
 
     // TAG
@@ -143,6 +145,7 @@ public class book_adapter extends RecyclerView.Adapter<book_adapter.ViewHolder>{
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()
+                .transform( new RoundedCornersTransformation(10, 5))
                 .into(holder.recipe_icon);
     }
 

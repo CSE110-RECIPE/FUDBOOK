@@ -27,6 +27,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 
 /**
  * Fragment for viewing recipe
@@ -108,13 +110,14 @@ public class fragment_recipe extends Fragment {
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()
+                .transform( new RoundedCornersTransformation(10, 10))
                 .into(recipeImageView);
 
         // load chip groups
         if (tags != null) {
             for (String ing : tags) {
                 Chip c = new Chip(getContext());
-                c.setTextSize(16);
+                c.setTextSize(15);
                 c.setPadding(3, 3, 3, 3);
                 c.setText(ing);
                 recipeChipGroup.addView(c);

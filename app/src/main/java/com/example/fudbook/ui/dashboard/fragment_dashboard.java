@@ -13,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.fudbook.CreateActivity;
 import com.example.fudbook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class fragment_dashboard extends Fragment {
     private static final String TAG = "dashboard";
@@ -56,6 +59,7 @@ public class fragment_dashboard extends Fragment {
             Picasso.get().load(recipeData.getString("image"))
                     .fit()
                     .centerCrop()
+                    .transform( new RoundedCornersTransformation(10, 10))
                     .into(imageView);
         }
 
