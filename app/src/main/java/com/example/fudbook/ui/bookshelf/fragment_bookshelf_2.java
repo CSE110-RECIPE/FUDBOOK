@@ -88,16 +88,19 @@ public class fragment_bookshelf_2 extends Fragment {
         JSONObject bookBody = new JSONObject();
         JSONArray recipeIdArr = new JSONArray();
 
-        // convert list of recipe_id to json
-        for (String i : recipe_id){
-            recipeIdArr.put(i);
-            System.out.println(i);
-        }
-        // creates a body for request
-        try {
-            bookBody.accumulate("recipes", recipeIdArr);
-        } catch (Exception e ) {
-            System.out.println("accumulation error");
+        if (recipe_id != null) {
+            // convert list of recipe_id to json
+            for (String i : recipe_id) {
+                recipeIdArr.put(i);
+                System.out.println(i);
+            }
+
+            // creates a body for request
+            try {
+                bookBody.accumulate("recipes", recipeIdArr);
+            } catch (Exception e) {
+                System.out.println("accumulation error");
+            }
         }
 
         // POST request to get recipes for book

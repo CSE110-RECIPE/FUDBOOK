@@ -50,8 +50,6 @@ public class fragment_bookshelf_1 extends Fragment {
     private RequestQueue requestQueue;
     private String API_URL = "http://10.0.2.2:3000";
 
-    //
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,9 +98,9 @@ public class fragment_bookshelf_1 extends Fragment {
                         JSONObject curr;
                         String author = "";
                         boolean def = false;
-
                         String name = null;
                         String id = null;
+                        JSONObject recipes;
                         String recipe_key;
                         Iterator<String> it;
 
@@ -114,12 +112,17 @@ public class fragment_bookshelf_1 extends Fragment {
                             def = curr.getBoolean("default");
                             name = curr.getString("name");
 
-                            it = curr.getJSONObject("recipes").keys();
-                            recipeList = new ArrayList<String>();
+                            if(curr.has("recipes")){
+                                recipes = curr.getJSONObject("recipes");
+                                it = recipes.keys();
+                                recipeList = new ArrayList<String>();
 
-                            while(it.hasNext()){
-                                recipe_key = it.next();
-                                recipeList.add(recipe_key);
+                                while (it.hasNext()) {
+                                    recipe_key = it.next();
+                                    recipeList.add(recipe_key);
+                                }
+                            }else{
+                                recipeList = null;
                             }
 
                             books.add(new Book(id, name, author, def, recipeList));
@@ -154,14 +157,18 @@ public class fragment_bookshelf_1 extends Fragment {
         public void onItemClick(int position) {
 
             System.out.println("Printing recipe ids");
-            for(String i : mAdapter.getBook(position).getRecipes()){
-                System.out.println("recipe:" + i);
-            }
-
             // get book chosen
             Book book = mAdapter.getBook(position);
-            // store clicked item title into bundle
-            data.putStringArrayList("recipe id", book.getRecipes()); // key for recipe id's
+
+            if (!book.isEmpty()) {
+                for (String i : mAdapter.getBook(position).getRecipes()) {
+                    System.out.println("recipe:" + i);
+                }
+
+                // store clicked item title into bundle
+                data.putStringArrayList("recipe id", book.getRecipes()); // key for recipe id's
+            }
+
             data.putString("book id", book.getBookId());
             data.putString("book name", book.getName());
             // load book's recipes

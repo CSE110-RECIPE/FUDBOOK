@@ -54,6 +54,13 @@ public class Book {
         return recipeIds;
     }
 
+    public boolean isEmpty(){
+        if (recipeIds == null){
+            return true;
+        }
+        return false;
+    }
+
     public String getBookId() {
         return BookId;
     }
