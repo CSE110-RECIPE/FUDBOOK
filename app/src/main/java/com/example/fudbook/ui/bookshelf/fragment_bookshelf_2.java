@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -47,8 +48,10 @@ public class fragment_bookshelf_2 extends Fragment {
 
     private ArrayList<Recipe> recipe_list;
     private ArrayList<String> recipe_id;
+    private String book_name;
 
     private ImageButton back_btn;
+    private TextView book_title_view;
 
     // Connection
     private RequestQueue requestQueue;
@@ -68,6 +71,10 @@ public class fragment_bookshelf_2 extends Fragment {
 
 
         recipe_id = data.getStringArrayList("recipe id"); //
+        book_name = data.getString("book name");
+
+        book_title_view = view.findViewById(R.id.book_title);
+        book_title_view.setText(book_name);
 
         System.out.println(recipe_id);
         recipe_list = new ArrayList<Recipe>();
@@ -75,9 +82,6 @@ public class fragment_bookshelf_2 extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.books_recycler);
         recyclerView.setHasFixedSize(true);
 
-        /**
-         * Load specific book
-         */
         // API request
         requestQueue = Volley.newRequestQueue(getContext());
 
@@ -95,7 +99,6 @@ public class fragment_bookshelf_2 extends Fragment {
         } catch (Exception e ) {
             System.out.println("accumulation error");
         }
-
 
         // POST request to get recipes for book
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, API_URL + "/recipe/book",
@@ -150,43 +153,6 @@ public class fragment_bookshelf_2 extends Fragment {
 
 
                     }
-//                    // change using names and a for loop
-//                    Iterator<String> recipe_iterator = response.keys();
-//                    while(recipe_iterator.hasNext()){
-//                        String key = recipe_iterator.next();
-//                        JSONObject jo = response.getJSONObject(key);
-//
-//                        // grab values from response
-//                        String author = jo.getString("author");
-//                        String name = jo.getString("name");
-//                        String image = jo.getString("image");
-//
-//                        // pre load image
-//                        Picasso.get().load(image).fetch();
-//
-//                        JSONArray ingredients_ja = jo.getJSONArray("ingredients");
-//                        JSONArray instructions_ja = jo.getJSONArray("steps");
-//                        JSONArray tags_ja = jo.getJSONArray("tags");
-//
-//                        // convert from JSONArray to ArrayList
-//                        ArrayList<String> ingredients = toArrayList(ingredients_ja);
-//                        ArrayList<String> instructions = toArrayList(instructions_ja);
-//                        ArrayList<String> tags = toArrayList(tags_ja);
-//
-//                        // place into Recipe List
-//                        Recipe rec = new Recipe( key,
-//                                name,
-//                                author,
-//                                ingredients,
-//                                instructions,
-//                                image,
-//                                tags);
-//
-//                        //combine the recipe instructions
-//                        rec.setInstr(instructions);
-//
-//                        recipe_list.add(rec);
-//                    }
 
                     // set up layout manager
                     layoutManager = new LinearLayoutManager(getActivity());

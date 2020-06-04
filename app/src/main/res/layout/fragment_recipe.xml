@@ -16,15 +16,15 @@
         android:paddingHorizontal="10dp"
         >
 
-        <TextView
-            android:id="@+id/book_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/open_sans"
-            android:text="Recipe"
-            android:textColor="@color/darkText"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/recipe_bar_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:fontFamily="@font/open_sans"-->
+<!--            android:text="Recipe"-->
+<!--            android:textColor="@color/darkText"-->
+<!--            android:textSize="16sp" />-->
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -44,58 +44,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
-        android:padding="15dp"
+        android:paddingHorizontal="10dp"
         android:layout_below="@id/title_layout">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/recipe_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Recipe Name"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/user_recipe_title"
-                android:layout_width="360dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User's Title"
-                android:layout_below="@id/recipe_title"
+                android:textAlignment="center"
                 android:padding="10dp"
                 android:textSize="20sp"
                 android:layout_centerHorizontal="true"
                 />
 
-            <TextView
-                android:id="@+id/photo_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Photo"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:layout_below="@id/user_recipe_title"
-                />
+<!--            <TextView-->
+<!--                android:id="@+id/photo_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="10dp"-->
+<!--                android:text="Photo"-->
+<!--                android:textColor="@color/colorPrimary"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_below="@id/user_recipe_title"-->
+<!--                />-->
+
+<!--            android:layout_below="@id/photo_title"-->
 
             <ImageView
                 android:id="@+id/recipe_photo"
                 android:layout_width="match_parent"
                 android:layout_height="375dp"
-                android:adjustViewBounds="true"
-                android:layout_below="@id/photo_title"
-                android:layout_margin="15dp"
-                />
+                android:layout_below="@id/user_recipe_title"
+                android:adjustViewBounds="true" />
 
             <Space
                 android:id="@+id/spacer_1"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="10dp"
                 android:layout_below="@id/recipe_photo"/>
 
             <TextView

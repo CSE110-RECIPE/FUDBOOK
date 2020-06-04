@@ -54,9 +54,8 @@ public class fragment_recipe extends Fragment {
     // Recipe Instructions
     private TextView recipeInstructionsView;
 
-    //Back button
+    // Back button
     private ImageButton back_btn;
-
 
     // variables
     private String title;

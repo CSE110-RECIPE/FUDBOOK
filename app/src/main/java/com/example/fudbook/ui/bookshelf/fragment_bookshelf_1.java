@@ -158,10 +158,12 @@ public class fragment_bookshelf_1 extends Fragment {
                 System.out.println("recipe:" + i);
             }
 
+            // get book chosen
+            Book book = mAdapter.getBook(position);
             // store clicked item title into bundle
-            data.putStringArrayList("recipe id", mAdapter.getBook(position).getRecipes()); // key for recipe id's
-            data.putString("book id", mAdapter.getBook(position).getBookId());
-
+            data.putStringArrayList("recipe id", book.getRecipes()); // key for recipe id's
+            data.putString("book id", book.getBookId());
+            data.putString("book name", book.getName());
             // load book's recipes
             FragmentManager fm = getParentFragmentManager();
             Fragment book_frag = new fragment_bookshelf_2();

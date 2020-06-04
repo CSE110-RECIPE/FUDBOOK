@@ -185,7 +185,7 @@ public class CreateActivity extends AppCompatActivity {
                                     && steps.length > 0)
                                 uploadRecipeImage(ingredientArr, recipeName, steps);
                             else {
-                                Toast.makeText(getApplicationContext(), "Form not completed :(",
+                                Toast.makeText(getApplicationContext(), "Recipe not completed :(",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
