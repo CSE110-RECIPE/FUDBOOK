@@ -47,10 +47,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User's Title"
+                android:textColor="@color/colorPrimary"
                 android:textAlignment="center"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:textSize="20sp"
                 android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/by_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="by User"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:layout_below="@id/user_recipe_title"
+                android:layout_marginBottom="5dp"
                 />
 
 <!--            <TextView-->
@@ -70,7 +83,7 @@
                 android:id="@+id/recipe_photo"
                 android:layout_width="match_parent"
                 android:layout_height="375dp"
-                android:layout_below="@id/user_recipe_title"
+                android:layout_below="@id/by_user"
                 android:adjustViewBounds="true" />
 
             <Space

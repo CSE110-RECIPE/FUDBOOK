@@ -41,6 +41,9 @@ public class fragment_recipe extends Fragment {
     // Recipe Title
     private TextView recipeTitleView;
 
+    // Recipe Autho
+    private TextView recipeAuthorView;
+
     // Recipe Photo
     private ImageView recipeImageView;
 
@@ -93,6 +96,7 @@ public class fragment_recipe extends Fragment {
 
     private void setView(View view) {
         recipeTitleView = view.findViewById(R.id.user_recipe_title);
+        recipeAuthorView = view.findViewById(R.id.by_user);
         recipeImageView = view.findViewById(R.id.recipe_photo);
         recipeChipGroup = (ChipGroup) view.findViewById(R.id.chip_group);
         recipeInstructionsView = view.findViewById(R.id.user_instructions_input);
@@ -103,6 +107,9 @@ public class fragment_recipe extends Fragment {
 
         // load title
         recipeTitleView.setText(title);
+
+        // load author
+        recipeAuthorView.setText("by " + author);
 
         // load image
         Picasso.get().load(image)
