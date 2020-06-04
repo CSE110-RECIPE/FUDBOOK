@@ -101,6 +101,8 @@ public class fragment_bookshelf_2 extends Fragment {
             } catch (Exception e) {
                 System.out.println("accumulation error");
             }
+        }else{
+            Toast. makeText(getContext(),"Book is empty",Toast. LENGTH_SHORT).show();
         }
 
         // POST request to get recipes for book
