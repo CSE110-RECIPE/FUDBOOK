@@ -239,10 +239,8 @@ public class fragment_bookshelf_2 extends Fragment {
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
-                                            System.out.println(response);
                                             try {
                                                 System.out.println("TRYING DELETE");
-                                                Bundle bundle = new Bundle();
 
                                                 // remove from adapter
                                                 mAdapter.remove(position);

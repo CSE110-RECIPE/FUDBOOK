@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="556dp"
         android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/ic_login_icons" />
+        app:srcCompat="@drawable/ic_background" />
 
     <Button
         android:id="@+id/loginbutton"
