@@ -55,7 +55,7 @@ public class fragment_bookshelf_2 extends Fragment {
 
     // Connection
     private RequestQueue requestQueue;
-    private String API_URL = "http://10.0.2.2:3000";
+    private static final String API_URL = "http://10.0.2.2:3000";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -288,10 +288,12 @@ public class fragment_bookshelf_2 extends Fragment {
         @Override
         public void onClick(View v) {
             FragmentManager fm2 = getParentFragmentManager();
-            Fragment fragment = fm2.findFragmentByTag("BOOKSHELF2");
+            Fragment fragment = new fragment_bookshelf_1();
+            fragment.setArguments(data);
             if(fragment !=null) {
-                fm2.beginTransaction().remove(fragment).commit();
+                fm2.beginTransaction().replace(R.id.bookshelf_container, fragment).commit();
             }
+//            fm2.beginTransaction().replace(R.id.bookshelf_container, new fragment_bookshelf_1()).commit();
         }
     };
 }

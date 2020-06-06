@@ -56,4 +56,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation 'com.google.firebase:firebase-analytics:17.4.2'
 }

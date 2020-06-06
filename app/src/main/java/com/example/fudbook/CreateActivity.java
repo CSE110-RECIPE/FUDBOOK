@@ -66,6 +66,7 @@ public class CreateActivity extends AppCompatActivity {
     Button back_button; // need to implement
 
     Bundle bundle;
+
     // For memory sharing
     SharedPreferences sharedPreferences;
     public static final String CREATE_PREFERENCES = "Create_Prefs";

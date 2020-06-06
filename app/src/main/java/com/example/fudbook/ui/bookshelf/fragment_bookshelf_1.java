@@ -48,7 +48,7 @@ public class fragment_bookshelf_1 extends Fragment {
 
     // Connection
     private RequestQueue requestQueue;
-    private String API_URL = "http://10.0.2.2:3000";
+    private static final String API_URL = "http://10.0.2.2:3000";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,9 +62,9 @@ public class fragment_bookshelf_1 extends Fragment {
         books = new ArrayList<Book>();
 
         // memory set up
-        data = new Bundle();
-        book_bundle = getArguments();
-        System.out.println(book_bundle.getString("favorite book"));
+        data = getArguments();
+
+        System.out.println(data.getString("favorite book"));
 
         JSONObject bookshelfBody = new JSONObject();
         JSONArray bookIdArr = new JSONArray();
@@ -73,10 +73,10 @@ public class fragment_bookshelf_1 extends Fragment {
         requestQueue = Volley.newRequestQueue(getContext());
 
         // place favorite book id
-        bookIdArr.put(book_bundle.getString("favorite book"));
+        bookIdArr.put(data.getString("favorite book"));
 
         // place personal book id
-        bookIdArr.put(book_bundle.getString("personal book"));
+        bookIdArr.put(data.getString("personal book"));
 
         // create a body for request
         try {
@@ -122,7 +122,7 @@ public class fragment_bookshelf_1 extends Fragment {
                                     recipeList.add(recipe_key);
                                 }
                             }else{
-                                recipeList = null;
+                                recipeList = new ArrayList<String>();
                             }
 
                             books.add(new Book(id, name, author, def, recipeList));
@@ -178,8 +178,7 @@ public class fragment_bookshelf_1 extends Fragment {
             // send recipe id's
             book_frag.setArguments(data);
             fm.beginTransaction()
-                    .add(R.id.bookshelf_container, book_frag, "BOOKSHELF2")
-                    .addToBackStack("going back to bookshelf")
+                    .replace(R.id.bookshelf_container, book_frag, "BOOKSHELF2")
                     .commit();
 
         }
