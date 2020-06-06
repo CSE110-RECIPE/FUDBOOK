@@ -68,7 +68,7 @@ public class Recipe{
             }
 
             //split string into sentences
-            String [] newInstr = str.split("[\\.|\\?|\\!][\\s]", -1);
+            String [] newInstr = str.split("[A-Za-z][\\.|\\?|\\!][\\s]", -1);
 
             //build new string in correct format with step numbers
             str = "";
