@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 3030;
     private Button login_button;
-    private static final String API_URL = "http://10.0.2.2:3000";
+    private static final String API_URL = "http://54.200.224.98:3000";
 
     GoogleSignInOptions gso;
 

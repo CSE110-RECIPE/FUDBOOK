@@ -48,7 +48,7 @@ public class fragment_bookshelf_1 extends Fragment {
 
     // Connection
     private RequestQueue requestQueue;
-    private static final String API_URL = "http://10.0.2.2:3000";
+    private static final String API_URL = "http://54.200.224.98:3000";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

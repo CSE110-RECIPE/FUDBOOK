@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private JSONObject userJSON;
     private JsonObjectRequest joR;
     private RequestQueue requestQueue;
-    private static final String API_URL = "http://10.0.2.2:3000";
+    private static final String API_URL = "http://54.200.224.98:3000";
 
     // account guard
     private boolean isLoggedin;

@@ -66,7 +66,7 @@ public class ExploreActivity extends AppCompatActivity {
     private boolean isLoaded;
     private int recipeProgressCount;
     private boolean reloadRequest;
-    private static final String API_URL = "http://10.0.2.2:3000";
+    private static final String API_URL = "http://54.200.224.98:3000";
 
     // On Starting Explore Activity
     @Override

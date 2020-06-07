@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -152,6 +153,7 @@ public class fragment_basket extends Fragment {
                                 Bundle data = new Bundle();
                                 data.putBoolean("done", done);
                                 getParentFragmentManager().setFragmentResult("isClear", data);
+                                Toast.makeText(getContext(), "Added to Favorite", Toast.LENGTH_SHORT).show();
                             }
                         },
                         new Response.ErrorListener() {
